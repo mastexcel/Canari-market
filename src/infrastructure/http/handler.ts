@@ -10,7 +10,7 @@
  */
 import { NextResponse, type NextRequest } from "next/server";
 import { Prisma } from "@prisma/client";
-import { ZodError, type ZodType } from "zod";
+import { ZodError, type ZodType, type ZodTypeDef } from "zod";
 import { DomainError } from "@/domain/errors";
 import { hasPermission, type AdminPermission, type UserRole } from "@/domain/permissions";
 import { getUserBySessionToken, SESSION_COOKIE, type SessionUser } from "@/application/auth.service";
@@ -124,7 +124,7 @@ export function route<P = Record<string, string>>(
   };
 }
 
-export async function parseBody<T>(req: NextRequest, schema: ZodType<T>): Promise<T> {
+export async function parseBody<T>(req: NextRequest, schema: ZodType<T, ZodTypeDef, unknown>): Promise<T> {
   let json: unknown;
   try {
     json = await req.json();
