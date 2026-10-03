@@ -510,6 +510,10 @@ async function main() {
     ]),
   });
 
+  // Exécute les remboursements restants (différences de palier, échecs) comme le ferait la tâche planifiée.
+  const { processPendingRefunds } = await import("../src/application/payment.service");
+  for (let i = 0; i < 20 && (await prisma.refund.count({ where: { status: "PENDING" } })) > 0; i++) await processPendingRefunds(prisma);
+
   const counts = {
     users: await prisma.user.count(),
     suppliers: await prisma.supplier.count(),
