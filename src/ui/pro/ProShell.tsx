@@ -38,16 +38,16 @@ export function StatCard({ label, value, hint, tone }: { label: string; value: s
   const toneClass = tone === "economie" ? "bg-economie-600 text-white" : tone === "brand" ? "bg-brand-700 text-white" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
   return (
     <div className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${toneClass}`}>
-      <p className={`text-xs ${tone && tone !== "alerte" ? "text-white/85" : "text-anthracite-600"}`}>{label}</p>
+      <p className={`text-xs ${tone && tone !== "alerte" ? "text-white" : "text-anthracite-600"}`}>{label}</p>
       <p className="mt-1 text-xl font-extrabold tabular">{value}</p>
-      {hint && <p className={`mt-0.5 text-xs ${tone && tone !== "alerte" ? "text-white/80" : "text-anthracite-500"}`}>{hint}</p>}
+      {hint && <p className={`mt-0.5 text-xs ${tone && tone !== "alerte" ? "text-white/95" : "text-anthracite-600"}`}>{hint}</p>}
     </div>
   );
 }
 
 export function Table({ head, children, empty }: { head: string[]; children: ReactNode; empty?: boolean }) {
   return (
-    <div className="overflow-x-auto rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)]">
+    <div tabIndex={0} role="region" aria-label="Tableau (défilement horizontal)" className="overflow-x-auto rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)]">
       <table className="w-full min-w-[640px] text-left text-sm">
         <thead className="bg-gris-50 text-xs text-anthracite-600 uppercase">
           <tr>

@@ -29,11 +29,11 @@ export default async function CategoriesPage() {
         ))}
         {upcoming.map((c) => (
           <li key={c.slug}>
-            <div className="flex h-full flex-col gap-2 rounded-[var(--radius-card)] border border-dashed border-gris-300 bg-white/60 p-4 opacity-80">
+            <div className="flex h-full flex-col gap-2 rounded-[var(--radius-card)] border border-dashed border-gris-300 bg-white/60 p-4">
               <span className="text-4xl grayscale" aria-hidden>
                 {c.emoji}
               </span>
-              <span className="font-bold text-anthracite-700">{c.name}</span>
+              <span className="font-bold text-anthracite-600">{c.name}</span>
               <span className="w-fit rounded-full bg-accent-100 px-2 py-0.5 text-xs font-bold text-accent-700">Bientôt</span>
             </div>
           </li>

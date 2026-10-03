@@ -4,6 +4,7 @@ import { cartCount } from "@/application/cart.service";
 import { unreadCount } from "@/application/notification.service";
 import { BottomNav } from "@/ui/BottomNav";
 import { Logo } from "@/ui/Logo";
+import { LegalFooter } from "@/ui/LegalFooter";
 
 export default async function ShopLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
@@ -34,6 +35,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
       </header>
       <main id="contenu" className="mx-auto max-w-lg px-4 pt-4 pb-28">
         {children}
+        <LegalFooter className="mt-10" />
       </main>
       <BottomNav cartCount={count} />
     </>

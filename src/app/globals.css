@@ -224,3 +224,7 @@ h2, h3 { font-weight: 700; }
 }
 
 .btn:disabled:not(.btn-ghost) { background: var(--color-gris-300); color: var(--color-anthracite-500); }
+
+/* Les éléments de grille peuvent rétrécir : un tableau large défile dans son cadre
+   au lieu d'élargir toute la page sur mobile. */
+.grid > * { min-width: 0; }

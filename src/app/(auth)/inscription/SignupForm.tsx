@@ -21,6 +21,7 @@ export function SignupForm({ communes, referralCode, next }: { communes: string[
     acceptTerms: false,
     marketingSms: false,
     marketingWhatsapp: false,
+    website: "", // champ piège anti-robot : invisible pour les humains
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
@@ -84,9 +85,27 @@ export function SignupForm({ communes, referralCode, next }: { communes: string[
           </Select>
         </fieldset>
       )}
+      {/* Anti-spam : champ invisible ; un robot qui le remplit voit son inscription refusée. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor="website">Ne pas remplir</label>
+        <input id="website" name="website" tabIndex={-1} autoComplete="off" value={f.website} onChange={set("website")} />
+      </div>
       <Input label="Code de parrainage" optional value={f.referralCode} onChange={(e) => setF({ ...f, referralCode: e.target.value.toUpperCase() })} />
       <div className="space-y-1 rounded-xl bg-white p-3">
-        <Checkbox label={<>J&apos;accepte les conditions d&apos;utilisation et la politique de confidentialité.</>} checked={f.acceptTerms} onChange={(e) => setF({ ...f, acceptTerms: e.target.checked })} />
+        <Checkbox
+          label={
+            <>
+              J&apos;accepte les{" "}
+              <a href="/cgu" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
+                conditions d&apos;utilisation
+              </a>{" "}
+              et la{" "}
+              <a href="/confidentialite" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
+                politique de confidentialité
+              </a>
+              .
+            </>
+          } checked={f.acceptTerms} onChange={(e) => setF({ ...f, acceptTerms: e.target.checked })} />
         {errors.acceptTerms && <p className="text-sm text-alerte-700">{errors.acceptTerms}</p>}
         <Checkbox label="Recevoir les bons plans par SMS" description="Facultatif, modifiable à tout moment." checked={f.marketingSms} onChange={(e) => setF({ ...f, marketingSms: e.target.checked })} />
         <Checkbox label="Recevoir les bons plans par WhatsApp" checked={f.marketingWhatsapp} onChange={(e) => setF({ ...f, marketingWhatsapp: e.target.checked })} />

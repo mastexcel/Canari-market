@@ -53,7 +53,7 @@ export function BarChart({
         </div>
       ) : (
         <div className="relative">
-          <div className="flex items-end gap-[2px] border-b border-gris-300" style={{ height: h }} role="img" aria-label={`${label} : maximum ${format(max)}`}>
+          <div className="flex items-end gap-[2px] border-b border-gris-300" style={{ height: h }} role="group" aria-label={`${label} : maximum ${format(max)}`}>
             {data.map((d, i) => (
               <button
                 key={d.key}

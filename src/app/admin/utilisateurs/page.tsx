@@ -24,7 +24,7 @@ export default async function Users({ searchParams }: { searchParams: Promise<{ 
       <H1>Utilisateurs</H1>
       <form className="mb-4 flex flex-wrap gap-2">
         <input name="q" defaultValue={sp.q} placeholder="Nom ou téléphone" className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm" />
-        <select name="role" defaultValue={sp.role ?? ""} className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm">
+        <select name="role" aria-label="Filtrer par rôle" defaultValue={sp.role ?? ""} className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm">
           <option value="">Tous les rôles</option>
           {Object.entries(ROLES).map(([k, v]) => (
             <option key={k} value={k}>

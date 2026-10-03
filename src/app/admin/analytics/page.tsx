@@ -29,7 +29,7 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
       <H1
         action={
           <form className="flex gap-2 text-sm">
-            <select name="jours" defaultValue={String(days)} className="h-9 rounded-lg border border-gris-300 bg-white px-2">
+            <select name="jours" aria-label="Période" defaultValue={String(days)} className="h-9 rounded-lg border border-gris-300 bg-white px-2">
               {[7, 30, 90, 180, 365].map((d) => (
                 <option key={d} value={d}>
                   {d} jours

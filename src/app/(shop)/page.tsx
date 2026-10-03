@@ -12,6 +12,7 @@ import { GroupBuyCard } from "@/ui/shop/GroupBuyCard";
 import { ProductCard } from "@/ui/shop/ProductCard";
 import { HowItWorks } from "@/ui/shop/HowItWorks";
 import { EmptyState } from "@/ui/EmptyState";
+import { ButtonLink } from "@/ui/Button";
 
 export default async function HomePage() {
   const user = await currentUser();
@@ -37,7 +38,7 @@ export default async function HomePage() {
         <h1 className="relative mt-1 max-w-[13.5rem] text-[28px] leading-[1.1] font-black">
           À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
         </h1>
-        <p className="relative mt-2 max-w-[13.5rem] text-sm text-white/80">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
+        <p className="relative mt-2 max-w-[13.5rem] text-sm text-white/90">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
         {mine && mine.total > 0 && (
           <Link href="/compte/economies" className="relative mt-4 flex items-center justify-between rounded-2xl bg-white/10 p-3 ring-1 ring-white/20 backdrop-blur-sm">
             <span className="text-sm">Vous avez économisé</span>
@@ -53,6 +54,10 @@ export default async function HomePage() {
           </span>
           <input id="q" name="q" type="search" placeholder="Riz, huile, savon, cahiers…" className="h-12 w-full rounded-[1.1rem_1.1rem_1.1rem_0.4rem] bg-white pr-4 pl-10 text-anthracite-900 shadow-[0_6px_18px_-8px_rgba(0,0,0,0.45)] placeholder:text-anthracite-500" />
         </form>
+        {/* Action principale de la page */}
+        <ButtonLink href="/achats-groupes" variant="accent" size="lg" block className="relative mt-3">
+          Rejoindre un achat groupé →
+        </ButtonLink>
       </section>
 
       {/* Les 4 promesses du logo */}
@@ -194,9 +199,9 @@ export default async function HomePage() {
       </section>
 
       <section className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
-        <p className="text-sm text-white/85">Ensemble, la communauté Sesam-Market a déjà économisé</p>
+        <p className="text-sm text-white">Ensemble, la communauté Sesam-Market a déjà économisé</p>
         <p className="mt-1 text-3xl font-extrabold tabular">{formatFcfa(platform.total)}</p>
-        <p className="mt-1 text-sm text-white/85">
+        <p className="mt-1 text-sm text-white">
           {platform.households} ménages · {formatFcfa(platform.average)} en moyenne par ménage
         </p>
       </section>

@@ -43,6 +43,8 @@ export const signupSchema = z.object({
   acceptTerms: z.literal(true, { errorMap: () => ({ message: "Vous devez accepter les conditions" }) }),
   marketingSms: z.boolean().default(false),
   marketingWhatsapp: z.boolean().default(false),
+  /** Champ piège anti-robot (invisible) : doit rester vide. */
+  website: z.string().max(0, "Inscription refusée.").optional(),
 });
 export type SignupInput = z.infer<typeof signupSchema>;
 

@@ -20,7 +20,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
       <H1>Commandes</H1>
       <form className="mb-4 flex flex-wrap gap-2">
         <input name="q" defaultValue={sp.q} placeholder="N° de commande ou prénom" className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm" />
-        <select name="statut" defaultValue={sp.statut ?? ""} className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm">
+        <select name="statut" aria-label="Filtrer par statut" defaultValue={sp.statut ?? ""} className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm">
           <option value="">Tous les statuts</option>
           {ORDER_STATUSES.map((s) => (
             <option key={s} value={s}>

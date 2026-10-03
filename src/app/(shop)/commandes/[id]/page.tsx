@@ -44,7 +44,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
           <p className="text-2xl">🎉</p>
           <p className="text-lg font-extrabold">Commande confirmée !</p>
           {order.savingsTotal > 0 && <p className="mt-1">Vous économisez {formatFcfa(order.savingsTotal)} grâce au groupe.</p>}
-          <p className="mt-1 text-sm text-white/85">Nous vous prévenons à chaque étape.</p>
+          <p className="mt-1 text-sm text-white">Nous vous prévenons à chaque étape.</p>
         </div>
       )}
 

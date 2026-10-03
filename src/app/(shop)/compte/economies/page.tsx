@@ -18,7 +18,7 @@ export default async function SavingsPage() {
     <div className="space-y-4">
       <PageHeader title="Mes économies" back={<BackLink href="/compte" />} />
       <section className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
-        <p className="text-sm text-white/85">Vous avez économisé</p>
+        <p className="text-sm text-white">Vous avez économisé</p>
         <dl className="mt-3 space-y-2">
           {s.lastOrder && (
             <div className="flex justify-between">
