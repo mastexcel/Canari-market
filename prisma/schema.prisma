@@ -1,0 +1,1408 @@
+// CANARI — modèle de données
+// Conventions :
+//  - Montants en FCFA entiers (XOF n'a pas de sous-unité) : type Int.
+//  - Quantités physiques en unité de base entière (gramme, millilitre ou pièce) : suffixe "Base".
+//  - Taux en points de base (bps) : 1 % = 100 bps.
+//  - Les identifiants sont des cuid ; les numéros lisibles (commandes, RFQ, bons de commande) sont séparés.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────
+
+enum UserRole {
+  HOUSEHOLD
+  MERCHANT
+  SUPPLIER
+  PICKUP_POINT
+  DRIVER
+  ADMIN
+}
+
+enum AdminPermission {
+  SUPER_ADMIN
+  USERS_MANAGE
+  SUPPLIERS_MANAGE
+  CATALOG_MANAGE
+  PRICING_MANAGE
+  GROUPBUYS_MANAGE
+  ORDERS_MANAGE
+  PAYMENTS_MANAGE
+  REFUNDS_MANAGE
+  LOGISTICS_MANAGE
+  COMMUNITIES_MANAGE
+  PROMOTIONS_MANAGE
+  SUPPORT_MANAGE
+  ANALYTICS_VIEW
+  AUDIT_VIEW
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum BaseUnit {
+  GRAM
+  MILLILITER
+  PIECE
+}
+
+enum ConsentType {
+  TERMS
+  PRIVACY
+  MARKETING_SMS
+  MARKETING_WHATSAPP
+  ANALYTICS
+}
+
+enum ReferencePriceSource {
+  MARKET_SURVEY
+  RETAILER_PRICE
+  OFFICIAL_INDEX
+  SUPPLIER_RRP
+}
+
+enum SupplierType {
+  PRODUCER
+  COOPERATIVE
+  WHOLESALER
+  IMPORTER
+  DISTRIBUTOR
+}
+
+enum VerificationStatus {
+  PENDING
+  IN_REVIEW
+  VERIFIED
+  REJECTED
+}
+
+enum GroupBuyStatus {
+  DRAFT
+  OPEN
+  CLOSED_SUCCESS
+  CLOSED_FAILED
+  CANCELLED
+  COMPLETED
+}
+
+enum ThresholdFailurePolicy {
+  EXTEND
+  REFUND
+  ALTERNATIVE_PRICE
+  CREDIT_WITH_CONSENT
+}
+
+enum ParticipantStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  AWAITING_DECISION
+  CANCELLED
+  REFUNDED
+  CREDITED
+}
+
+enum SaleKind {
+  GROUP_BUY
+  STOCK
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING_PAYMENT
+  PAID
+  GROUP_PENDING
+  GROUP_CONFIRMED
+  SUPPLIER_ORDERED
+  SUPPLIER_CONFIRMED
+  RECEIVED_WAREHOUSE
+  PACKING
+  READY
+  OUT_FOR_DELIVERY
+  READY_FOR_PICKUP
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum FulfillmentMode {
+  PICKUP
+  HOME_DELIVERY
+}
+
+enum DeliverySpeed {
+  STANDARD
+  SCHEDULED
+}
+
+enum DeliveryStatus {
+  PENDING
+  ASSIGNED
+  ACCEPTED
+  PICKED_UP
+  AT_PICKUP_POINT
+  DELIVERED
+  FAILED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentMethod {
+  MOBILE_MONEY
+  CARD
+  WALLET
+}
+
+enum MobileMoneyOperator {
+  ORANGE_MONEY
+  MTN_MOMO
+  MOOV_MONEY
+  WAVE
+}
+
+enum PaymentTransactionType {
+  CHARGE
+  WEBHOOK
+  REFUND
+}
+
+enum RefundStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+}
+
+enum RefundReason {
+  GROUP_FAILED
+  TIER_PRICE_DIFFERENCE
+  CANCELLATION
+  ITEM_UNAVAILABLE
+  CLAIM
+  OTHER
+}
+
+enum RFQStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  AWARDED
+  CANCELLED
+}
+
+enum RFQResponseStatus {
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum PurchaseOrderStatus {
+  DRAFT
+  SENT
+  CONFIRMED
+  SHIPPED
+  RECEIVED
+  PARTIALLY_RECEIVED
+  CANCELLED
+}
+
+enum InventoryMovementType {
+  RECEIPT
+  FRACTIONATION
+  LOSS
+  DISPATCH
+  ADJUSTMENT
+  RETURN
+  STOCK_SALE_RESERVE
+  STOCK_SALE_RELEASE
+}
+
+enum CommunityType {
+  NEIGHBORHOOD
+  RESIDENCE
+  COMPANY
+  ASSOCIATION
+  OTHER
+}
+
+enum CommunityRole {
+  ADMIN
+  MEMBER
+}
+
+enum NotificationChannel {
+  IN_APP
+  PUSH
+  SMS
+  WHATSAPP
+  EMAIL
+}
+
+enum NotificationStatus {
+  QUEUED
+  SENT
+  FAILED
+  READ
+}
+
+enum PromotionType {
+  PERCENT
+  FIXED
+  FREE_DELIVERY
+}
+
+enum ReferralStatus {
+  PENDING
+  QUALIFIED
+  REWARDED
+  REJECTED
+}
+
+enum ReviewTarget {
+  ORDER
+  PRODUCT
+  DELIVERY
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketCategory {
+  ORDER
+  PAYMENT
+  DELIVERY
+  PRODUCT
+  ACCOUNT
+  OTHER
+}
+
+enum CreditReason {
+  GROUP_FAILED_CONVERSION
+  TIER_PRICE_DIFFERENCE
+  REFERRAL_REWARD
+  GOODWILL
+  ORDER_PAYMENT
+}
+
+// ─────────────────────────────────────────────────────────────
+// Identité, comptes, confidentialité
+// ─────────────────────────────────────────────────────────────
+
+model User {
+  id               String            @id @default(cuid())
+  phone            String            @unique // format E.164 : +225XXXXXXXXXX
+  email            String?           @unique
+  passwordHash     String
+  firstName        String
+  lastName         String?
+  role             UserRole          @default(HOUSEHOLD)
+  adminPermissions AdminPermission[]
+  status           UserStatus        @default(ACTIVE)
+  commune          String?
+  quartier         String?
+  referralCode     String            @unique
+  referredById     String?
+  failedLoginCount Int               @default(0)
+  lockedUntil      DateTime?
+  lastLoginAt      DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  deletedAt        DateTime?
+
+  referredBy         User?                 @relation("UserReferrals", fields: [referredById], references: [id], onDelete: SetNull)
+  referees           User[]                @relation("UserReferrals")
+  household          Household?
+  merchant           Merchant?
+  supplier           Supplier?
+  driver             Driver?
+  managedPickupPoint PickupPoint?          @relation("PickupPointManager")
+  sessions           Session[]
+  consents           ConsentRecord[]
+  addresses          Address[]
+  cart               Cart?
+  orders             Order[]
+  participations     GroupBuyParticipant[]
+  communityMembers   CommunityMember[]
+  communitiesCreated Community[]           @relation("CommunityCreator")
+  notifications      Notification[]
+  reviews            Review[]
+  tickets            SupportTicket[]
+  ticketMessages     SupportMessage[]
+  referralsMade      Referral[]            @relation("Referrer")
+  referralReceived   Referral?             @relation("Referee")
+  creditEntries      CreditLedgerEntry[]
+  auditLogs          AuditLog[]
+  idempotencyKeys    IdempotencyKey[]
+
+  @@index([role])
+  @@index([commune])
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  tokenHash  String   @unique
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+  userAgent  String?
+  ip         String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model ConsentRecord {
+  id        String      @id @default(cuid())
+  userId    String
+  type      ConsentType
+  granted   Boolean
+  version   String
+  ip        String?
+  createdAt DateTime    @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type, createdAt])
+}
+
+model Household {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  adults    Int      @default(2)
+  children  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Petit commerçant — socle pour le futur module CANARI BUSINESS.
+model Merchant {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  businessName String
+  businessType String
+  commune      String
+  quartier     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  label     String
+  commune   String
+  quartier  String
+  landmark  String? // repère : « derrière la pharmacie… »
+  phone     String?
+  latitude  Float?
+  longitude Float?
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Catalogue
+// ─────────────────────────────────────────────────────────────
+
+model Category {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  emoji     String
+  parentId  String?
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[] @relation("CategoryTree")
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  brand       String?
+  categoryId  String
+  baseUnit    BaseUnit
+  emoji       String
+  imageUrl    String?
+  popularity  Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category           Category            @relation(fields: [categoryId], references: [id])
+  variants           ProductVariant[]
+  supplierProducts   SupplierProduct[]
+  groupBuys          GroupBuy[]
+  orderItems         OrderItem[]
+  inventories        Inventory[]
+  inventoryMovements InventoryMovement[]
+  rfqs               RFQ[]
+  purchaseOrderItems PurchaseOrderItem[]
+  reviews            Review[]
+
+  @@index([categoryId])
+  @@index([isActive, popularity])
+}
+
+/// Unité vendue au consommateur (ex. « Sac 5 kg »).
+model ProductVariant {
+  id           String   @id @default(cuid())
+  productId    String
+  sku          String   @unique
+  name         String
+  quantityBase Int // contenu en unité de base (5 kg = 5000 g)
+  weightGrams  Int // poids logistique
+  canariPrice  Int? // prix de vente en stock (null = pas vendu hors achat groupé)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  product         Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+  referencePrices ReferencePrice[]
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  basketItems     FamilyBasketItem[]
+
+  @@index([productId])
+}
+
+/// Prix de référence « marché », toujours daté et sourcé.
+model ReferencePrice {
+  id          String               @id @default(cuid())
+  variantId   String
+  price       Int
+  source      ReferencePriceSource
+  sourceLabel String // ex. « Relevé CANARI – marché d'Adjamé »
+  method      String // ex. « Médiane de 3 relevés »
+  observedAt  DateTime
+  createdById String?
+  createdAt   DateTime             @default(now())
+
+  variant ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@index([variantId, observedAt])
+}
+
+model FamilyBasket {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  description   String
+  targetPrice   Int // prix « vitrine » annoncé (10 000 / 25 000 / 50 000)
+  householdHint String
+  isActive      Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  items FamilyBasketItem[]
+}
+
+model FamilyBasketItem {
+  id        String @id @default(cuid())
+  basketId  String
+  variantId String
+  quantity  Int
+
+  basket  FamilyBasket   @relation(fields: [basketId], references: [id], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [variantId], references: [id])
+
+  @@unique([basketId, variantId])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Fournisseurs
+// ─────────────────────────────────────────────────────────────
+
+model Supplier {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  businessName       String
+  type               SupplierType
+  registrationNumber String? // RCCM
+  taxId              String? // NCC
+  commune            String
+  address            String?
+  contactPhone       String
+  description        String?
+  verificationStatus VerificationStatus @default(PENDING)
+  qualityScore       Int                @default(70) // 0–100, issu des contrôles qualité
+  reliabilityScore   Int                @default(70) // 0–100, issu de l'historique de livraisons
+  onTimeRateBps      Int                @default(8000)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verifications  SupplierVerification[]
+  products       SupplierProduct[]
+  rfqResponses   RFQResponse[]
+  purchaseOrders PurchaseOrder[]
+
+  @@index([verificationStatus])
+}
+
+model SupplierVerification {
+  id           String             @id @default(cuid())
+  supplierId   String
+  documentType String // RCCM, DFE, pièce d'identité du gérant…
+  documentKey  String // clé de stockage S3 — jamais d'URL publique
+  status       VerificationStatus @default(PENDING)
+  notes        String?
+  reviewedById String?
+  reviewedAt   DateTime?
+  createdAt    DateTime           @default(now())
+
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  @@index([supplierId])
+}
+
+/// Produit tel que proposé par un fournisseur (unité fournisseur, capacité, délais).
+model SupplierProduct {
+  id                       String   @id @default(cuid())
+  supplierId               String
+  productId                String
+  supplierUnitLabel        String // « Sac 50 kg »
+  supplierUnitQuantityBase Int
+  minOrderUnits            Int      @default(1)
+  capacityUnitsPerWeek     Int
+  leadTimeDays             Int
+  qualityGrade             String?
+  isActive                 Boolean  @default(true)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  supplier   Supplier    @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  product    Product     @relation(fields: [productId], references: [id])
+  priceTiers PriceTier[]
+  groupBuys  GroupBuy[]
+
+  @@unique([supplierId, productId, supplierUnitQuantityBase])
+  @@index([productId])
+}
+
+/// Tarif fournisseur dégressif (prix par unité fournisseur).
+model PriceTier {
+  id                String @id @default(cuid())
+  supplierProductId String
+  minUnits          Int
+  unitPrice         Int
+
+  supplierProduct SupplierProduct @relation(fields: [supplierProductId], references: [id], onDelete: Cascade)
+
+  @@unique([supplierProductId, minUnits])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Achats groupés
+// ─────────────────────────────────────────────────────────────
+
+model GroupBuy {
+  id                       String         @id @default(cuid())
+  slug                     String         @unique
+  title                    String
+  description              String
+  productId                String
+  supplierProductId        String?
+  communityId              String? // achat réservé à une communauté (optionnel)
+  status                   GroupBuyStatus @default(DRAFT)
+  supplierUnitLabel        String // « Sac 50 kg »
+  supplierUnitQuantityBase Int
+  targetUnits              Int // objectif affiché (ex. 200 sacs)
+  maxUnits                 Int // capacité fournisseur
+  committedBase            Int            @default(0) // quantités payées
+  heldBase                 Int            @default(0) // quantités en attente de paiement
+  participantCount         Int            @default(0)
+
+  // Prix de référence marché (instantané daté et sourcé), par unité fournisseur
+  referenceUnitPrice  Int
+  referenceSource     String
+  referenceMethod     String
+  referenceObservedAt DateTime
+
+  // Calendrier et règles d'échec
+  opensAt              DateTime
+  closesAt             DateTime
+  expectedDeliveryAt   DateTime
+  failurePolicy        ThresholdFailurePolicy @default(REFUND)
+  extensionDays        Int                    @default(3)
+  maxExtensions        Int                    @default(1)
+  extensionsUsed       Int                    @default(0)
+  alternativeUnitPrice Int? // prix alternatif proposé si le seuil n'est pas atteint
+
+  // Économie unitaire (FCFA par unité fournisseur sauf mention)
+  supplierUnitCost            Int
+  inboundTransportPerUnit     Int @default(0)
+  storagePerUnit              Int @default(0)
+  fractionationFeePerPortion  Int @default(0) // facturé au client pour une portion fractionnée
+  fractionationCostPerPortion Int @default(0) // coût interne main-d'œuvre
+  packagingCostPerPortion     Int @default(0)
+  lossRateBps                 Int @default(100)
+  paymentFeeBps               Int @default(150)
+  deliveryCostPerOrder        Int @default(0)
+  promotionCostPerUnit        Int @default(0)
+  expectedAvgPortionBase      Int // mix de demande attendu, pour les projections
+
+  deficitAcknowledged Boolean @default(false)
+  deficitReason       String?
+
+  finalUnitPrice Int?
+  closedAt       DateTime?
+  publishedAt    DateTime?
+  publishedById  String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  product            Product               @relation(fields: [productId], references: [id])
+  supplierProduct    SupplierProduct?      @relation(fields: [supplierProductId], references: [id], onDelete: SetNull)
+  community          Community?            @relation(fields: [communityId], references: [id], onDelete: SetNull)
+  tiers              GroupBuyTier[]
+  portions           GroupBuyPortion[]
+  participants       GroupBuyParticipant[]
+  orderItems         OrderItem[]
+  cartItems          CartItem[]
+  rfqs               RFQ[]
+  purchaseOrders     PurchaseOrder[]
+  inventoryMovements InventoryMovement[]
+
+  @@index([status, closesAt])
+  @@index([productId])
+}
+
+/// Palier client : à partir de minUnits unités fournisseur engagées, prix unitaire client.
+model GroupBuyTier {
+  id         String @id @default(cuid())
+  groupBuyId String
+  minUnits   Int
+  unitPrice  Int
+
+  groupBuy GroupBuy @relation(fields: [groupBuyId], references: [id], onDelete: Cascade)
+
+  @@unique([groupBuyId, minUnits])
+}
+
+/// Portions proposées aux ménages (5 kg, 10 kg, 25 kg, 50 kg…).
+model GroupBuyPortion {
+  id           String @id @default(cuid())
+  groupBuyId   String
+  label        String
+  quantityBase Int
+  sortOrder    Int    @default(0)
+
+  groupBuy   GroupBuy    @relation(fields: [groupBuyId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  @@unique([groupBuyId, quantityBase])
+}
+
+model GroupBuyParticipant {
+  id            String            @id @default(cuid())
+  groupBuyId    String
+  userId        String
+  orderItemId   String            @unique
+  communityId   String?
+  quantityBase  Int
+  status        ParticipantStatus @default(PENDING_PAYMENT)
+  creditConsent Boolean           @default(false) // accord explicite pour un avoir en cas d'échec
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  groupBuy  GroupBuy   @relation(fields: [groupBuyId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id])
+  orderItem OrderItem  @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  community Community? @relation(fields: [communityId], references: [id], onDelete: SetNull)
+
+  @@index([groupBuyId, status])
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Communautés
+// ─────────────────────────────────────────────────────────────
+
+model Community {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  name            String
+  type            CommunityType
+  commune         String
+  quartier        String?
+  description     String?
+  createdById     String
+  pickupPointId   String?
+  deliveryWeekday Int? // 0 = dimanche … 6 = samedi
+  inviteCode      String        @unique
+  isPublic        Boolean       @default(true)
+  memberCount     Int           @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  createdBy    User                  @relation("CommunityCreator", fields: [createdById], references: [id])
+  pickupPoint  PickupPoint?          @relation(fields: [pickupPointId], references: [id], onDelete: SetNull)
+  members      CommunityMember[]
+  groupBuys    GroupBuy[]
+  participants GroupBuyParticipant[]
+  orders       Order[]
+
+  @@index([commune])
+}
+
+model CommunityMember {
+  id          String        @id @default(cuid())
+  communityId String
+  userId      String
+  role        CommunityRole @default(MEMBER)
+  joinedAt    DateTime      @default(now())
+
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([communityId, userId])
+  @@index([userId])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Panier & commandes
+// ─────────────────────────────────────────────────────────────
+
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+}
+
+model CartItem {
+  id         String   @id @default(cuid())
+  cartId     String
+  kind       SaleKind
+  groupBuyId String?
+  portionId  String?
+  variantId  String?
+  quantity   Int
+  createdAt  DateTime @default(now())
+
+  cart     Cart             @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  groupBuy GroupBuy?        @relation(fields: [groupBuyId], references: [id], onDelete: Cascade)
+  portion  GroupBuyPortion? @relation(fields: [portionId], references: [id], onDelete: Cascade)
+  variant  ProductVariant?  @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, portionId])
+  @@unique([cartId, variantId])
+}
+
+model Order {
+  id                String          @id @default(cuid())
+  number            String          @unique
+  userId            String
+  status            OrderStatus     @default(DRAFT)
+  fulfillmentMode   FulfillmentMode
+  pickupPointId     String?
+  addressId         String?
+  deliveryZoneId    String?
+  communityId       String?
+  deliverySpeed     DeliverySpeed   @default(STANDARD)
+  slotStart         DateTime?
+  slotEnd           DateTime?
+  subtotal          Int // produits, hors frais de fractionnement
+  referenceTotal    Int // valeur estimée au prix de référence
+  savingsTotal      Int
+  fractionationFees Int             @default(0)
+  deliveryFee       Int             @default(0)
+  discountTotal     Int             @default(0)
+  creditApplied     Int             @default(0)
+  total             Int
+  promotionId       String?
+  pickupCode        String // OTP / QR de retrait ou de livraison
+  creditConsent     Boolean         @default(false)
+  expectedReadyAt   DateTime?
+  idempotencyKey    String?         @unique
+  paidAt            DateTime?
+  deliveredAt       DateTime?
+  cancelledAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  user         User                @relation(fields: [userId], references: [id])
+  pickupPoint  PickupPoint?        @relation(fields: [pickupPointId], references: [id])
+  address      Address?            @relation(fields: [addressId], references: [id])
+  deliveryZone DeliveryZone?       @relation(fields: [deliveryZoneId], references: [id])
+  community    Community?          @relation(fields: [communityId], references: [id], onDelete: SetNull)
+  promotion    Promotion?          @relation(fields: [promotionId], references: [id])
+  items        OrderItem[]
+  events       OrderStatusEvent[]
+  payments     Payment[]
+  refunds      Refund[]
+  delivery     Delivery?
+  reviews      Review[]
+  tickets      SupportTicket[]
+  credits      CreditLedgerEntry[]
+
+  @@index([userId, createdAt])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id                  String      @id @default(cuid())
+  orderId             String
+  kind                SaleKind
+  productId           String
+  groupBuyId          String?
+  portionId           String?
+  variantId           String?
+  label               String
+  quantity            Int // nombre de portions / unités
+  unitQuantityBase    Int // contenu d'une portion en unité de base
+  unitPrice           Int // prix payé par portion (hors fractionnement)
+  referenceUnitPrice  Int // prix de référence par portion au moment de la commande
+  referenceObservedAt DateTime
+  fractionationFee    Int         @default(0) // par portion
+  finalUnitPrice      Int? // prix définitif après clôture de l'achat groupé
+  lineTotal           Int
+  refundedAmount      Int         @default(0)
+  status              OrderStatus @default(PENDING_PAYMENT)
+  createdAt           DateTime    @default(now())
+
+  order       Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product              @relation(fields: [productId], references: [id])
+  groupBuy    GroupBuy?            @relation(fields: [groupBuyId], references: [id])
+  portion     GroupBuyPortion?     @relation(fields: [portionId], references: [id])
+  variant     ProductVariant?      @relation(fields: [variantId], references: [id])
+  participant GroupBuyParticipant?
+  refunds     Refund[]
+
+  @@index([orderId])
+  @@index([groupBuyId, status])
+}
+
+model OrderStatusEvent {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  note      String?
+  actorId   String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Paiements
+// ─────────────────────────────────────────────────────────────
+
+model Payment {
+  id               String               @id @default(cuid())
+  orderId          String
+  provider         String // « mock », « cinetpay », « wave »…
+  method           PaymentMethod
+  operator         MobileMoneyOperator?
+  amount           Int
+  refundedAmount   Int                  @default(0)
+  status           PaymentStatus        @default(PENDING)
+  providerRef      String?              @unique
+  idempotencyKey   String               @unique
+  payerPhoneMasked String?
+  failureReason    String?
+  expiresAt        DateTime
+  paidAt           DateTime?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  order        Order                @relation(fields: [orderId], references: [id])
+  transactions PaymentTransaction[]
+  refunds      Refund[]
+
+  @@index([orderId, status])
+}
+
+model PaymentTransaction {
+  id              String                 @id @default(cuid())
+  paymentId       String
+  type            PaymentTransactionType
+  provider        String
+  providerEventId String
+  amount          Int
+  status          String
+  payload         Json // charge utile assainie (jamais de données de carte)
+  createdAt       DateTime               @default(now())
+
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerEventId])
+  @@index([paymentId])
+}
+
+model Refund {
+  id            String       @id @default(cuid())
+  paymentId     String
+  orderId       String
+  orderItemId   String?
+  amount        Int
+  reason        RefundReason
+  status        RefundStatus @default(PENDING)
+  providerRef   String?
+  note          String?
+  requestedById String?
+  createdAt     DateTime     @default(now())
+  processedAt   DateTime?
+
+  payment   Payment    @relation(fields: [paymentId], references: [id])
+  order     Order      @relation(fields: [orderId], references: [id])
+  orderItem OrderItem? @relation(fields: [orderItemId], references: [id])
+
+  @@index([orderId])
+}
+
+/// Avoirs : uniquement avec accord explicite de l'utilisateur (ou récompense).
+model CreditLedgerEntry {
+  id        String       @id @default(cuid())
+  userId    String
+  amount    Int // positif = crédit, négatif = utilisation
+  reason    CreditReason
+  orderId   String?
+  note      String?
+  createdAt DateTime     @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@index([userId])
+}
+
+model IdempotencyKey {
+  id             String   @id @default(cuid())
+  userId         String
+  scope          String
+  key            String
+  requestHash    String
+  responseStatus Int
+  responseBody   Json
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scope, key])
+  @@index([createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Logistique
+// ─────────────────────────────────────────────────────────────
+
+model DeliveryZone {
+  id                 String   @id @default(cuid())
+  commune            String   @unique
+  baseFee            Int
+  includedWeightKg   Int      @default(10)
+  perKgFee           Int      @default(50)
+  distanceKm         Int // distance moyenne depuis l'entrepôt
+  perKmFee           Int      @default(0)
+  scheduledSurcharge Int      @default(500)
+  quartiers          String[]
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+
+  orders     Order[]
+  deliveries Delivery[]
+}
+
+model PickupPoint {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  name          String
+  commune       String
+  quartier      String
+  address       String
+  landmark      String?
+  openingHours  String
+  managerUserId String?  @unique
+  capacity      Int      @default(80)
+  customerFee   Int      @default(0)
+  feePerParcel  Int      @default(150) // rémunération du point relais
+  latitude      Float?
+  longitude     Float?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+
+  manager     User?       @relation("PickupPointManager", fields: [managerUserId], references: [id], onDelete: SetNull)
+  communities Community[]
+  orders      Order[]
+  deliveries  Delivery[]
+
+  @@index([commune])
+}
+
+model Driver {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  vehicleType String // moto, tricycle, camionnette
+  communes    String[]
+  isActive    Boolean  @default(true)
+  rating      Int      @default(45) // sur 50
+  createdAt   DateTime @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveries Delivery[]
+}
+
+model Delivery {
+  id             String          @id @default(cuid())
+  orderId        String          @unique
+  mode           FulfillmentMode
+  status         DeliveryStatus  @default(PENDING)
+  driverId       String?
+  pickupPointId  String?
+  zoneId         String?
+  fee            Int
+  driverFee      Int             @default(0)
+  weightGrams    Int
+  scheduledStart DateTime?
+  scheduledEnd   DateTime?
+  attempts       Int             @default(0)
+  failureReason  String?
+  assignedAt     DateTime?
+  acceptedAt     DateTime?
+  pickedUpAt     DateTime?
+  arrivedAt      DateTime?
+  deliveredAt    DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  order       Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  driver      Driver?       @relation(fields: [driverId], references: [id], onDelete: SetNull)
+  pickupPoint PickupPoint?  @relation(fields: [pickupPointId], references: [id])
+  zone        DeliveryZone? @relation(fields: [zoneId], references: [id])
+  reviews     Review[]
+
+  @@index([status])
+  @@index([driverId, status])
+  @@index([pickupPointId, status])
+}
+
+model Warehouse {
+  id        String   @id @default(cuid())
+  name      String
+  commune   String
+  address   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  inventories    Inventory[]
+  movements      InventoryMovement[]
+  purchaseOrders PurchaseOrder[]
+}
+
+/// Stock courant par entrepôt et produit, en unité de base.
+model Inventory {
+  id           String   @id @default(cuid())
+  warehouseId  String
+  productId    String
+  quantityBase Int      @default(0)
+  reservedBase Int      @default(0)
+  updatedAt    DateTime @updatedAt
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
+
+  @@unique([warehouseId, productId])
+}
+
+/// Journal immuable des mouvements de stock (base du module de fractionnement).
+model InventoryMovement {
+  id           String                @id @default(cuid())
+  warehouseId  String
+  productId    String
+  groupBuyId   String? // lot
+  type         InventoryMovementType
+  quantityBase Int // toujours positif ; le type donne le sens
+  portionBase  Int? // pour FRACTIONATION : taille de portion produite
+  portionCount Int? // pour FRACTIONATION : nombre de portions produites
+  reference    String?
+  note         String?
+  actorId      String?
+  createdAt    DateTime              @default(now())
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
+  groupBuy  GroupBuy? @relation(fields: [groupBuyId], references: [id])
+
+  @@index([groupBuyId, type])
+  @@index([productId, createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Approvisionnement : RFQ & bons de commande
+// ─────────────────────────────────────────────────────────────
+
+model RFQ {
+  id                       String    @id @default(cuid())
+  number                   String    @unique
+  groupBuyId               String?
+  productId                String
+  quantityBase             Int
+  supplierUnitLabel        String
+  supplierUnitQuantityBase Int
+  quality                  String
+  packaging                String
+  destination              String
+  neededBy                 DateTime
+  closesAt                 DateTime
+  status                   RFQStatus @default(OPEN)
+  notes                    String?
+  awardJustification       String?
+  createdById              String
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  groupBuy  GroupBuy?     @relation(fields: [groupBuyId], references: [id], onDelete: SetNull)
+  product   Product       @relation(fields: [productId], references: [id])
+  responses RFQResponse[]
+
+  @@index([status])
+}
+
+model RFQResponse {
+  id               String            @id @default(cuid())
+  rfqId            String
+  supplierId       String
+  unitPrice        Int // par unité fournisseur
+  unitsOffered     Int
+  leadTimeDays     Int
+  conditions       String?
+  deliveryLocation String
+  qualityNote      String?
+  validUntil       DateTime
+  status           RFQResponseStatus @default(SUBMITTED)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  rfq            RFQ             @relation(fields: [rfqId], references: [id], onDelete: Cascade)
+  supplier       Supplier        @relation(fields: [supplierId], references: [id])
+  purchaseOrders PurchaseOrder[]
+
+  @@unique([rfqId, supplierId])
+}
+
+model PurchaseOrder {
+  id               String              @id @default(cuid())
+  number           String              @unique
+  supplierId       String
+  groupBuyId       String?
+  rfqResponseId    String?
+  warehouseId      String
+  status           PurchaseOrderStatus @default(SENT)
+  totalAmount      Int
+  expectedAt       DateTime
+  confirmedAt      DateTime?
+  shippedAt        DateTime?
+  receivedAt       DateTime?
+  paidToSupplierAt DateTime?
+  createdById      String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  supplier    Supplier            @relation(fields: [supplierId], references: [id])
+  groupBuy    GroupBuy?           @relation(fields: [groupBuyId], references: [id], onDelete: SetNull)
+  rfqResponse RFQResponse?        @relation(fields: [rfqResponseId], references: [id], onDelete: SetNull)
+  warehouse   Warehouse           @relation(fields: [warehouseId], references: [id])
+  items       PurchaseOrderItem[]
+
+  @@index([supplierId, status])
+}
+
+model PurchaseOrderItem {
+  id                       String @id @default(cuid())
+  purchaseOrderId          String
+  productId                String
+  supplierUnitLabel        String
+  supplierUnitQuantityBase Int
+  units                    Int
+  unitPrice                Int
+  receivedUnits            Int    @default(0)
+  damagedBase              Int    @default(0)
+
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  product       Product       @relation(fields: [productId], references: [id])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Croissance, relation client, conformité
+// ─────────────────────────────────────────────────────────────
+
+model Promotion {
+  id          String        @id @default(cuid())
+  code        String        @unique
+  description String
+  type        PromotionType
+  value       Int // % (PERCENT) ou FCFA (FIXED)
+  minOrder    Int           @default(0)
+  maxUses     Int?
+  usedCount   Int           @default(0)
+  startsAt    DateTime
+  endsAt      DateTime
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+
+  orders Order[]
+}
+
+model Referral {
+  id                String         @id @default(cuid())
+  referrerId        String
+  refereeId         String         @unique
+  groupBuyId        String?
+  status            ReferralStatus @default(PENDING)
+  rewardAmount      Int            @default(0)
+  qualifyingOrderId String?
+  createdAt         DateTime       @default(now())
+  rewardedAt        DateTime?
+
+  referrer User @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
+  referee  User @relation("Referee", fields: [refereeId], references: [id], onDelete: Cascade)
+
+  @@index([referrerId, status])
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String
+  channel   NotificationChannel
+  template  String
+  title     String
+  body      String
+  data      Json?
+  status    NotificationStatus  @default(QUEUED)
+  sentAt    DateTime?
+  readAt    DateTime?
+  createdAt DateTime            @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, channel, createdAt])
+  @@index([status, channel])
+}
+
+model Review {
+  id         String       @id @default(cuid())
+  userId     String
+  target     ReviewTarget
+  orderId    String?
+  productId  String?
+  deliveryId String?
+  rating     Int // 1–5
+  comment    String?
+  createdAt  DateTime     @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order    Order?    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product  Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  delivery Delivery? @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orderId, target, productId])
+  @@index([productId])
+}
+
+model SupportTicket {
+  id        String         @id @default(cuid())
+  userId    String
+  orderId   String?
+  category  TicketCategory
+  subject   String
+  status    TicketStatus   @default(OPEN)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order    Order?           @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  messages SupportMessage[]
+
+  @@index([status])
+  @@index([userId])
+}
+
+model SupportMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  authorId  String
+  body      String
+  createdAt DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String // ex. « groupbuy.publish », « price.update »
+  entityType String
+  entityId   String
+  before     Json?
+  after      Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([action, createdAt])
+}
+
+/// Événements produit — aucune donnée personnelle dans props.
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String?
+  props     Json?
+  createdAt DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@index([userId])
+}
