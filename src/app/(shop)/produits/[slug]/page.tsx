@@ -37,7 +37,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {product.groupBuys.map((gb) => (
-        <Link key={gb.id} href={`/achats-groupes/${gb.slug}`} className="block rounded-[var(--radius-card)] bg-brand-600 p-4 text-white">
+        <Link key={gb.id} href={`/achats-groupes/${gb.slug}`} className="capsule-foret block rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)]">
           <p className="text-sm text-white">👥 Achat groupé en cours</p>
           <p className="font-bold">{gb.title}</p>
           <p className="mt-1 text-sm font-semibold text-accent-400">Rejoindre et payer moins cher →</p>

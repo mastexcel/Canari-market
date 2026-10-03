@@ -39,7 +39,7 @@
   --color-brand-100: #e2f3e5;
   --color-brand-50: #f1f9f2;
 
-  --color-lime-700: #4b7d14;
+  --color-lime-700: #437012;
   --color-lime-600: #5f9e1b;
   --color-lime-500: #7cb82f;
   --color-lime-400: #9ccc3c;
@@ -57,7 +57,7 @@
   --color-anthracite-800: #24312a;
   --color-anthracite-700: #36443c;
   --color-anthracite-600: #4f5d55;
-  --color-anthracite-500: #66736b;
+  --color-anthracite-500: #5c6861;
 
   --color-gris-400: #aab5a6;
   --color-gris-300: #cfd8cc;
@@ -71,11 +71,17 @@
   --color-economie-50: #eefaf7;
 
   /* Couleurs de fête (motifs wax / kente) : terre cuite et lagune */
+  --color-terre-700: #b04a1c;
   --color-terre-600: #d9622b;
   --color-terre-100: #fbe4d6;
+  --color-lagune-700: #12786f;
   --color-lagune-600: #1fa39a;
   --color-lagune-100: #d9f2ef;
   --color-creme-50: #fffaf0;
+  /* Sable : surfaces chaudes et claires */
+  --color-sable-50: #fdf8ee;
+  --color-sable-100: #f8edd8;
+  --color-sable-300: #e8d3ab;
   /* Fond général du site */
   --color-fond: #f1f2f4;
 
@@ -177,16 +183,18 @@ p { text-wrap: pretty; }
 
 /*
  * Boutons signature Sesam-Market
- *  - forme « feuille » : trois coins arrondis, le coin bas-gauche plus vif (l'aile du canari) ;
- *  - relief tactile : lèvre inférieure de 3 px qui s'enfonce à l'appui ;
- *  - reflet lumineux qui balaie le bouton au survol / focus (« les prix s’ouvrent »).
+ *  - forme « feuille » : trois coins arrondis, le coin bas-gauche plus vif (l'aile du logo) ;
+ *  - matière : dégradé profond + motif « tissu » très discret + reflet en haut ;
+ *  - relief : lèvre inférieure qui s'enfonce à l'appui, légère montée au survol ;
+ *  - reflet lumineux qui balaie le bouton au survol / focus (« les prix s'ouvrent »).
  */
 .btn {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border-radius: 1.1rem 1.1rem 1.1rem 0.4rem;
-  transition: transform 120ms ease, box-shadow 120ms ease, filter 160ms ease, background-color 160ms ease;
+  border-radius: 1.15rem 1.15rem 1.15rem 0.45rem;
+  letter-spacing: 0.01em;
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 160ms ease, background-color 160ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 .btn::after {
@@ -194,11 +202,12 @@ p { text-wrap: pretty; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.38) 48%, transparent 66%);
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.4) 48%, transparent 66%);
   transform: translateX(-120%);
-  transition: transform 600ms ease;
+  transition: transform 650ms ease;
   pointer-events: none;
 }
+.btn:not(:disabled):hover { transform: translateY(-1px); }
 .btn:not(:disabled):hover::after,
 .btn:not(:disabled):focus-visible::after { transform: translateX(120%); }
 .btn:not(:disabled):active { transform: translateY(2px); }
@@ -206,36 +215,51 @@ p { text-wrap: pretty; }
 
 .btn-primary {
   color: #fff;
-  background-image: linear-gradient(180deg, var(--color-brand-500), var(--color-brand-700));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), 0 3px 0 var(--color-brand-900), 0 10px 20px -10px rgb(14 95 54 / 0.7);
+  background-color: var(--color-brand-700);
+  background-image:
+    url("/patterns/tissu.svg"),
+    radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.22), transparent 55%),
+    linear-gradient(180deg, var(--color-brand-500), var(--color-brand-700) 60%, var(--color-brand-800));
+  background-size: 56px 56px, auto, auto;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.12), 0 4px 0 var(--color-brand-900), 0 12px 22px -12px rgb(14 95 54 / 0.75);
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.18);
 }
 .btn-primary:not(:disabled):hover { filter: brightness(1.06) saturate(1.05); }
 .btn-primary:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 var(--color-brand-900), 0 4px 10px -6px rgb(14 95 54 / 0.6); }
 
 .btn-accent {
-  color: var(--color-brand-950);
-  background-image: linear-gradient(180deg, var(--color-accent-400), var(--color-accent-600));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), 0 3px 0 #b35f00, 0 10px 20px -10px rgb(240 138 0 / 0.75);
+  color: var(--color-anthracite-950);
+  background-color: var(--color-accent-500);
+  background-image:
+    url("/patterns/tissu-sombre.svg"),
+    radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.5), transparent 55%),
+    linear-gradient(180deg, var(--color-accent-400), var(--color-accent-500) 45%, var(--color-accent-600));
+  background-size: 56px 56px, auto, auto;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), inset 0 -2px 0 rgb(0 0 0 / 0.08), 0 4px 0 #b35f00, 0 12px 22px -12px rgb(240 138 0 / 0.8);
 }
+.btn-accent:not(:disabled):hover { filter: brightness(1.04) saturate(1.08); }
 .btn-accent:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 1px 0 #b35f00; }
 
+/* Secondaire : sable chaud, texte vert forêt, liseré */
 .btn-secondary {
-  color: var(--color-brand-700);
-  background: #fff;
-  box-shadow: inset 0 0 0 1.5px var(--color-brand-200), 0 3px 0 var(--color-brand-100);
+  color: var(--color-brand-800);
+  background-color: var(--color-sable-100);
+  background-image: url("/patterns/tissu-sombre.svg");
+  background-size: 56px 56px;
+  box-shadow: inset 0 0 0 1.5px var(--color-sable-300), 0 3px 0 var(--color-sable-300);
 }
-.btn-secondary:not(:disabled):hover { background: var(--color-brand-50); }
-.btn-secondary:not(:disabled):active { box-shadow: inset 0 0 0 1.5px var(--color-brand-200), 0 1px 0 var(--color-brand-100); }
+.btn-secondary:not(:disabled):hover { background-color: var(--color-sable-50); }
+.btn-secondary:not(:disabled):active { box-shadow: inset 0 0 0 1.5px var(--color-sable-300), 0 1px 0 var(--color-sable-300); }
 
 .btn-outline {
   color: var(--color-anthracite-800);
-  background: rgb(255 255 255 / 0.7);
+  background: #fff;
   box-shadow: inset 0 0 0 1.5px var(--color-gris-300), 0 2px 0 var(--color-gris-200);
 }
-.btn-outline:not(:disabled):hover { background: #fff; }
+.btn-outline:not(:disabled):hover { box-shadow: inset 0 0 0 1.5px var(--color-brand-400), 0 2px 0 var(--color-gris-200); color: var(--color-brand-800); }
 
 .btn-ghost { color: var(--color-anthracite-800); background: transparent; }
-.btn-ghost:not(:disabled):hover { background: rgb(14 95 54 / 0.07); }
+.btn-ghost:not(:disabled):hover { background: rgb(14 95 54 / 0.07); transform: none; }
 .btn-ghost::after { display: none; }
 
 .btn-danger {
@@ -244,7 +268,45 @@ p { text-wrap: pretty; }
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 3px 0 #6e140f;
 }
 
-.btn:disabled:not(.btn-ghost) { background: var(--color-gris-300); color: var(--color-anthracite-500); }
+.btn:disabled:not(.btn-ghost) { background: var(--color-gris-300); color: var(--color-anthracite-600); text-shadow: none; }
+
+/*
+ * Capsules d'information : blocs colorés profonds, empreints du motif « tissu ».
+ * Couleurs choisies pour un contraste AA avec le texte (blanc, ou anthracite sur soleil/sable).
+ */
+.capsule-foret, .capsule-terre, .capsule-lagune, .capsule-nuit, .capsule-soleil, .capsule-sable {
+  background-size: 56px 56px, auto;
+}
+.capsule-foret {
+  color: #fff;
+  background-color: var(--color-brand-700);
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-brand-800), var(--color-brand-600));
+}
+.capsule-terre {
+  color: #fff;
+  background-color: var(--color-terre-700);
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #8f3a15, var(--color-terre-700));
+}
+.capsule-lagune {
+  color: #fff;
+  background-color: var(--color-lagune-700);
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #0a5c57, var(--color-lagune-700));
+}
+.capsule-nuit {
+  color: #fff;
+  background-color: var(--color-anthracite-900);
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-anthracite-950), var(--color-anthracite-800));
+}
+.capsule-soleil {
+  color: var(--color-anthracite-950);
+  background-color: var(--color-accent-500);
+  background-image: url("/patterns/tissu-sombre.svg"), linear-gradient(135deg, var(--color-accent-400), var(--color-accent-600));
+}
+.capsule-sable {
+  color: var(--color-anthracite-900);
+  background-color: var(--color-sable-100);
+  background-image: url("/patterns/tissu-sombre.svg"), linear-gradient(135deg, var(--color-sable-50), var(--color-sable-100));
+}
 
 /* Les éléments de grille peuvent rétrécir : un tableau large défile dans son cadre
    au lieu d'élargir toute la page sur mobile. */

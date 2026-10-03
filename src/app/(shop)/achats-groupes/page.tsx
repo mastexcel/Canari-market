@@ -20,7 +20,7 @@ export default async function GroupBuysPage({ searchParams }: { searchParams: Pr
             key={c.slug || "all"}
             href={c.slug ? `/achats-groupes?categorie=${c.slug}` : "/achats-groupes"}
             aria-current={(categorie ?? "") === c.slug ? "page" : undefined}
-            className={cn("shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold", (categorie ?? "") === c.slug ? "bg-brand-600 text-white" : "bg-white text-anthracite-800 shadow-[var(--shadow-card)]")}
+            className={cn("shrink-0 rounded-full px-3.5 py-1.5 text-sm font-bold", (categorie ?? "") === c.slug ? "capsule-foret shadow-[var(--shadow-card)]" : "capsule-sable text-anthracite-800 ring-1 ring-sable-300")}
           >
             {c.emoji} {c.name}
           </Link>
@@ -28,8 +28,8 @@ export default async function GroupBuysPage({ searchParams }: { searchParams: Pr
       </nav>
       {gbs.length ? (
         <div className="space-y-3">
-          {gbs.map((gb) => (
-            <GroupBuyCard key={gb.id} gb={gb} />
+          {gbs.map((gb, i) => (
+            <GroupBuyCard key={gb.id} gb={gb} index={i} />
           ))}
         </div>
       ) : (

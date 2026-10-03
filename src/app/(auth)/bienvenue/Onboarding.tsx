@@ -136,7 +136,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
       <div className="kente-band" />
       <div className="flex flex-1 flex-col px-5 pt-3 pb-5">
         <div className="flex items-center justify-between">
-          <span className="rounded-full bg-white/80 px-3 py-1 text-xs font-bold tracking-wide text-brand-800 uppercase shadow-[var(--shadow-card)]">
+          <span className="capsule-soleil rounded-full px-3 py-1 text-xs font-extrabold tracking-wide uppercase shadow-[var(--shadow-card)]">
             {i + 1}/{SLIDES.length} · {s.eyebrow}
           </span>
           <Link href="/" onClick={markOnboarded} className="rounded-full px-3 py-1.5 text-sm font-semibold text-anthracite-700 hover:bg-white/70">
@@ -168,7 +168,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <h1 className="animate-rise max-w-sm text-[28px] leading-[1.12] font-bold text-anthracite-950 [animation-delay:80ms]">{s.title}</h1>
             <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-anthracite-800 [animation-delay:140ms]">{s.text}</p>
           </div>
-          {proof && <p className="animate-rise mt-3 rounded-full bg-white px-4 py-2 text-sm font-bold text-brand-800 shadow-[var(--shadow-card)] ring-1 ring-brand-100 [animation-delay:200ms]">{proof}</p>}
+          {proof && <p className="animate-rise mt-3 capsule-foret rounded-full px-4 py-2 text-sm font-bold shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
         </div>
 
         <div className="my-5 flex justify-center gap-2" aria-hidden>

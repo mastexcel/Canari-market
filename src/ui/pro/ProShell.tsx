@@ -35,7 +35,7 @@ export function ProShell({ title, user, nav, children }: { title: string; user: 
 }
 
 export function StatCard({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: "economie" | "brand" | "alerte" }) {
-  const toneClass = tone === "economie" ? "bg-economie-600 text-white" : tone === "brand" ? "bg-brand-700 text-white" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
+  const toneClass = tone === "economie" ? "capsule-lagune" : tone === "brand" ? "capsule-foret" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
   return (
     <div className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${toneClass}`}>
       <p className={`text-xs ${tone && tone !== "alerte" ? "text-white" : "text-anthracite-600"}`}>{label}</p>

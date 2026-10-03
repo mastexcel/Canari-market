@@ -17,7 +17,7 @@ export default async function SavingsPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Mes économies" back={<BackLink href="/compte" />} />
-      <section className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
+      <section className="capsule-lagune rounded-[var(--radius-card)] p-5 shadow-[var(--shadow-card)]">
         <p className="text-sm text-white">Vous avez économisé</p>
         <dl className="mt-3 space-y-2">
           {s.lastOrder && (

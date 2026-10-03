@@ -40,7 +40,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
       <PageHeader title={order.number} subtitle={`Passée le ${formatDateTime(order.createdAt)}`} back={<BackLink href="/commandes" />} />
 
       {confirmee && order.status !== "PENDING_PAYMENT" && (
-        <div className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
+        <div className="capsule-lagune rounded-[var(--radius-card)] p-5 shadow-[var(--shadow-card)]">
           <p className="text-2xl">🎉</p>
           <p className="text-lg font-extrabold">Commande confirmée !</p>
           {order.savingsTotal > 0 && <p className="mt-1">Vous économisez {formatFcfa(order.savingsTotal)} grâce au groupe.</p>}

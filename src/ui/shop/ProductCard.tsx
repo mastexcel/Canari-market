@@ -15,13 +15,13 @@ export function ProductCard({ p }: { p: Product }) {
         {p.fromPrice !== null ? (
           <p className="text-sm">
             <span className="text-xs text-anthracite-500">dès </span>
-            <strong className="tabular text-brand-700">{formatFcfa(p.fromPrice)}</strong>
+            <strong className="rounded-md bg-brand-700 px-1.5 py-0.5 tabular text-white">{formatFcfa(p.fromPrice)}</strong>
           </p>
         ) : (
           <p className="text-xs font-semibold text-accent-700">En achat groupé</p>
         )}
         {cmp?.saving ? <SavingPill amount={cmp.saving} bps={cmp.savingBps} /> : null}
-        {p.openGroupBuy && <p className="mt-1 text-xs font-bold text-brand-600">👥 Achat groupé en cours</p>}
+        {p.openGroupBuy && <p className="capsule-terre mt-1.5 rounded-full px-2 py-0.5 text-center text-xs font-bold">👥 Achat groupé en cours</p>}
       </div>
     </Link>
   );

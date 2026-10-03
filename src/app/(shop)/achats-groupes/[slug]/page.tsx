@@ -57,33 +57,35 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
       </div>
 
       {/* Le groupe → le volume → le prix → l'économie */}
-      <Card className="p-4">
+      <section className="capsule-foret rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)]">
         <dl className="grid grid-cols-2 gap-3">
           <div>
-            <dt className="text-xs text-anthracite-600">Prix marché indicatif</dt>
-            <dd className="text-lg font-bold tabular text-anthracite-700">
+            <dt className="text-xs text-white/90">Prix marché indicatif</dt>
+            <dd className="text-lg font-bold tabular text-white/90">
               <span className={gb.referenceIsFresh ? "line-through" : ""}>{formatFcfa(gb.referenceUnitPrice)}</span>
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-anthracite-600">Prix Sesam-Market à l&apos;objectif</dt>
-            <dd className="text-lg font-extrabold tabular text-brand-700">{formatFcfa(p.targetUnitPrice)}</dd>
+            <dt className="text-xs text-white/90">Prix Sesam-Market à l&apos;objectif</dt>
+            <dd>
+              <span className="inline-block rounded-lg bg-white px-2 py-0.5 text-xl font-extrabold tabular text-brand-800">{formatFcfa(p.targetUnitPrice)}</span>
+            </dd>
           </div>
         </dl>
         {gb.targetSavingPerUnit ? (
-          <p className="mt-2 rounded-xl bg-economie-100 px-3 py-2 text-center font-bold text-economie-700">
+          <p className="capsule-soleil mt-3 rounded-xl px-3 py-2 text-center font-extrabold">
             Économie : {formatFcfa(gb.targetSavingPerUnit)} par {unit}
           </p>
         ) : null}
-        <p className="mt-2 text-xs text-anthracite-500">
+        <p className="mt-2 text-xs text-white/90">
           {gb.referenceIsFresh ? "Référence" : "⚠️ Référence ancienne (économie non affichée)"} : {gb.referenceSource} — {gb.referenceMethod}, relevé du {formatDate(gb.referenceObservedAt)}.
         </p>
-      </Card>
+      </section>
 
       <Card className="p-4">
         <div className="flex items-baseline justify-between">
           <p className="text-sm font-semibold text-anthracite-700">Progression</p>
-          <p className="text-3xl font-extrabold tabular text-brand-700">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
+          <p className="rounded-xl bg-brand-700 px-2.5 py-0.5 text-2xl font-extrabold tabular text-white">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
         </div>
         <p className="mb-2 text-xl font-extrabold tabular">
           {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="text-base font-semibold text-anthracite-600">{unitNoun(gb.supplierUnitLabel, gb.targetUnits)}</span>

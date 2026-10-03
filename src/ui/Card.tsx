@@ -9,7 +9,10 @@ export function SectionTitle({ title, action, subtitle }: { title: string; subti
   return (
     <div className="mb-3 flex items-end justify-between gap-3">
       <div>
-        <h2 className="text-lg font-bold text-anthracite-900">{title}</h2>
+        <h2 className="flex items-center gap-2 text-lg font-bold text-anthracite-900">
+          <span aria-hidden className="h-5 w-1.5 rounded-full bg-gradient-to-b from-accent-500 via-terre-600 to-brand-600" />
+          {title}
+        </h2>
         {subtitle && <p className="text-sm text-anthracite-600">{subtitle}</p>}
       </div>
       {action}

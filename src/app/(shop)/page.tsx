@@ -84,17 +84,17 @@ export default async function HomePage() {
       {/* Les 4 promesses du logo */}
       <ul className="-mt-4 grid grid-cols-4 gap-2" aria-label="Nos services">
         {[
-          { e: "👨‍👩‍👧", t: "Achats groupés", href: "/achats-groupes", icon: "achats-groupes" },
-          { e: "🚚", t: "Livraison à domicile", href: "/points-relais", icon: "livraison-domicile" },
-          { e: "📍", t: "Points relais", href: "/points-relais", icon: "points-relais" },
-          { e: "🛡️", t: "Produits pour tous", href: "/categories", icon: "produits-pour-tous" },
+          { e: "👨‍👩‍👧", t: "Achats groupés", href: "/achats-groupes", icon: "achats-groupes", tone: "capsule-foret" },
+          { e: "🚚", t: "Livraison à domicile", href: "/points-relais", icon: "livraison-domicile", tone: "capsule-terre" },
+          { e: "📍", t: "Points relais", href: "/points-relais", icon: "points-relais", tone: "capsule-lagune" },
+          { e: "🛡️", t: "Produits pour tous", href: "/categories", icon: "produits-pour-tous", tone: "capsule-nuit" },
         ].map((f) => ({ ...f, img: iconImage(f.icon) })).map((f) => (
           <li key={f.t}>
-            <Link href={f.href} className="flex h-full flex-col items-center gap-1 rounded-2xl bg-white/90 px-1 py-2.5 text-center shadow-[var(--shadow-card)] ring-1 ring-brand-100 backdrop-blur">
-              <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-lime-100 to-accent-100 text-lg" aria-hidden>
+            <Link href={f.href} className={`${f.tone} flex h-full flex-col items-center gap-1.5 rounded-2xl px-1 py-3 text-center shadow-[var(--shadow-card)] ring-2 ring-white transition-transform hover:-translate-y-0.5`}>
+              <span className="grid size-10 place-items-center overflow-hidden rounded-full bg-white text-lg shadow-sm" aria-hidden>
                 {f.img ? <Image src={f.img} alt="" width={36} height={36} /> : f.e}
               </span>
-              <span className="text-[11.5px] leading-tight font-extrabold tracking-[0.02em] text-brand-800 uppercase">{f.t}</span>
+              <span className="text-[11.5px] leading-tight font-extrabold tracking-[0.02em] uppercase">{f.t}</span>
             </Link>
           </li>
         ))}
@@ -119,15 +119,15 @@ export default async function HomePage() {
       </section>
 
       {upcoming.length > 0 && (
-        <aside className="flex items-center gap-3 rounded-[var(--radius-card)] border border-dashed border-lime-500/50 bg-lime-100/60 px-4 py-3" aria-label="Bientôt">
+        <aside className="capsule-soleil flex items-center gap-3 rounded-[var(--radius-card)] px-4 py-3 shadow-[var(--shadow-card)]" aria-label="Bientôt">
           <span className="flex -space-x-1 text-2xl" aria-hidden>
             {upcoming.map((c) => (
               <span key={c.slug}>{c.emoji}</span>
             ))}
           </span>
-          <p className="text-sm text-anthracite-800">
-            <strong className="text-brand-800">Pour commencer : le non-périssable.</strong> Riz, huile, sucre, entretien, hygiène, fournitures…{" "}
-            <span className="text-anthracite-600">Les produits frais arrivent bientôt.</span>
+          <p className="text-sm text-anthracite-950">
+            <strong>Pour commencer : le non-périssable.</strong> Riz, huile, sucre, entretien, hygiène, fournitures…{" "}
+            <span className="font-semibold">Les produits frais arrivent bientôt.</span>
           </p>
         </aside>
       )}
@@ -136,8 +136,8 @@ export default async function HomePage() {
         <SectionTitle title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
         {groupBuys.length ? (
           <div className="space-y-3">
-            {groupBuys.map((gb) => (
-              <GroupBuyCard key={gb.id} gb={gb} />
+            {groupBuys.map((gb, i) => (
+              <GroupBuyCard key={gb.id} gb={gb} index={i} />
             ))}
           </div>
         ) : (
@@ -219,7 +219,7 @@ export default async function HomePage() {
         <HowItWorks />
       </section>
 
-      <section className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
+      <section className="capsule-lagune rounded-[var(--radius-card)] p-5 shadow-[var(--shadow-card)]">
         <p className="text-sm text-white">Ensemble, la communauté Sesam-Market a déjà économisé</p>
         <p className="mt-1 text-3xl font-extrabold tabular">{formatFcfa(platform.total)}</p>
         <p className="mt-1 text-sm text-white">

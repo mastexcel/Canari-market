@@ -96,7 +96,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
 
 function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className={`rounded-[var(--radius-card)] p-3 ${highlight ? "bg-economie-600 text-white" : "bg-white shadow-[var(--shadow-card)]"}`}>
+    <div className={`rounded-[var(--radius-card)] p-3 ${highlight ? "capsule-lagune" : "bg-white shadow-[var(--shadow-card)]"}`}>
       <p className={`text-xs ${highlight ? "text-white" : "text-anthracite-600"}`}>{label}</p>
       <p className="mt-0.5 text-lg font-extrabold tabular">{value}</p>
     </div>

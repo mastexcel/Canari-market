@@ -13,7 +13,7 @@ export function SharePanel({ url, title, groupBuyId, qrSvg, remaining, unit, log
     if (loggedIn) api("/referrals/share", { body: { channel, groupBuyId } }).catch(() => undefined);
   };
   return (
-    <section className="rounded-[var(--radius-card)] bg-brand-50 p-4">
+    <section className="capsule-sable rounded-[var(--radius-card)] p-4 ring-1 ring-sable-300">
       <h2 className="font-bold text-brand-800">INVITER DES PROCHES</h2>
       <p className="mt-1 text-sm text-anthracite-700">Invitez 5 personnes à rejoindre cet achat : plus le groupe grandit, plus le prix baisse pour tous.</p>
       <div className="mt-3 grid grid-cols-2 gap-2">

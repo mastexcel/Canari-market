@@ -54,7 +54,7 @@ export function PriceCompare({
 export function SavingPill({ amount, bps }: { amount: number; bps?: number | null }) {
   if (amount <= 0) return null;
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-economie-100 px-2 py-0.5 text-xs font-bold text-economie-700">
+    <span className="inline-flex items-center gap-1 rounded-full bg-economie-700 px-2 py-0.5 text-xs font-bold text-white">
       −{formatFcfa(amount)}
       {bps ? ` · ${formatBps(bps, 0)}` : ""}
     </span>

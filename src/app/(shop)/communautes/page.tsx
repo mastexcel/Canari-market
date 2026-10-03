@@ -24,7 +24,7 @@ export default async function CommunitiesPage({ searchParams }: { searchParams: 
           <ul className="space-y-2">
             {mine.map((m) => (
               <li key={m.id}>
-                <Link href={`/communautes/${m.community.slug}`} className="flex items-center justify-between rounded-[var(--radius-card)] bg-brand-600 p-3 text-white">
+                <Link href={`/communautes/${m.community.slug}`} className="capsule-foret flex items-center justify-between rounded-[var(--radius-card)] p-3">
                   <span className="font-semibold">{m.community.name}</span>
                   {m.role === "ADMIN" && <Badge tone="accent">Admin</Badge>}
                 </Link>
