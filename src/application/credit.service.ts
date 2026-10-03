@@ -1,4 +1,4 @@
-/** Avoirs CANARI (crédit utilisable sur une prochaine commande). */
+/** Avoirs Sesam-Market (crédit utilisable sur une prochaine commande). */
 import { prisma, type Db } from "@/infrastructure/db";
 
 export async function creditBalance(userId: string, db: Db = prisma): Promise<number> {

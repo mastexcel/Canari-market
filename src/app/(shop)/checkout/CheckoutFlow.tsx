@@ -165,7 +165,7 @@ export function CheckoutFlow(props: {
       {step === 0 && (
         <div className="space-y-3">
           <div className="grid gap-2" role="radiogroup" aria-label="Mode de livraison">
-            <ChoiceCard name="mode" value="PICKUP" checked={mode === "PICKUP"} onChange={() => setMode("PICKUP")} title="📍 Point CANARI" description="Le plus économique : retrait avec un code, près de chez vous." />
+            <ChoiceCard name="mode" value="PICKUP" checked={mode === "PICKUP"} onChange={() => setMode("PICKUP")} title="📍 Point Sesam" description="Le plus économique : retrait avec un code, près de chez vous." />
             <ChoiceCard name="mode" value="HOME_DELIVERY" checked={mode === "HOME_DELIVERY"} onChange={() => setMode("HOME_DELIVERY")} title="🛵 Livraison à domicile" description="Tarif selon commune, poids et créneau." />
           </div>
           {mode === "PICKUP" ? (
@@ -237,7 +237,7 @@ export function CheckoutFlow(props: {
           {quote ? (
             <Card className="space-y-1.5 p-4 text-[15px]">
               <Row label="Sous-total" value={formatFcfa(quote.totals.subtotal)} />
-              {quote.totals.savings > 0 && <Row label={`Économie CANARI (${formatBps(quote.totals.savingsBps)})`} value={`${formatFcfa(quote.totals.savings)}`} tone="economie" />}
+              {quote.totals.savings > 0 && <Row label={`Économie Sesam-Market (${formatBps(quote.totals.savingsBps)})`} value={`${formatFcfa(quote.totals.savings)}`} tone="economie" />}
               {quote.totals.fractionationFees > 0 && <Row label="Fractionnement" value={formatFcfa(quote.totals.fractionationFees)} />}
               <Row label={mode === "PICKUP" ? "Retrait au point relais" : "Livraison"} value={quote.totals.deliveryFee ? formatFcfa(quote.totals.deliveryFee) : "Gratuit"} />
               {quote.fee.discount > 0 && <p className="text-xs text-economie-700">Avantage communauté {quote.community?.name} ({quote.community?.level}) : −{formatFcfa(quote.fee.discount)}</p>}
@@ -259,8 +259,8 @@ export function CheckoutFlow(props: {
           </div>
           {props.credit > 0 && <Checkbox label={`Utiliser mon avoir (${formatFcfa(props.credit)} disponibles)`} checked={useCredit} onChange={(e) => setUseCredit(e.target.checked)} />}
           {props.policies.length > 0 && (
-            <div className="rounded-xl border border-canari-600/30 bg-canari-100 p-3 text-sm">
-              <p className="font-bold text-canari-700">À savoir avant de payer</p>
+            <div className="rounded-xl border border-accent-600/30 bg-accent-100 p-3 text-sm">
+              <p className="font-bold text-accent-700">À savoir avant de payer</p>
               <ul className="mt-1 space-y-1.5 text-anthracite-800">
                 {props.policies.map((p) => (
                   <li key={p.title}>
@@ -270,7 +270,7 @@ export function CheckoutFlow(props: {
                 <li>Vous payez le prix actuel ; si un meilleur palier est atteint, la différence vous est remboursée.</li>
               </ul>
               {hasCreditPolicy && (
-                <Checkbox className="mt-2" label="En cas d'échec, je préfère recevoir un avoir CANARI plutôt qu'un remboursement." description="Facultatif. Sans cette case, vous êtes remboursé sur votre moyen de paiement." checked={creditConsent} onChange={(e) => setCreditConsent(e.target.checked)} />
+                <Checkbox className="mt-2" label="En cas d'échec, je préfère recevoir un avoir Sesam-Market plutôt qu'un remboursement." description="Facultatif. Sans cette case, vous êtes remboursé sur votre moyen de paiement." checked={creditConsent} onChange={(e) => setCreditConsent(e.target.checked)} />
               )}
               <Checkbox className="mt-1" label="J'ai pris connaissance de ces règles." checked={policiesAccepted} onChange={(e) => setPoliciesAccepted(e.target.checked)} />
             </div>
@@ -282,11 +282,11 @@ export function CheckoutFlow(props: {
         <div className="space-y-3">
           <Card className="p-4 text-center">
             <p className="text-sm text-anthracite-600">Montant à payer</p>
-            <p className="text-3xl font-black tabular text-bordeaux-700">{formatFcfa(quote.totals.total)}</p>
+            <p className="text-3xl font-black tabular text-brand-700">{formatFcfa(quote.totals.total)}</p>
           </Card>
           <div className="grid gap-2" role="radiogroup" aria-label="Moyen de paiement">
             <ChoiceCard name="method" value="MOBILE_MONEY" checked={method === "MOBILE_MONEY"} onChange={() => setMethod("MOBILE_MONEY")} title="📱 Mobile Money" description="Orange Money, MTN MoMo, Moov Money, Wave" />
-            <ChoiceCard name="method" value="CARD" checked={method === "CARD"} onChange={() => setMethod("CARD")} title="💳 Carte bancaire" description="Saisie sécurisée chez le prestataire — CANARI ne voit jamais votre carte." />
+            <ChoiceCard name="method" value="CARD" checked={method === "CARD"} onChange={() => setMethod("CARD")} title="💳 Carte bancaire" description="Saisie sécurisée chez le prestataire — Sesam-Market ne voit jamais votre carte." />
           </div>
           {method === "MOBILE_MONEY" && (
             <>

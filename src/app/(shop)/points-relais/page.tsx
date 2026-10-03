@@ -8,7 +8,7 @@ export default async function PickupPointsPage() {
   const points = await prisma.pickupPoint.findMany({ where: { isActive: true }, orderBy: [{ commune: "asc" }, { name: "asc" }] });
   return (
     <div>
-      <PageHeader title="Points CANARI" subtitle="Retirez vos commandes près de chez vous avec un code : c'est le mode le plus économique." />
+      <PageHeader title="Points Sesam" subtitle="Retirez vos commandes près de chez vous avec un code : c'est le mode le plus économique." />
       <ul className="space-y-2">
         {points.map((p) => (
           <li key={p.id} className="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">

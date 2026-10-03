@@ -249,8 +249,8 @@ export function describeFailurePolicy(
     case "REFUND":
       return "Si le seuil n'est pas atteint à la date limite, vous êtes remboursé intégralement sur votre moyen de paiement.";
     case "ALTERNATIVE_PRICE":
-      return "Si le seuil n'est pas atteint, CANARI vous propose un prix alternatif. Vous choisissez : accepter, ou être remboursé intégralement. Sans réponse de votre part, vous êtes remboursé.";
+      return "Si le seuil n'est pas atteint, Sesam-Market vous propose un prix alternatif. Vous choisissez : accepter, ou être remboursé intégralement. Sans réponse de votre part, vous êtes remboursé.";
     case "CREDIT_WITH_CONSENT":
-      return "Si le seuil n'est pas atteint, vous êtes remboursé intégralement, sauf si vous avez choisi ci-dessous de recevoir un avoir CANARI à la place.";
+      return "Si le seuil n'est pas atteint, vous êtes remboursé intégralement, sauf si vous avez choisi ci-dessous de recevoir un avoir Sesam-Market à la place.";
   }
 }

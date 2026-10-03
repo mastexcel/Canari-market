@@ -75,7 +75,7 @@ export function JoinPanel(props: {
             description={p.fee > 0 ? `dont fractionnement ${formatFcfa(p.fee)}` : "Sac entier, sans fractionnement"}
             aside={
               <span className="text-right">
-                <span className="block font-extrabold tabular text-bordeaux-700">{formatFcfa(p.unitPrice + p.fee)}</span>
+                <span className="block font-extrabold tabular text-brand-700">{formatFcfa(p.unitPrice + p.fee)}</span>
                 {p.saving ? <span className="block text-xs font-semibold text-economie-700">−{formatFcfa(p.saving)}</span> : null}
               </span>
             }

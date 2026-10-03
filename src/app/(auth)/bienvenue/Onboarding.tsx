@@ -2,18 +2,18 @@
 /** Splash (logo animé) puis 3 écrans d'onboarding : le groupe → le volume → le prix → l'économie. */
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { CanariMark } from "@/ui/Logo";
+import { FullLogo } from "@/ui/Logo";
 import { buttonClasses } from "@/ui/Button";
 import { cn } from "@/ui/cn";
 
 const SLIDES = [
   { emoji: "👨‍👩‍👧‍👦", title: "Achetons ensemble", text: "Des centaines de ménages et petits commerces réunissent leurs besoins dans un même achat groupé." },
   { emoji: "📉", title: "Plus nous sommes nombreux, moins nous payons", text: "Le volume fait baisser le prix, palier après palier. Le prix que vous payez ne peut jamais monter." },
-  { emoji: "🧺", title: "Juste la quantité qu'il vous faut", text: "CANARI achète en gros et fractionne : 5 kg, 10 kg, 25 kg… Retrait au point relais ou livraison." },
+  { emoji: "🧺", title: "Juste la quantité qu'il vous faut", text: "Sesam-Market achète en gros et fractionne : 5 kg, 10 kg, 25 kg… Retrait au point relais ou livraison." },
 ];
 
 function markOnboarded() {
-  document.cookie = "canari_onboarded=1; path=/; max-age=31536000; samesite=lax";
+  document.cookie = "sesam_onboarded=1; path=/; max-age=31536000; samesite=lax";
 }
 
 export function Onboarding() {
@@ -26,11 +26,9 @@ export function Onboarding() {
 
   if (splash) {
     return (
-      <div className="brand-pattern fixed inset-0 grid place-items-center text-center text-white">
-        <div className="animate-[pulse_1.2s_ease-in-out_infinite]">
-          <CanariMark size={96} className="mx-auto" />
-          <p className="mt-4 text-3xl font-black tracking-wider">CANARI</p>
-          <p className="mt-1 text-canari-400">Acheter ensemble, mieux vivre.</p>
+      <div className="fixed inset-0 grid place-items-center bg-white px-6 text-center">
+        <div className="animate-[pulse_1.4s_ease-in-out_infinite]">
+          <FullLogo width={320} className="mx-auto h-auto w-[min(80vw,340px)]" />
         </div>
       </div>
     );
@@ -45,7 +43,7 @@ export function Onboarding() {
         </Link>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center text-center" aria-live="polite">
-        <div className="grid size-40 place-items-center rounded-full bg-canari-100 text-7xl" aria-hidden>
+        <div className="grid size-40 place-items-center rounded-full bg-accent-100 text-7xl" aria-hidden>
           {s.emoji}
         </div>
         <h1 className="mt-8 text-2xl font-extrabold">{s.title}</h1>
@@ -53,7 +51,7 @@ export function Onboarding() {
       </div>
       <div className="mb-6 flex justify-center gap-2" aria-hidden>
         {SLIDES.map((_, k) => (
-          <span key={k} className={cn("h-2 rounded-full transition-all", k === i ? "w-6 bg-bordeaux-600" : "w-2 bg-gris-300")} />
+          <span key={k} className={cn("h-2 rounded-full transition-all", k === i ? "w-6 bg-brand-600" : "w-2 bg-gris-300")} />
         ))}
       </div>
       {last ? (
@@ -64,7 +62,7 @@ export function Onboarding() {
           <Link href="/connexion" onClick={markOnboarded} className={buttonClasses("outline", "lg", true)}>
             J&apos;ai déjà un compte
           </Link>
-          <Link href="/" onClick={markOnboarded} className="block py-2 text-center text-sm font-semibold text-bordeaux-700">
+          <Link href="/" onClick={markOnboarded} className="block py-2 text-center text-sm font-semibold text-brand-700">
             Découvrir sans compte
           </Link>
         </div>

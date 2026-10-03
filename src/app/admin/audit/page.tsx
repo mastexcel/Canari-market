@@ -19,7 +19,7 @@ export default async function Audit({ searchParams }: { searchParams: Promise<{ 
       <H1>Journal d&apos;audit</H1>
       <form className="mb-4 flex gap-2">
         <input name="action" defaultValue={action} placeholder="Filtrer : price, groupbuy, refund…" className="h-10 rounded-lg border border-gris-300 bg-white px-3 text-sm" />
-        <button className="h-10 rounded-lg bg-bordeaux-600 px-4 text-sm font-semibold text-white">Filtrer</button>
+        <button className="h-10 rounded-lg bg-brand-600 px-4 text-sm font-semibold text-white">Filtrer</button>
       </form>
       <Table head={["Date", "Acteur", "Action", "Objet", "Détail"]} empty={logs.length === 0}>
         {logs.map((l) => (

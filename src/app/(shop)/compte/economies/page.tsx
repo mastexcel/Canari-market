@@ -57,7 +57,7 @@ export default async function SavingsPage() {
         </Card>
       )}
       <p className="text-xs text-anthracite-600">
-        Méthode : pour chaque article payé, prix de référence marché (relevé daté de moins de 30 jours) moins le prix CANARI final, frais de fractionnement inclus. Les frais de livraison ne sont pas déduits. Les commandes annulées ou remboursées ne comptent pas.
+        Méthode : pour chaque article payé, prix de référence marché (relevé daté de moins de 30 jours) moins le prix Sesam-Market final, frais de fractionnement inclus. Les frais de livraison ne sont pas déduits. Les commandes annulées ou remboursées ne comptent pas.
       </p>
     </div>
   );

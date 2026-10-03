@@ -13,7 +13,7 @@ export const CATEGORIES = [
 ] as const;
 
 type Unit = "GRAM" | "MILLILITER" | "PIECE";
-/** [catégorie, nom, marque, emoji, unité, libellé variante, quantité, poids g, prix CANARI, prix réf.] */
+/** [catégorie, nom, marque, emoji, unité, libellé variante, quantité, poids g, prix Sesam-Market, prix réf.] */
 export type ProductRow = [string, string, string | null, string, Unit, string, number, number, number | null, number];
 
 export const PRODUCTS: ProductRow[] = [
@@ -116,8 +116,8 @@ export const PRODUCTS: ProductRow[] = [
   ["scolaire", "Gommes", null, "🩹", "PIECE", "Lot de 10", 10, 100, 650, 800],
   ["scolaire", "Règles 30 cm", null, "📏", "PIECE", "Lot de 5", 5, 200, 650, 800],
   ["scolaire", "Sac à dos écolier", null, "🎒", "PIECE", "Pièce", 1, 700, 6700, 7800],
-  ["scolaire", "Kit scolaire primaire", "CANARI", "🎒", "PIECE", "Kit complet", 1, 2500, 9800, 11800],
-  ["scolaire", "Kit scolaire collège", "CANARI", "🎒", "PIECE", "Kit complet", 1, 3200, 14500, 17200],
+  ["scolaire", "Kit scolaire primaire", "Sesam-Market", "🎒", "PIECE", "Kit complet", 1, 2500, 9800, 11800],
+  ["scolaire", "Kit scolaire collège", "Sesam-Market", "🎒", "PIECE", "Kit complet", 1, 3200, 14500, 17200],
   ["scolaire", "Ardoises", null, "🪧", "PIECE", "Lot de 5", 5, 800, 1650, 1950],
   ["scolaire", "Craies blanches", null, "🖍️", "PIECE", "Boîte de 100", 100, 600, 1050, 1250],
   ["scolaire", "Protège-cahiers", null, "📘", "PIECE", "Lot de 10", 10, 300, 1050, 1250],
@@ -139,24 +139,24 @@ export const COMMUNES_ZONES = [
 ];
 
 export const PICKUP_POINTS = [
-  { code: "PR-ANG", name: "Point CANARI Angré", commune: "Cocody", quartier: "Angré 8e Tranche", address: "Boutique Chez Tantie Awa, rue des Jardins", landmark: "Face à la pharmacie Les Oliviers", fee: 0 },
-  { code: "PR-NIA", name: "Point CANARI Niangon", commune: "Yopougon", quartier: "Niangon Sud", address: "Alimentation La Grâce", landmark: "Arrêt bus 27, à côté de l'église", fee: 0 },
-  { code: "PR-ABO", name: "Point CANARI Abobo Avocatier", commune: "Abobo", quartier: "Avocatier", address: "Kiosque Mariam", landmark: "Près du marché d'Avocatier", fee: 100 },
-  { code: "PR-MAR", name: "Point CANARI Marcory Zone 4", commune: "Marcory", quartier: "Zone 4", address: "Supérette Le Bon Coin", landmark: "Rue du Dr Blanchard", fee: 200 },
-  { code: "PR-KOU", name: "Point CANARI Koumassi", commune: "Koumassi", quartier: "Remblais", address: "Cabine Fofana & Fils", landmark: "Derrière la mairie", fee: 100 },
+  { code: "PR-ANG", name: "Point Sesam Angré", commune: "Cocody", quartier: "Angré 8e Tranche", address: "Boutique Chez Tantie Awa, rue des Jardins", landmark: "Face à la pharmacie Les Oliviers", fee: 0 },
+  { code: "PR-NIA", name: "Point Sesam Niangon", commune: "Yopougon", quartier: "Niangon Sud", address: "Alimentation La Grâce", landmark: "Arrêt bus 27, à côté de l'église", fee: 0 },
+  { code: "PR-ABO", name: "Point Sesam Abobo Avocatier", commune: "Abobo", quartier: "Avocatier", address: "Kiosque Mariam", landmark: "Près du marché d'Avocatier", fee: 100 },
+  { code: "PR-MAR", name: "Point Sesam Marcory Zone 4", commune: "Marcory", quartier: "Zone 4", address: "Supérette Le Bon Coin", landmark: "Rue du Dr Blanchard", fee: 200 },
+  { code: "PR-KOU", name: "Point Sesam Koumassi", commune: "Koumassi", quartier: "Remblais", address: "Cabine Fofana & Fils", landmark: "Derrière la mairie", fee: 100 },
 ];
 
 export const COMMUNITIES = [
-  { name: "CANARI Angré 8e Tranche", type: "NEIGHBORHOOD", commune: "Cocody", quartier: "Angré 8e Tranche", point: "PR-ANG", weekday: 6 },
-  { name: "CANARI Niangon", type: "NEIGHBORHOOD", commune: "Yopougon", quartier: "Niangon", point: "PR-NIA", weekday: 6 },
-  { name: "CANARI Résidence Les Palmiers", type: "RESIDENCE", commune: "Cocody", quartier: "Riviera 3", point: "PR-ANG", weekday: 3 },
-  { name: "CANARI Abobo Avocatier", type: "NEIGHBORHOOD", commune: "Abobo", quartier: "Avocatier", point: "PR-ABO", weekday: 5 },
-  { name: "CANARI Entreprise SOTRA Logistique", type: "COMPANY", commune: "Treichville", quartier: "Zone portuaire", point: null, weekday: 4 },
-  { name: "CANARI Association des enseignants de Yopougon", type: "ASSOCIATION", commune: "Yopougon", quartier: "Selmer", point: "PR-NIA", weekday: 6 },
-  { name: "CANARI Marcory Zone 4", type: "NEIGHBORHOOD", commune: "Marcory", quartier: "Zone 4", point: "PR-MAR", weekday: 2 },
-  { name: "CANARI Koumassi Remblais", type: "NEIGHBORHOOD", commune: "Koumassi", quartier: "Remblais", point: "PR-KOU", weekday: 6 },
-  { name: "CANARI Femmes commerçantes d'Adjamé", type: "ASSOCIATION", commune: "Adjamé", quartier: "Liberté", point: null, weekday: 1 },
-  { name: "CANARI Bingerville Centre", type: "NEIGHBORHOOD", commune: "Bingerville", quartier: "Centre", point: null, weekday: 6 },
+  { name: "Sesam Angré 8e Tranche", type: "NEIGHBORHOOD", commune: "Cocody", quartier: "Angré 8e Tranche", point: "PR-ANG", weekday: 6 },
+  { name: "Sesam Niangon", type: "NEIGHBORHOOD", commune: "Yopougon", quartier: "Niangon", point: "PR-NIA", weekday: 6 },
+  { name: "Sesam Résidence Les Palmiers", type: "RESIDENCE", commune: "Cocody", quartier: "Riviera 3", point: "PR-ANG", weekday: 3 },
+  { name: "Sesam Abobo Avocatier", type: "NEIGHBORHOOD", commune: "Abobo", quartier: "Avocatier", point: "PR-ABO", weekday: 5 },
+  { name: "Sesam Entreprise SOTRA Logistique", type: "COMPANY", commune: "Treichville", quartier: "Zone portuaire", point: null, weekday: 4 },
+  { name: "Sesam Association des enseignants de Yopougon", type: "ASSOCIATION", commune: "Yopougon", quartier: "Selmer", point: "PR-NIA", weekday: 6 },
+  { name: "Sesam Marcory Zone 4", type: "NEIGHBORHOOD", commune: "Marcory", quartier: "Zone 4", point: "PR-MAR", weekday: 2 },
+  { name: "Sesam Koumassi Remblais", type: "NEIGHBORHOOD", commune: "Koumassi", quartier: "Remblais", point: "PR-KOU", weekday: 6 },
+  { name: "Sesam Femmes commerçantes d'Adjamé", type: "ASSOCIATION", commune: "Adjamé", quartier: "Liberté", point: null, weekday: 1 },
+  { name: "Sesam Bingerville Centre", type: "NEIGHBORHOOD", commune: "Bingerville", quartier: "Centre", point: null, weekday: 6 },
 ] as const;
 
 export const SUPPLIERS: Array<{ name: string; type: "PRODUCER" | "COOPERATIVE" | "WHOLESALER" | "IMPORTER" | "DISTRIBUTOR"; commune: string; verified: boolean; quality: number; reliability: number }> = [

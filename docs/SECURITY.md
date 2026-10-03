@@ -36,7 +36,7 @@
 ## Intégrité métier
 
 - Verrous de ligne PostgreSQL sur achats groupés, stocks, paiements et commandes lors des opérations concurrentes.
-- **Journal d'audit** : création/publication/clôture d'achats groupés (avec avertissements et justification de déficit), **toute modification de prix** (paliers CANARI et tarifs fournisseurs, avant/après), attribution de RFQ (rang, justification), réceptions, fractionnements, écarts, remboursements manuels, permissions, statuts, vérifications KYB, exports et suppressions de données.
+- **Journal d'audit** : création/publication/clôture d'achats groupés (avec avertissements et justification de déficit), **toute modification de prix** (paliers Sesam-Market et tarifs fournisseurs, avant/après), attribution de RFQ (rang, justification), réceptions, fractionnements, écarts, remboursements manuels, permissions, statuts, vérifications KYB, exports et suppressions de données.
 
 ## Téléversements (KYB)
 

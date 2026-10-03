@@ -36,7 +36,7 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
                 </option>
               ))}
             </select>
-            <button className="h-9 rounded-lg bg-bordeaux-600 px-3 font-semibold text-white">OK</button>
+            <button className="h-9 rounded-lg bg-brand-600 px-3 font-semibold text-white">OK</button>
           </form>
         }
       >
@@ -61,7 +61,7 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
                 </span>
               </div>
               <div className="mt-1 h-3 rounded-full bg-gris-100">
-                <div className="h-3 rounded-full bg-bordeaux-600" style={{ width: `${(f.users / maxFunnel) * 100}%` }} />
+                <div className="h-3 rounded-full bg-brand-600" style={{ width: `${(f.users / maxFunnel) * 100}%` }} />
               </div>
             </li>
           ))}
@@ -79,7 +79,7 @@ export default async function Analytics({ searchParams }: { searchParams: Promis
           </tr>
         ))}
       </Table>
-      <p className="text-xs text-anthracite-500">Les événements ne contiennent aucune donnée personnelle (identifiants techniques et montants uniquement). Toute analyse partagée hors de CANARI est agrégée et anonymisée.</p>
+      <p className="text-xs text-anthracite-500">Les événements ne contiennent aucune donnée personnelle (identifiants techniques et montants uniquement). Toute analyse partagée hors de Sesam-Market est agrégée et anonymisée.</p>
     </div>
   );
 }

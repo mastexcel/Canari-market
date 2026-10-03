@@ -34,7 +34,7 @@ export async function evaluateReferralForOrder(orderId: string, db: Db = prisma,
     await tx.creditLedgerEntry.createMany({
       data: [
         { userId: referral.referrerId, amount: decision.referrerReward, reason: "REFERRAL_REWARD", orderId, note: "Parrainage : filleul livré" },
-        { userId: referral.refereeId, amount: decision.refereeReward, reason: "REFERRAL_REWARD", orderId, note: "Bienvenue chez CANARI" },
+        { userId: referral.refereeId, amount: decision.refereeReward, reason: "REFERRAL_REWARD", orderId, note: "Bienvenue chez Sesam-Market" },
       ],
     });
     await notify(referral.referrerId, "referral_rewarded", { amount: decision.referrerReward }, {}, tx);

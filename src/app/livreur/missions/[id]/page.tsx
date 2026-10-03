@@ -21,7 +21,7 @@ export default async function Mission({ params }: { params: Promise<{ id: string
       <div className="space-y-1 rounded-[var(--radius-card)] bg-white p-4 text-sm shadow-[var(--shadow-card)]">
         <p className="font-bold">Client : {d.order.user.firstName}</p>
         <p>
-          <a className="font-semibold text-bordeaux-700 underline" href={`tel:${d.order.user.phone}`}>
+          <a className="font-semibold text-brand-700 underline" href={`tel:${d.order.user.phone}`}>
             📞 {formatPhone(d.order.user.phone)}
           </a>
         </p>

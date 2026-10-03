@@ -3,7 +3,7 @@ import { requireUser } from "@/lib/session";
 import { getPaymentForUser } from "@/application/payment.service";
 import { DomainError } from "@/domain/errors";
 import { formatFcfa } from "@/domain/money";
-import { CanariMark } from "@/ui/Logo";
+import { BrandMark } from "@/ui/Logo";
 import { MockPayActions } from "./MockPayActions";
 
 export const metadata = { title: "Paiement" };
@@ -30,8 +30,8 @@ export default async function MockPaymentPage({ params }: { params: Promise<{ id
     <main id="contenu" className="mx-auto grid min-h-dvh max-w-md place-items-center p-4">
       <div className="w-full rounded-3xl bg-white p-6 shadow-[var(--shadow-float)]">
         <div className="mb-4 flex items-center justify-between">
-          <CanariMark size={40} />
-          <span className="rounded-full bg-canari-100 px-3 py-1 text-xs font-bold text-canari-700">Prestataire de test</span>
+          <BrandMark size={40} />
+          <span className="rounded-full bg-accent-100 px-3 py-1 text-xs font-bold text-accent-700">Prestataire de test</span>
         </div>
         <p className="text-sm text-anthracite-600">Commande {p.order.number}</p>
         <p className="mt-1 text-3xl font-black tabular">{formatFcfa(p.amount)}</p>

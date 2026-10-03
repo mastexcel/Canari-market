@@ -9,7 +9,7 @@ import { formatFcfa } from "@/domain/money";
 
 export function BarChart({
   data,
-  color = "var(--color-bordeaux-600)",
+  color = "var(--color-brand-600)",
   kind = "fcfa",
   label,
 }: {
@@ -28,7 +28,7 @@ export function BarChart({
     <figure className="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
       <figcaption className="mb-3 flex items-center justify-between gap-2">
         <span className="font-bold">{label}</span>
-        <button className="text-xs font-semibold text-bordeaux-700 underline" onClick={() => setTable(!table)} aria-pressed={table}>
+        <button className="text-xs font-semibold text-brand-700 underline" onClick={() => setTable(!table)} aria-pressed={table}>
           {table ? "Graphique" : "Tableau"}
         </button>
       </figcaption>

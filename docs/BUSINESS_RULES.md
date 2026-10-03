@@ -8,7 +8,7 @@ Toutes ces règles sont implémentées dans `src/domain/` et couvertes par des t
 
 - Un achat groupé porte sur un produit vendu par **unité fournisseur** (ex. sac de 50 kg = 50 000 g).
 - **Paliers** : à partir de `minUnits` unités engagées, prix client `unitPrice` par unité fournisseur. Seuils strictement croissants, prix strictement décroissants (validé).
-- **Seuil minimal** = premier palier. **Objectif** affiché = `targetUnits` (prix « CANARI » mis en avant). **Capacité** = `maxUnits` (offre fournisseur).
+- **Seuil minimal** = premier palier. **Objectif** affiché = `targetUnits` (prix « Sesam-Market » mis en avant). **Capacité** = `maxUnits` (offre fournisseur).
 - **Progression** = quantités **payées** / unité fournisseur. Les réservations en attente de paiement (`heldBase`) comptent pour la capacité mais pas pour la progression.
 - « Plus que N » est arrondi **au supérieur** : on n'affiche jamais 0 tant que le seuil n'est pas atteint.
 - « Encore N commandes » = reste ÷ quantité moyenne réelle par participant (à défaut, portion moyenne attendue).
@@ -102,7 +102,7 @@ Marge nette   = marge brute − stockage − fractionnement − emballage − fr
 
 ## 7. Livraison
 
-- **Point relais** : frais du point (souvent 0), remise contre code à 6 chiffres ou QR (`CANARI:<n°>:<code>`), 5 essais max / 15 min par colis.
+- **Point relais** : frais du point (souvent 0), remise contre code à 6 chiffres ou QR (`SESAM:<n°>:<code>`), 5 essais max / 15 min par colis.
 - **Domicile** : `frais = base commune + (kg au-delà de 10) × 50 + distance × tarif/km + 200/article encombrant (≥ 25 kg) + supplément créneau programmé (500)`.
 - Créneaux 8 h–12 h et 14 h–18 h, pas de dimanche, à partir de la date où tout est prêt.
 - Incident : la livraison repasse « à attribuer », la commande repasse « Prête ».

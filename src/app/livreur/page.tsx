@@ -29,7 +29,7 @@ export default async function DriverHome() {
               <Link href={`/livreur/missions/${d.id}`} className="block rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
                 <div className="flex justify-between gap-2">
                   <p className="font-bold">{d.order.number}</p>
-                  <Badge tone={d.status === "ASSIGNED" ? "canari" : "bordeaux"}>{S[d.status]}</Badge>
+                  <Badge tone={d.status === "ASSIGNED" ? "accent" : "brand"}>{S[d.status]}</Badge>
                 </div>
                 <p className="mt-1 text-sm">
                   📍 {d.order.address?.quartier}, {d.order.address?.commune}

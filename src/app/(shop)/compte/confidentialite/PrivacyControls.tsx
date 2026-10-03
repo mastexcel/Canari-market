@@ -9,7 +9,7 @@ import { Card } from "@/ui/Card";
 import { useToast } from "@/ui/Toast";
 
 type Key = "MARKETING_SMS" | "MARKETING_WHATSAPP" | "ANALYTICS";
-const LABELS: Record<Key, string> = { MARKETING_SMS: "Recevoir les offres par SMS", MARKETING_WHATSAPP: "Recevoir les offres par WhatsApp", ANALYTICS: "Aider à améliorer CANARI (mesure d'audience)" };
+const LABELS: Record<Key, string> = { MARKETING_SMS: "Recevoir les offres par SMS", MARKETING_WHATSAPP: "Recevoir les offres par WhatsApp", ANALYTICS: "Aider à améliorer Sesam-Market (mesure d'audience)" };
 
 export function PrivacyControls({ initial }: { initial: Record<Key, boolean> }) {
   const [state, setState] = useState(initial);

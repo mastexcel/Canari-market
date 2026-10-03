@@ -5,7 +5,7 @@ destinée aux futures applications mobiles.
 
 ## Authentification
 
-- **Web** : cookie `canari_session` (httpOnly, SameSite=Lax, Secure en HTTPS), posé par `/auth/login` ou `/auth/signup`.
+- **Web** : cookie `sesam_session` (httpOnly, SameSite=Lax, Secure en HTTPS), posé par `/auth/login` ou `/auth/signup`.
 - **Mobile** : le même jeton, renvoyé dans le corps (`token`), à envoyer en `Authorization: Bearer <jeton>`.
 - Mutations par cookie : l'en-tête `Origin` doit correspondre à l'hôte (protection CSRF). Les requêtes Bearer en sont dispensées.
 

@@ -12,7 +12,7 @@ const FAQ = [
   ["Que se passe-t-il si l'achat groupé n'atteint pas son seuil ?", "La règle est affichée avant le paiement : prolongation, remboursement intégral, prix alternatif (avec votre accord) ou avoir (seulement si vous l'avez choisi)."],
   ["Le prix peut-il augmenter après mon paiement ?", "Non. Vous payez le prix actuel ; s'il baisse grâce au groupe, la différence vous est remboursée."],
   ["Comment retirer ma commande ?", "Présentez votre code à 6 chiffres (ou le QR code) au point relais. Ne le communiquez qu'au moment de la remise."],
-  ["Mes données de paiement sont-elles stockées ?", "Non. Le paiement est géré par un prestataire agréé ; CANARI ne voit jamais votre code secret ni votre carte."],
+  ["Mes données de paiement sont-elles stockées ?", "Non. Le paiement est géré par un prestataire agréé ; Sesam-Market ne voit jamais votre code secret ni votre carte."],
 ];
 
 export default async function SupportPage({ searchParams }: { searchParams: Promise<{ commande?: string }> }) {
@@ -39,7 +39,7 @@ export default async function SupportPage({ searchParams }: { searchParams: Prom
               <li key={t.id} className="rounded-[var(--radius-card)] bg-white p-3 shadow-[var(--shadow-card)]">
                 <div className="flex justify-between gap-2">
                   <p className="font-semibold">{t.subject}</p>
-                  <Badge tone={t.status === "RESOLVED" || t.status === "CLOSED" ? "economie" : "canari"}>{t.status === "OPEN" ? "Ouverte" : t.status === "IN_PROGRESS" ? "En cours" : "Résolue"}</Badge>
+                  <Badge tone={t.status === "RESOLVED" || t.status === "CLOSED" ? "economie" : "accent"}>{t.status === "OPEN" ? "Ouverte" : t.status === "IN_PROGRESS" ? "En cours" : "Résolue"}</Badge>
                 </div>
                 <p className="text-xs text-anthracite-500">{formatDateTime(t.createdAt)}</p>
               </li>

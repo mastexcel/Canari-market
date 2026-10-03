@@ -26,7 +26,7 @@ export default async function SupplierOrders() {
             <td className="px-3 py-2 tabular">{formatFcfa(po.totalAmount)}</td>
             <td className="px-3 py-2">{formatDate(po.expectedAt)}</td>
             <td className="px-3 py-2">
-              <Badge tone={po.status === "SENT" ? "canari" : po.status === "RECEIVED" ? "economie" : "neutral"}>{S[po.status]}</Badge>
+              <Badge tone={po.status === "SENT" ? "accent" : po.status === "RECEIVED" ? "economie" : "neutral"}>{S[po.status]}</Badge>
             </td>
             <td className="px-3 py-2">{po.paidToSupplierAt ? "Payé" : po.status === "RECEIVED" ? "En attente" : "—"}</td>
             <td className="px-3 py-2">

@@ -1,10 +1,10 @@
 /**
- * Économies — KPI principal de CANARI.
+ * Économies — KPI principal de Sesam-Market.
  *
  * Économie d'une ligne = (prix de référence − prix effectivement payé, frais de
  * fractionnement inclus) × quantité. Les frais de livraison sont exclus (ils
  * existent aussi pour un achat au détail : trajet, transport) et affichés à part.
- * Une économie n'est jamais négative dans les indicateurs : si CANARI est plus
+ * Une économie n'est jamais négative dans les indicateurs : si Sesam-Market est plus
  * cher, l'économie comptée est 0.
  */
 export interface SavingsLine {

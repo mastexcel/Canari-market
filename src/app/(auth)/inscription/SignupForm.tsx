@@ -40,7 +40,7 @@ export function SignupForm({ communes, referralCode, next }: { communes: string[
           const r = await api<{ redirect: string }>("/auth/signup", {
             body: { ...f, adults: Number(f.adults), children: Number(f.children), businessName: f.businessName || undefined, commune: f.commune || undefined },
           });
-          document.cookie = "canari_onboarded=1; path=/; max-age=31536000; samesite=lax";
+          document.cookie = "sesam_onboarded=1; path=/; max-age=31536000; samesite=lax";
           // Navigation complète : repart d'un cache client vierge avec la nouvelle session.
           window.location.assign(next ?? r.redirect);
         } catch (err) {

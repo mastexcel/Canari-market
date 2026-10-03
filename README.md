@@ -1,7 +1,7 @@
-# CANARI — Acheter ensemble, mieux vivre
+# Sesam-Market — À plusieurs, les prix s’ouvrent
 
 Centrale d'achat numérique pour les ménages et petits commerces de Côte d'Ivoire.
-CANARI agrège la demande de centaines de ménages, achète en gros auprès des
+Sesam-Market agrège la demande de centaines de ménages, achète en gros auprès des
 producteurs et grossistes, **fractionne** les volumes (sac de 50 kg → portions de
 5, 10, 25 kg) et les distribue en point relais ou à domicile.
 
@@ -25,7 +25,7 @@ npm run db:seed                      # données de démo Abidjan (~2 min, 1 100+
 npm run dev                          # http://localhost:3000
 ```
 
-### Comptes de démonstration (mot de passe : `canari2026`)
+### Comptes de démonstration (mot de passe : `sesam2026`)
 
 | Rôle | Téléphone | Espace |
 |---|---|---|

@@ -5,7 +5,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * des sessions et des rôles se fait côté serveur (layouts et API).
  */
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname === "/" && !req.cookies.has("canari_onboarded") && !req.cookies.has("canari_session")) {
+  if (req.nextUrl.pathname === "/" && !req.cookies.has("sesam_onboarded") && !req.cookies.has("sesam_session")) {
     return NextResponse.redirect(new URL("/bienvenue", req.url));
   }
   return NextResponse.next();

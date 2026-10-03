@@ -112,11 +112,11 @@ peuvent être partagés avec un client TypeScript.
 
 | Verticale | Point d'extension existant |
 |---|---|
-| CANARI BUSINESS | Modèle `Merchant`, rôle `MERCHANT` (achat déjà possible, unités entières) |
-| CANARI PRO | Mêmes achats groupés, portions = unités fournisseur ; paliers par volume |
-| CANARI FOURNISSEUR | Portail fournisseur, `SupplierProduct` + `PriceTier`, KYB |
-| CANARI COMMUNAUTÉ | `Community`, niveaux d'avantages, achats réservés |
-| CANARI LOGISTICS | `Delivery`, `Driver`, `PickupPoint`, `DeliveryZone`, `Warehouse` multi-entrepôts |
+| Sesam BUSINESS | Modèle `Merchant`, rôle `MERCHANT` (achat déjà possible, unités entières) |
+| Sesam PRO | Mêmes achats groupés, portions = unités fournisseur ; paliers par volume |
+| Sesam FOURNISSEUR | Portail fournisseur, `SupplierProduct` + `PriceTier`, KYB |
+| Sesam COMMUNAUTÉ | `Community`, niveaux d'avantages, achats réservés |
+| Sesam LOGISTICS | `Delivery`, `Driver`, `PickupPoint`, `DeliveryZone`, `Warehouse` multi-entrepôts |
 
 ## 6. Choix techniques
 

@@ -16,10 +16,10 @@ export function ProShell({ title, user, nav, children }: { title: string; user: 
     <div className="min-h-dvh lg:flex">
       <aside className="border-b border-gris-200 bg-white lg:sticky lg:top-0 lg:h-dvh lg:w-60 lg:shrink-0 lg:border-r lg:border-b-0">
         <div className="flex items-center justify-between px-4 py-3 lg:block lg:py-5">
-          <Link href="/" aria-label="Accueil CANARI">
+          <Link href="/" aria-label="Accueil Sesam-Market">
             <Logo />
           </Link>
-          <p className="text-xs font-semibold tracking-wide text-canari-700 uppercase lg:mt-2">{title}</p>
+          <p className="text-xs font-semibold tracking-wide text-accent-700 uppercase lg:mt-2">{title}</p>
         </div>
         <ProNav items={nav} />
         <div className="hidden px-4 py-4 text-xs text-anthracite-600 lg:block">
@@ -34,8 +34,8 @@ export function ProShell({ title, user, nav, children }: { title: string; user: 
   );
 }
 
-export function StatCard({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: "economie" | "bordeaux" | "alerte" }) {
-  const toneClass = tone === "economie" ? "bg-economie-600 text-white" : tone === "bordeaux" ? "bg-bordeaux-700 text-white" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
+export function StatCard({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: "economie" | "brand" | "alerte" }) {
+  const toneClass = tone === "economie" ? "bg-economie-600 text-white" : tone === "brand" ? "bg-brand-700 text-white" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
   return (
     <div className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${toneClass}`}>
       <p className={`text-xs ${tone && tone !== "alerte" ? "text-white/85" : "text-anthracite-600"}`}>{label}</p>

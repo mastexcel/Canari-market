@@ -171,7 +171,7 @@ export function assessCampaign(
         code: "NO_CUSTOMER_SAVING",
         severity: "warning",
         tierMinUnits: tier.minUnits,
-        message: `Au palier ${tier.minUnits}, le prix CANARI n'est pas inférieur au prix de référence.`,
+        message: `Au palier ${tier.minUnits}, le prix Sesam-Market n'est pas inférieur au prix de référence.`,
       });
     }
   }

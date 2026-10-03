@@ -58,7 +58,7 @@ describe("communautés", () => {
     const admin = await makeUser();
     const member = await makeUser();
     const c = await createCommunity(admin.id, { name: "Angré 8e Tranche", type: "NEIGHBORHOOD", commune: "Cocody", pickupPointId: f.pickupPoint.id, isPublic: false });
-    expect(c.name).toBe("CANARI Angré 8e Tranche");
+    expect(c.name).toBe("Sesam Angré 8e Tranche");
     await expect(joinCommunity(member.id, c.id, null)).rejects.toThrow(/privée/);
     await joinCommunity(member.id, c.id, c.inviteCode);
     await joinCommunity(member.id, c.id, c.inviteCode); // idempotent

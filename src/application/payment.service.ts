@@ -91,7 +91,7 @@ export async function initiatePayment(
     method: input.method,
     operator: input.operator ?? null,
     payerPhone,
-    description: `CANARI ${order.number}`,
+    description: `Sesam-Market ${order.number}`,
     returnUrl: `${env().APP_URL}/commandes/${order.id}`,
     notifyUrl: `${env().APP_URL}/api/v1/webhooks/payments/${provider.name}`,
   });

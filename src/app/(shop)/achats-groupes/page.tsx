@@ -20,7 +20,7 @@ export default async function GroupBuysPage({ searchParams }: { searchParams: Pr
             key={c.slug || "all"}
             href={c.slug ? `/achats-groupes?categorie=${c.slug}` : "/achats-groupes"}
             aria-current={(categorie ?? "") === c.slug ? "page" : undefined}
-            className={cn("shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold", (categorie ?? "") === c.slug ? "bg-bordeaux-600 text-white" : "bg-white text-anthracite-800 shadow-[var(--shadow-card)]")}
+            className={cn("shrink-0 rounded-full px-3 py-1.5 text-sm font-semibold", (categorie ?? "") === c.slug ? "bg-brand-600 text-white" : "bg-white text-anthracite-800 shadow-[var(--shadow-card)]")}
           >
             {c.emoji} {c.name}
           </Link>

@@ -21,7 +21,7 @@ export default async function ReferralPage() {
       <PageHeader title="Parrainage" back={<BackLink href="/compte" />} />
       <Card className="p-5 text-center">
         <p className="text-sm text-anthracite-600">Votre code</p>
-        <p className="mt-1 text-3xl font-black tracking-widest text-bordeaux-700">{r.code}</p>
+        <p className="mt-1 text-3xl font-black tracking-widest text-brand-700">{r.code}</p>
         <ShareCode link={link} />
       </Card>
       <Card className="space-y-2 p-4 text-sm">

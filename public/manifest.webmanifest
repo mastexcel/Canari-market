@@ -1,22 +1,44 @@
 {
-  "name": "CANARI — Acheter ensemble, mieux vivre",
-  "short_name": "CANARI",
-  "description": "Centrale d'achat numérique : plus nous sommes nombreux à acheter ensemble, moins nous payons cher.",
+  "name": "Sesam-Market — À plusieurs, les prix s’ouvrent",
+  "short_name": "Sesam-Market",
+  "description": "Achats groupés pour les ménages et petits commerces : plus nous sommes nombreux, plus les prix baissent.",
   "lang": "fr-CI",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#5e0f25",
-  "theme_color": "#8e1b3a",
-  "categories": ["shopping", "food"],
+  "background_color": "#0a4a2b",
+  "theme_color": "#0e5f36",
+  "categories": [
+    "shopping",
+    "food"
+  ],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "Achats groupés", "url": "/achats-groupes" },
-    { "name": "Mes commandes", "url": "/commandes" }
+    {
+      "name": "Achats groupés",
+      "url": "/achats-groupes"
+    },
+    {
+      "name": "Mes commandes",
+      "url": "/commandes"
+    }
   ]
 }

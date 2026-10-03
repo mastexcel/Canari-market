@@ -40,7 +40,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
 
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard tone="economie" label="Économie réelle générée (KPI n°1)" value={formatFcfa(k.savings)} hint={`${formatFcfa(k.savingsPerHousehold)} par ménage actif`} />
-        <StatCard tone="bordeaux" label="GMV" value={formatFcfa(k.gmv)} hint={`CA net de remboursements : ${formatFcfa(k.revenue)}`} />
+        <StatCard tone="brand" label="GMV" value={formatFcfa(k.gmv)} hint={`CA net de remboursements : ${formatFcfa(k.revenue)}`} />
         <StatCard label="Marge brute" value={formatFcfa(k.grossMargin)} hint={`${pct(k.grossMarginRate)} des ventes produits${k.uncostedRevenue ? " (hors ventes sans coût connu)" : ""}`} />
         <StatCard label="Commandes" value={String(k.orders)} hint={`Panier moyen ${formatFcfa(k.averageBasket)}`} />
         <StatCard label="Ménages actifs" value={String(k.activeUsers)} hint={`${k.newUsers} nouveaux inscrits`} />

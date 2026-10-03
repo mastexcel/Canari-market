@@ -33,7 +33,7 @@ export function PublishPanel({ id, warnings, requiresAck }: { id: string; warnin
 export function RfqForm({ id, unitLabel, units }: { id: string; unitLabel: string; units: number }) {
   const { send, busy } = useCommand("admin");
   const d = (days: number) => new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
-  const [f, setF] = useState({ quality: "Conforme à l'échantillon validé", packaging: unitLabel, destination: "Entrepôt CANARI Yopougon", neededBy: d(5), closesAt: d(2) });
+  const [f, setF] = useState({ quality: "Conforme à l'échantillon validé", packaging: unitLabel, destination: "Entrepôt Sesam-Market Yopougon", neededBy: d(5), closesAt: d(2) });
   return (
     <div className={card}>
       <p className="font-bold">Créer la demande de cotation (RFQ) — {units} × {unitLabel}</p>

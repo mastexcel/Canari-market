@@ -1,6 +1,6 @@
 import { cn } from "./cn";
 
-const BG = ["bg-canari-100", "bg-bordeaux-50", "bg-economie-50", "bg-gris-100", "bg-info-100"];
+const BG = ["bg-accent-100", "bg-brand-50", "bg-economie-50", "bg-gris-100", "bg-info-100"];
 
 /**
  * Visuel produit léger : pictogramme sur fond coloré (0 octet d'image à

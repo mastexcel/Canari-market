@@ -1,6 +1,6 @@
 const STEPS = [
   { emoji: "👥", title: "On s'unit", text: "Des centaines de ménages réservent leur part d'un même produit." },
-  { emoji: "📦", title: "On achète en gros", text: "CANARI négocie le prix de gros auprès des producteurs et grossistes." },
+  { emoji: "📦", title: "On achète en gros", text: "Sesam-Market négocie le prix de gros auprès des producteurs et grossistes." },
   { emoji: "⚖️", title: "On fractionne", text: "Les sacs sont partagés en portions : 5, 10, 25 kg… selon vos besoins." },
   { emoji: "💰", title: "Vous économisez", text: "Plus le groupe est grand, plus le prix baisse. Il ne peut jamais monter." },
 ];

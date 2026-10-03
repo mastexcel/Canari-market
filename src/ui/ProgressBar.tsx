@@ -27,7 +27,7 @@ export function GroupProgress({
         className={cn("relative w-full overflow-hidden rounded-full bg-gris-200", h)}
       >
         <div
-          className={cn("h-full rounded-full transition-[width] duration-700", p >= 100 ? "bg-economie-600" : "bg-gradient-to-r from-bordeaux-600 to-canari-500")}
+          className={cn("h-full rounded-full transition-[width] duration-700", p >= 100 ? "bg-economie-600" : "bg-gradient-to-r from-brand-600 via-lime-500 to-accent-500")}
           style={{ width: `${p}%` }}
         />
         {markers.map((m) => (

@@ -71,7 +71,7 @@ export async function baseFixture(opts: { failurePolicy?: "REFUND" | "EXTEND" | 
       targetUnits: 4,
       maxUnits: opts.maxUnits ?? 6,
       referenceUnitPrice: 27_500,
-      referenceSource: "Relevé CANARI",
+      referenceSource: "Relevé Sesam-Market",
       referenceMethod: "Médiane de 3 marchés",
       referenceObservedAt: new Date(now.getTime() - 3 * DAY),
       opensAt: new Date(now.getTime() - DAY),

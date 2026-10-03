@@ -36,7 +36,7 @@ export default async function AdminGroupBuys() {
               <td className="px-3 py-2.5 tabular">{g.participantCount}</td>
               <td className="px-3 py-2.5">{formatShortDate(g.closesAt)}</td>
               <td className="px-3 py-2.5 text-right">
-                <Link href={`/admin/achats-groupes/${g.id}`} className="font-semibold text-bordeaux-700 underline">
+                <Link href={`/admin/achats-groupes/${g.id}`} className="font-semibold text-brand-700 underline">
                   Piloter
                 </Link>
               </td>

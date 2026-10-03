@@ -28,13 +28,13 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             </option>
           ))}
         </select>
-        <button className="h-10 rounded-lg bg-bordeaux-600 px-4 text-sm font-semibold text-white">Filtrer</button>
+        <button className="h-10 rounded-lg bg-brand-600 px-4 text-sm font-semibold text-white">Filtrer</button>
       </form>
       <Table head={["N°", "Client", "Date", "Statut", "Retrait / livraison", "Total", "Économie"]} empty={orders.length === 0}>
         {orders.map((o) => (
           <tr key={o.id}>
             <td className="px-3 py-2">
-              <Link href={`/admin/commandes/${o.id}`} className="font-semibold text-bordeaux-700 underline">
+              <Link href={`/admin/commandes/${o.id}`} className="font-semibold text-brand-700 underline">
                 {o.number}
               </Link>
             </td>

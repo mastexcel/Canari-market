@@ -19,7 +19,7 @@ export function LoginForm({ next }: { next: string | null }) {
         setError(null);
         try {
           const r = await api<{ redirect: string }>("/auth/login", { body: { phone, password } });
-          document.cookie = "canari_onboarded=1; path=/; max-age=31536000; samesite=lax";
+          document.cookie = "sesam_onboarded=1; path=/; max-age=31536000; samesite=lax";
           // Navigation complète : repart d'un cache client vierge avec la nouvelle session.
           window.location.assign(next ?? r.redirect);
         } catch (err) {

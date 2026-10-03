@@ -19,7 +19,7 @@ export default async function NotificationsPage() {
       ) : (
         <ul className="space-y-2">
           {items.map((n) => (
-            <li key={n.id} className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${n.readAt ? "bg-white" : "border-l-4 border-bordeaux-600 bg-bordeaux-50"}`}>
+            <li key={n.id} className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${n.readAt ? "bg-white" : "border-l-4 border-brand-600 bg-brand-50"}`}>
               <p className="font-bold">{n.title}</p>
               <p className="mt-0.5 text-sm text-anthracite-700">{n.body}</p>
               <p className="mt-1 text-xs text-anthracite-500">{formatDateTime(n.createdAt)}</p>

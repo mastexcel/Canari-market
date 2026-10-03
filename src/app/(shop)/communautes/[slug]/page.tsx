@@ -36,7 +36,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
       <Card className="p-4">
         <div className="flex items-center justify-between">
           <p className="font-bold">Niveau de la communauté</p>
-          <Badge tone="canari">{stats.level.label}</Badge>
+          <Badge tone="accent">{stats.level.label}</Badge>
         </div>
         <p className="mt-1 text-sm text-anthracite-700">{stats.level.description}</p>
         {stats.next && (
@@ -60,7 +60,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
       </Card>
       {c.pickupPoint && (
         <Card className="p-4 text-sm">
-          <p className="font-bold">📍 Point CANARI de la communauté</p>
+          <p className="font-bold">📍 Point Sesam de la communauté</p>
           <p className="mt-1">
             {c.pickupPoint.name} — {c.pickupPoint.address}, {c.pickupPoint.quartier}
             <br />
@@ -74,7 +74,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
           <ul className="space-y-1">
             {c.groupBuys.map((g) => (
               <li key={g.slug}>
-                <Link className="font-semibold text-bordeaux-700 underline" href={`/achats-groupes/${g.slug}`}>
+                <Link className="font-semibold text-brand-700 underline" href={`/achats-groupes/${g.slug}`}>
                   {g.title}
                 </Link>
               </li>
@@ -86,7 +86,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
       {user ? (
         <MembershipButton communityId={c.id} member={!!c.membership} isPublic={c.isPublic} inviteCode={c.membership ? c.inviteCode : null} />
       ) : (
-        <Link href={`/connexion?suite=/communautes/${c.slug}`} className="block rounded-xl bg-bordeaux-600 py-3 text-center font-semibold text-white">
+        <Link href={`/connexion?suite=/communautes/${c.slug}`} className="block rounded-xl bg-brand-600 py-3 text-center font-semibold text-white">
           Se connecter pour rejoindre
         </Link>
       )}

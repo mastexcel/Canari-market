@@ -90,7 +90,7 @@ export default async function AdminGroupBuy({ params }: { params: Promise<{ id: 
           </Table>
           <div className="grid grid-cols-2 gap-3">
             <StatCard label="Volume total" value={q(consolidated.demand.totalBase)} hint={`${formatUnits(consolidated.demand.exactSupplierUnits, 2)} ${gb.supplierUnitLabel.toLowerCase()} exacts`} />
-            <StatCard tone="bordeaux" label="À commander au fournisseur" value={`${consolidated.demand.supplierUnitsToOrder} × ${gb.supplierUnitLabel}`} hint={`dont pertes prévues ${q(consolidated.demand.lossAllowanceBase)}`} />
+            <StatCard tone="brand" label="À commander au fournisseur" value={`${consolidated.demand.supplierUnitsToOrder} × ${gb.supplierUnitLabel}`} hint={`dont pertes prévues ${q(consolidated.demand.lossAllowanceBase)}`} />
             <StatCard label="Plan de fractionnement" value={`${consolidated.plan.unitsToOpen} unités à ouvrir`} hint={`${consolidated.plan.bagsNeeded} sachets · ${consolidated.plan.fullUnitsShippedAsIs} unités remises entières`} />
             <StatCard label="Commandes concernées" value={String(consolidated.ordersCount)} />
           </div>
@@ -158,7 +158,7 @@ export default async function AdminGroupBuy({ params }: { params: Promise<{ id: 
               <p className="font-bold">
                 {rfq.number} · {requiredUnits} × {rfq.supplierUnitLabel} · {rfq.quality}
               </p>
-              <Badge tone={rfq.status === "AWARDED" ? "economie" : "canari"}>{rfq.status === "AWARDED" ? "Attribuée" : rfq.status === "OPEN" ? "Ouverte" : rfq.status}</Badge>
+              <Badge tone={rfq.status === "AWARDED" ? "economie" : "accent"}>{rfq.status === "AWARDED" ? "Attribuée" : rfq.status === "OPEN" ? "Ouverte" : rfq.status}</Badge>
             </div>
             <p className="text-xs text-anthracite-600">
               Réponses jusqu&apos;au {formatDateTime(rfq.closesAt)} · livraison souhaitée le {formatDate(rfq.neededBy)} à {rfq.destination}. Classement multicritère : prix 40 %, qualité 20 %, fiabilité 15 %, délai 15 %, capacité 10 %. La décision reste humaine.

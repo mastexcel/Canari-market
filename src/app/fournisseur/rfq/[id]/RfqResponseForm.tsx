@@ -16,7 +16,7 @@ export function RfqResponseForm({ rfqId, units, existing }: { rfqId: string; uni
     unitPrice: String(existing?.unitPrice ?? ""),
     unitsOffered: String(existing?.unitsOffered ?? units),
     leadTimeDays: String(existing?.leadTimeDays ?? 3),
-    deliveryLocation: existing?.deliveryLocation ?? "Entrepôt CANARI Yopougon",
+    deliveryLocation: existing?.deliveryLocation ?? "Entrepôt Sesam-Market Yopougon",
     conditions: existing?.conditions ?? "",
     qualityNote: existing?.qualityNote ?? "",
     validUntil: new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10),

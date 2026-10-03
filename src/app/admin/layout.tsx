@@ -2,7 +2,7 @@ import { requireRole } from "@/lib/session";
 import { hasPermission, type AdminPermission } from "@/domain/permissions";
 import { ProShell, type NavItem } from "@/ui/pro/ProShell";
 
-export const metadata = { title: { default: "Administration", template: "%s · Admin CANARI" } };
+export const metadata = { title: { default: "Administration", template: "%s · Admin Sesam-Market" } };
 
 const NAV: Array<NavItem & { perm?: AdminPermission }> = [
   { href: "/admin", label: "Tableau de bord", emoji: "📊", perm: "ANALYTICS_VIEW" },

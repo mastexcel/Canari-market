@@ -26,7 +26,7 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
   return (
     <div className="space-y-5">
       <H1 action={stockToPrepare ? <CommandButton space="admin" body={{ type: "order.prepare", orderId: o.id }} success="Articles en stock préparés">Préparer le stock</CommandButton> : undefined}>
-        {o.number} <Badge tone="bordeaux">{ORDER_STATUS_LABELS[o.status]}</Badge>
+        {o.number} <Badge tone="brand">{ORDER_STATUS_LABELS[o.status]}</Badge>
       </H1>
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-[var(--radius-card)] bg-white p-4 text-sm shadow-[var(--shadow-card)]">

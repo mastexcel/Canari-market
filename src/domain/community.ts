@@ -1,6 +1,6 @@
 /**
  * Communautés : plus une communauté commande ensemble, plus elle obtient
- * d'avantages logistiques (la livraison groupée coûte moins cher à CANARI).
+ * d'avantages logistiques (la livraison groupée coûte moins cher à Sesam-Market).
  */
 import type { DeliveryBenefits } from "./delivery";
 
@@ -54,7 +54,7 @@ export function nextCommunityLevel(monthlyOrders: number): { level: CommunityLev
   return next ? { level: next, remainingOrders: next.minMonthlyOrders - monthlyOrders } : null;
 }
 
-/** Slug lisible : « CANARI Angré 8e Tranche » → « canari-angre-8e-tranche ». */
+/** Slug lisible : « Sesam-Market Angré 8e Tranche » → « sesam-market-angre-8e-tranche ». */
 export function slugify(input: string): string {
   return input
     .normalize("NFD")

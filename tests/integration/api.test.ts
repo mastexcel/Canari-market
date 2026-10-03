@@ -28,7 +28,7 @@ const ctx = (params: Record<string, string> = {}) => ({ params: Promise.resolve(
 function req(path: string, opts: { method?: string; body?: unknown; token?: string; origin?: string | null; headers?: Record<string, string>; raw?: string } = {}) {
   const headers = new Headers({ host: "localhost:3000", "content-type": "application/json", ...(opts.headers ?? {}) });
   if (opts.origin !== null) headers.set("origin", opts.origin ?? ORIGIN);
-  if (opts.token) headers.set("cookie", `canari_session=${opts.token}`);
+  if (opts.token) headers.set("cookie", `sesam_session=${opts.token}`);
   return new NextRequest(`${ORIGIN}/api/v1${path}`, {
     method: opts.method ?? (opts.body !== undefined || opts.raw ? "POST" : "GET"),
     headers,
@@ -56,10 +56,10 @@ describe("API v1", () => {
     const res = await signupPOST(req("/auth/signup", { body: signupBody }), ctx());
     expect(res.status).toBe(200);
     const cookie = res.headers.get("set-cookie")!;
-    expect(cookie).toMatch(/canari_session=/);
+    expect(cookie).toMatch(/sesam_session=/);
     expect(cookie).toMatch(/HttpOnly/i);
     expect(cookie).toMatch(/SameSite=lax/i);
-    const token = cookie.match(/canari_session=([^;]+)/)![1];
+    const token = cookie.match(/sesam_session=([^;]+)/)![1];
     const me = await meGET(req("/auth/me", { token }), ctx());
     expect((await me.json()).user.firstName).toBe("Mariam");
     // Le mot de passe n'est jamais renvoyé
@@ -96,7 +96,7 @@ describe("API v1", () => {
     const t = await tokenFor(household.id);
     expect((await adminPOST(req("/admin/commands", { body: { type: "jobs.run" }, token: t }), ctx())).status).toBe(403);
     expect((await supplierPOST(req("/supplier/commands", { body: { type: "po.confirm", poId: "x" }, token: t }), ctx())).status).toBe(403);
-    expect((await pickupPOST(req("/pickup/commands", { body: { type: "receive", orderNumber: "CAN-000000-XXXXX" }, token: t }), ctx())).status).toBe(403);
+    expect((await pickupPOST(req("/pickup/commands", { body: { type: "receive", orderNumber: "SES-000000-XXXXX" }, token: t }), ctx())).status).toBe(403);
     // Un livreur ne peut pas passer commande
     const driver = await makeUser("DRIVER");
     const td = await tokenFor(driver.id);

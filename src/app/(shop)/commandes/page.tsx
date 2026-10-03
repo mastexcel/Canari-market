@@ -11,7 +11,7 @@ import { ButtonLink } from "@/ui/Button";
 
 export const metadata = { title: "Mes commandes" };
 
-const tone = (s: string) => (s === "DELIVERED" ? "economie" : s === "CANCELLED" || s === "REFUNDED" ? "neutral" : s === "PENDING_PAYMENT" ? "alerte" : s === "READY_FOR_PICKUP" || s === "OUT_FOR_DELIVERY" ? "canari" : "bordeaux");
+const tone = (s: string) => (s === "DELIVERED" ? "economie" : s === "CANCELLED" || s === "REFUNDED" ? "neutral" : s === "PENDING_PAYMENT" ? "alerte" : s === "READY_FOR_PICKUP" || s === "OUT_FOR_DELIVERY" ? "accent" : "brand");
 
 export default async function OrdersPage() {
   const user = await requireUser("/commandes");

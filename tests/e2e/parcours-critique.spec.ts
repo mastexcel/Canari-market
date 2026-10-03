@@ -15,19 +15,19 @@ test("inscription → achat groupé → paiement → suivi → admin", async ({ 
   // Première visite : onboarding
   await page.goto("/");
   await expect(page).toHaveURL(/\/bienvenue/);
-  await expect(page.getByText("CANARI").first()).toBeVisible();
+  await expect(page.getByRole("img", { name: /Sesam-Market/ }).first()).toBeVisible();
 
   // Inscription
   await page.goto("/inscription");
   await waitHydrated(page);
   await page.getByLabel("Prénom").fill("Testeur");
   await page.getByLabel("Téléphone").fill(phone);
-  await page.getByLabel("Mot de passe").fill("canari2026");
+  await page.getByLabel("Mot de passe").fill("sesam2026");
   await page.getByLabel("Commune").selectOption("Cocody");
   await page.getByLabel("Quartier").fill("Angré");
   await page.getByText("J'accepte les conditions").click();
   await page.getByRole("button", { name: "Créer mon compte" }).click();
-  await expect(page.getByRole("heading", { name: "Acheter ensemble, mieux vivre." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "À plusieurs, les prix s’ouvrent." })).toBeVisible();
 
   // Achat groupé : progression visible
   await page.goto("/achats-groupes/riz-parfume-sac-de-50-kg");
@@ -74,7 +74,7 @@ test("inscription → achat groupé → paiement → suivi → admin", async ({ 
   await admin.goto("/connexion");
   await waitHydrated(admin);
   await admin.getByLabel("Numéro de téléphone").fill("0700000099");
-  await admin.getByLabel("Mot de passe").fill("canari2026");
+  await admin.getByLabel("Mot de passe").fill("sesam2026");
   await admin.getByRole("button", { name: "Se connecter" }).click();
   await expect(admin.getByRole("heading", { name: /Tableau de bord/ })).toBeVisible();
   await admin.getByRole("link", { name: /Achats groupés/ }).first().click();

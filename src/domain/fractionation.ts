@@ -1,5 +1,5 @@
 /**
- * Fractionnement : CANARI achète des unités fournisseur (sacs de 50 kg) et
+ * Fractionnement : Sesam-Market achète des unités fournisseur (sacs de 50 kg) et
  * prépare des portions (5, 10, 25 kg). Ce module :
  *  1. planifie la préparation à partir de la demande agrégée ;
  *  2. tient le grand livre d'un lot à partir des mouvements de stock immuables

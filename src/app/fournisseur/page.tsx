@@ -17,11 +17,11 @@ export default async function SupplierHome() {
       <H1>{s.businessName}</H1>
       {s.verificationStatus !== "VERIFIED" && (
         <Alert tone="warning" title="Dossier KYB en cours de vérification">
-          Vous pourrez répondre aux demandes de cotation une fois votre dossier (RCCM, DFE, pièce d&apos;identité du gérant) validé par CANARI.
+          Vous pourrez répondre aux demandes de cotation une fois votre dossier (RCCM, DFE, pièce d&apos;identité du gérant) validé par Sesam-Market.
         </Alert>
       )}
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard tone="bordeaux" label="Chiffre d'affaires CANARI" value={formatFcfa(d.stats.revenue)} hint="Bons de commande réceptionnés" />
+        <StatCard tone="brand" label="Chiffre d'affaires Sesam-Market" value={formatFcfa(d.stats.revenue)} hint="Bons de commande réceptionnés" />
         <StatCard label="Paiements reçus" value={formatFcfa(d.stats.paid)} hint={`En attente : ${formatFcfa(d.stats.pendingPayment)}`} />
         <StatCard label="À confirmer" value={String(d.stats.ordersToConfirm)} hint="Bons de commande" />
         <StatCard label="Performance" value={`${Math.round(s.onTimeRateBps / 100)} % à l'heure`} hint={`Qualité ${s.qualityScore}/100 · fiabilité ${s.reliabilityScore}/100`} />
@@ -39,9 +39,9 @@ export default async function SupplierHome() {
                 {formatQuantity(r.quantityBase, r.product.baseUnit)} ({Math.ceil(r.quantityBase / r.supplierUnitQuantityBase)} × {r.supplierUnitLabel})
               </td>
               <td className="px-3 py-2">{formatDateTime(r.closesAt)}</td>
-              <td className="px-3 py-2">{r.responses[0] ? <Badge tone="economie">Envoyée</Badge> : <Badge tone="canari">À faire</Badge>}</td>
+              <td className="px-3 py-2">{r.responses[0] ? <Badge tone="economie">Envoyée</Badge> : <Badge tone="accent">À faire</Badge>}</td>
               <td className="px-3 py-2 text-right">
-                <Link href={`/fournisseur/rfq/${r.id}`} className="font-semibold text-bordeaux-700 underline">
+                <Link href={`/fournisseur/rfq/${r.id}`} className="font-semibold text-brand-700 underline">
                   {r.responses[0] ? "Modifier" : "Répondre"}
                 </Link>
               </td>

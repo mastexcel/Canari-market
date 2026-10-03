@@ -22,7 +22,7 @@ export async function userSavings(userId: string, db: Db = prisma, now = new Dat
   return { ...summary, lastOrder };
 }
 
-/** Économie cumulée de toute la communauté CANARI (page d'accueil). */
+/** Économie cumulée de toute la communauté Sesam-Market (page d'accueil). */
 export async function platformSavings(db: Db = prisma) {
   const items = await db.orderItem.findMany({
     where: { order: { paidAt: { not: null } }, status: { notIn: [...countedStatuses.notIn] } },

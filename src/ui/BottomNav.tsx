@@ -24,12 +24,12 @@ export function BottomNav({ cartCount }: { cartCount: number }) {
               <Link
                 href={it.href}
                 aria-current={active ? "page" : undefined}
-                className={cn("relative flex h-16 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold", active ? "text-bordeaux-700" : "text-anthracite-600")}
+                className={cn("relative flex h-16 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold", active ? "text-brand-700" : "text-anthracite-600")}
               >
                 <Icon active={active} />
                 <span className="leading-none">{it.label}</span>
                 {it.href === "/panier" && cartCount > 0 && (
-                  <span className="absolute top-1.5 left-1/2 ml-2 grid min-w-5 place-items-center rounded-full bg-canari-500 px-1 text-[11px] font-bold text-anthracite-900" aria-label={`${cartCount} articles`}>
+                  <span className="absolute top-1.5 left-1/2 ml-2 grid min-w-5 place-items-center rounded-full bg-accent-500 px-1 text-[11px] font-bold text-anthracite-900" aria-label={`${cartCount} articles`}>
                     {cartCount}
                   </span>
                 )}

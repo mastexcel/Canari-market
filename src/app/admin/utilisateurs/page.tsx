@@ -32,7 +32,7 @@ export default async function Users({ searchParams }: { searchParams: Promise<{ 
             </option>
           ))}
         </select>
-        <button className="h-10 rounded-lg bg-bordeaux-600 px-4 text-sm font-semibold text-white">Filtrer</button>
+        <button className="h-10 rounded-lg bg-brand-600 px-4 text-sm font-semibold text-white">Filtrer</button>
       </form>
       <Table head={["Nom", "Téléphone", "Rôle", "Commune", "Inscrit", "Commandes", "Statut", "Actions"]}>
         {users.map((u) => (

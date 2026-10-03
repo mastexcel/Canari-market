@@ -8,13 +8,13 @@ import { useToast } from "@/ui/Toast";
 export function SharePanel({ url, title, groupBuyId, qrSvg, remaining, unit, loggedIn }: { url: string; title: string; groupBuyId: string; qrSvg: string; remaining: number; unit: string; loggedIn: boolean }) {
   const [qr, setQr] = useState(false);
   const toast = useToast();
-  const text = `Rejoins-moi sur CANARI : « ${title} ». ${remaining > 0 ? `Plus que ${remaining} ${unit} pour débloquer le meilleur prix ! ` : ""}Ensemble on paie moins cher 👉 ${url}`;
+  const text = `Rejoins-moi sur Sesam-Market : « ${title} ». ${remaining > 0 ? `Plus que ${remaining} ${unit} pour débloquer le meilleur prix ! ` : ""}Ensemble on paie moins cher 👉 ${url}`;
   const log = (channel: string) => {
     if (loggedIn) api("/referrals/share", { body: { channel, groupBuyId } }).catch(() => undefined);
   };
   return (
-    <section className="rounded-[var(--radius-card)] bg-bordeaux-50 p-4">
-      <h2 className="font-bold text-bordeaux-800">INVITER DES PROCHES</h2>
+    <section className="rounded-[var(--radius-card)] bg-brand-50 p-4">
+      <h2 className="font-bold text-brand-800">INVITER DES PROCHES</h2>
       <p className="mt-1 text-sm text-anthracite-700">Invitez 5 personnes à rejoindre cet achat : plus le groupe grandit, plus le prix baisse pour tous.</p>
       <div className="mt-3 grid grid-cols-2 gap-2">
         <a className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] font-semibold text-anthracite-900" href={`https://wa.me/?text=${encodeURIComponent(text)}`} target="_blank" rel="noopener noreferrer" onClick={() => log("whatsapp")}>

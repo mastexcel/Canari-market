@@ -1,5 +1,5 @@
 /**
- * GroupBuyService : cœur de CANARI.
+ * GroupBuyService : cœur de Sesam-Market.
  * Publication (avec contrôle d'économie unitaire), progression, clôture,
  * règlement (paliers / règles d'échec), demande consolidée.
  */

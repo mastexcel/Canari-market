@@ -5,7 +5,7 @@ type Tone = "info" | "success" | "warning" | "error";
 const styles: Record<Tone, string> = {
   info: "bg-info-100 text-info-700 border-info-700/20",
   success: "bg-economie-100 text-economie-700 border-economie-700/20",
-  warning: "bg-canari-100 text-canari-700 border-canari-600/30",
+  warning: "bg-accent-100 text-accent-700 border-accent-600/30",
   error: "bg-alerte-100 text-alerte-700 border-alerte-700/20",
 };
 const icons: Record<Tone, string> = { info: "ℹ️", success: "✅", warning: "⚠️", error: "⛔" };

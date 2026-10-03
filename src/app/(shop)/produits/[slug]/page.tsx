@@ -37,16 +37,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {product.groupBuys.map((gb) => (
-        <Link key={gb.id} href={`/achats-groupes/${gb.slug}`} className="block rounded-[var(--radius-card)] bg-bordeaux-600 p-4 text-white">
+        <Link key={gb.id} href={`/achats-groupes/${gb.slug}`} className="block rounded-[var(--radius-card)] bg-brand-600 p-4 text-white">
           <p className="text-sm text-white/80">👥 Achat groupé en cours</p>
           <p className="font-bold">{gb.title}</p>
-          <p className="mt-1 text-sm font-semibold text-canari-400">Rejoindre et payer moins cher →</p>
+          <p className="mt-1 text-sm font-semibold text-accent-400">Rejoindre et payer moins cher →</p>
         </Link>
       ))}
 
       {sellable.length > 0 ? (
         <Card className="p-4">
-          <h2 className="mb-3 font-bold">Disponible en stock CANARI</h2>
+          <h2 className="mb-3 font-bold">Disponible en stock Sesam-Market</h2>
           <ul className="space-y-4">
             {sellable.map((v) => (
               <li key={v.id} className="border-b border-gris-200 pb-4 last:border-0 last:pb-0">

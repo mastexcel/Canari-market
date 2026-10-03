@@ -41,7 +41,7 @@ export default async function SupplierRfq({ params }: { params: Promise<{ id: st
         <dd>{formatDateTime(rfq.closesAt)}</dd>
       </dl>
       <p className="text-xs text-anthracite-600">
-        CANARI compare les offres sur le prix, la qualité, la fiabilité, le délai et la capacité. Vous ne voyez jamais les offres concurrentes, et elles ne voient pas la vôtre.
+        Sesam-Market compare les offres sur le prix, la qualité, la fiabilité, le délai et la capacité. Vous ne voyez jamais les offres concurrentes, et elles ne voient pas la vôtre.
       </p>
       {rfq.status === "OPEN" ? (
         <RfqResponseForm rfqId={rfq.id} units={units} existing={myResponse ? { unitPrice: myResponse.unitPrice, unitsOffered: myResponse.unitsOffered, leadTimeDays: myResponse.leadTimeDays, deliveryLocation: myResponse.deliveryLocation, conditions: myResponse.conditions ?? "", qualityNote: myResponse.qualityNote ?? "" } : null} />

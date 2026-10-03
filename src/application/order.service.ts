@@ -122,7 +122,7 @@ export async function quoteCheckout(userId: string, input: CheckoutInput, db: Db
 async function uniqueOrderNumber(db: Db, now: Date) {
   const d = now.toISOString().slice(2, 10).replace(/-/g, "");
   for (let i = 0; i < 10; i++) {
-    const n = `CAN-${d}-${humanCode(5)}`;
+    const n = `SES-${d}-${humanCode(5)}`;
     if (!(await db.order.findUnique({ where: { number: n }, select: { id: true } }))) return n;
   }
   throw new Error("Numéro de commande indisponible.");

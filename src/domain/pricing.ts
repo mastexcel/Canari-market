@@ -7,7 +7,7 @@
  * plus des frais de fractionnement explicites lorsqu'elle est plus petite
  * que l'unité fournisseur.
  *
- * Garantie CANARI : le prix payé est un PLAFOND. À la clôture, si un palier
+ * Garantie Sesam-Market : le prix payé est un PLAFOND. À la clôture, si un palier
  * plus avantageux est atteint, la différence est remboursée ; le prix ne peut
  * jamais augmenter après paiement.
  */
@@ -69,7 +69,7 @@ export function payableUnitPrice(tiers: readonly Tier[], committedUnits: number)
   return (reachedTier(sorted, committedUnits) ?? sorted[0]).unitPrice;
 }
 
-/** Prix unitaire au volume objectif (le « prix CANARI » mis en avant). */
+/** Prix unitaire au volume objectif (le « prix Sesam-Market » mis en avant). */
 export function targetUnitPrice(tiers: readonly Tier[], targetUnits: number): number {
   const sorted = normalizeTiers(tiers);
   return (reachedTier(sorted, targetUnits) ?? sorted[0]).unitPrice;

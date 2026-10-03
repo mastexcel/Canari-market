@@ -129,7 +129,7 @@ describe("communautés, permissions, téléphone", () => {
     expect(communityLevel(35).key).toBe("ARGENT");
     expect(nextCommunityLevel(35)).toMatchObject({ remainingOrders: 25 });
     expect(nextCommunityLevel(100)).toBeNull();
-    expect(slugify("CANARI Angré 8e Tranche !")).toBe("canari-angre-8e-tranche");
+    expect(slugify("Sesam Angré 8e Tranche !")).toBe("sesam-angre-8e-tranche");
   });
   it("applique le RBAC", () => {
     const admin = { id: "1", role: "ADMIN" as const, adminPermissions: ["ORDERS_MANAGE" as const] };

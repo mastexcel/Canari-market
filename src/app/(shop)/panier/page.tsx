@@ -42,7 +42,7 @@ export default async function CartPage() {
                 <p className="text-xs text-anthracite-600">{l.sublabel}</p>
                 {l.price && (
                   <p className="mt-0.5 text-sm">
-                    <span className="tabular font-bold text-bordeaux-700">{formatFcfa(l.price.unitPrice + l.price.fractionationFee)}</span>
+                    <span className="tabular font-bold text-brand-700">{formatFcfa(l.price.unitPrice + l.price.fractionationFee)}</span>
                     {l.price.referenceIsUsable && l.price.referenceUnitPrice > l.price.unitPrice + l.price.fractionationFee && (
                       <span className="ml-1.5 text-xs text-anthracite-500 line-through">{formatFcfa(l.price.referenceUnitPrice)}</span>
                     )}
@@ -67,7 +67,7 @@ export default async function CartPage() {
         </div>
         {cart.savings > 0 && (
           <div className="flex justify-between font-semibold text-economie-700">
-            <span>Économie CANARI</span>
+            <span>Économie Sesam-Market</span>
             <span className="tabular">−{formatFcfa(cart.savings)}</span>
           </div>
         )}

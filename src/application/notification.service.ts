@@ -25,11 +25,11 @@ export const TEMPLATES = {
   }),
   group_failed_credit: (v: Vars) => ({
     title: "Achat groupé non abouti",
-    body: `« ${v.title} » n'a pas atteint son seuil. Comme vous l'avez choisi, ${formatFcfa(Number(v.amount))} sont crédités sur votre avoir CANARI.`,
+    body: `« ${v.title} » n'a pas atteint son seuil. Comme vous l'avez choisi, ${formatFcfa(Number(v.amount))} sont crédités sur votre avoir Sesam-Market.`,
   }),
   group_alternative: (v: Vars) => ({
     title: "Une proposition pour votre achat",
-    body: `« ${v.title} » n'a pas atteint son seuil. CANARI vous propose un prix alternatif : acceptez ou soyez remboursé.`,
+    body: `« ${v.title} » n'a pas atteint son seuil. Sesam-Market vous propose un prix alternatif : acceptez ou soyez remboursé.`,
   }),
   group_extended: (v: Vars) => ({
     title: "Achat groupé prolongé",
@@ -61,7 +61,7 @@ export const TEMPLATES = {
   }),
   referral_rewarded: (v: Vars) => ({
     title: "Parrainage récompensé",
-    body: `${formatFcfa(Number(v.amount))} crédités sur votre avoir CANARI. Merci de faire grandir le groupe !`,
+    body: `${formatFcfa(Number(v.amount))} crédités sur votre avoir Sesam-Market. Merci de faire grandir le groupe !`,
   }),
   rfq_opened: (v: Vars) => ({
     title: "Nouvelle demande de cotation",

@@ -1,4 +1,4 @@
-// CANARI — modèle de données
+// Sesam-Market — modèle de données
 // Conventions :
 //  - Montants en FCFA entiers (XOF n'a pas de sous-unité) : type Int.
 //  - Quantités physiques en unité de base entière (gramme, millilitre ou pièce) : suffixe "Base".
@@ -406,7 +406,7 @@ model Household {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-/// Petit commerçant — socle pour le futur module CANARI BUSINESS.
+/// Petit commerçant — socle pour le futur module Sesam-Market BUSINESS.
 model Merchant {
   id           String   @id @default(cuid())
   userId       String   @unique
@@ -516,7 +516,7 @@ model ReferencePrice {
   variantId   String
   price       Int
   source      ReferencePriceSource
-  sourceLabel String // ex. « Relevé CANARI – marché d'Adjamé »
+  sourceLabel String // ex. « Relevé Sesam-Market – marché d'Adjamé »
   method      String // ex. « Médiane de 3 relevés »
   observedAt  DateTime
   createdById String?

@@ -87,7 +87,7 @@ export async function getCommunity(slug: string, userId: string | null, db: Db =
 }
 
 export async function createCommunity(userId: string, input: z.infer<typeof communitySchema>, db: Db = prisma) {
-  const base = slugify(input.name.toLowerCase().startsWith("canari") ? input.name : `canari ${input.name}`);
+  const base = slugify(input.name.toLowerCase().startsWith("accent") ? input.name : `sesam ${input.name}`);
   let slug = base;
   for (let i = 2; await db.community.findUnique({ where: { slug }, select: { id: true } }); i++) slug = `${base}-${i}`;
   if (input.pickupPointId) {
@@ -98,7 +98,7 @@ export async function createCommunity(userId: string, input: z.infer<typeof comm
     const community = await db.community.create({
       data: {
         slug,
-        name: input.name.toLowerCase().startsWith("canari") ? input.name : `CANARI ${input.name}`,
+        name: input.name.toLowerCase().startsWith("accent") ? input.name : `Sesam ${input.name}`,
         type: input.type,
         commune: input.commune,
         quartier: input.quartier || null,

@@ -41,7 +41,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
   const unit = gb.supplierUnitLabel.toLowerCase();
   const open = gb.status === "OPEN" && gb.closesAt > now;
   const shareUrl = `${env().APP_URL}/achats-groupes/${gb.slug}${user ? `?ref=${user.referralCode}` : ""}`;
-  const qrSvg = await QRCode.toString(shareUrl, { type: "svg", margin: 1, color: { dark: "#5e0f25", light: "#ffffff" } });
+  const qrSvg = await QRCode.toString(shareUrl, { type: "svg", margin: 1, color: { dark: "#0e5f36", light: "#ffffff" } });
 
   return (
     <div className="space-y-4">
@@ -66,8 +66,8 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-anthracite-600">Prix CANARI à l&apos;objectif</dt>
-            <dd className="text-lg font-extrabold tabular text-bordeaux-700">{formatFcfa(p.targetUnitPrice)}</dd>
+            <dt className="text-xs text-anthracite-600">Prix Sesam-Market à l&apos;objectif</dt>
+            <dd className="text-lg font-extrabold tabular text-brand-700">{formatFcfa(p.targetUnitPrice)}</dd>
           </div>
         </dl>
         {gb.targetSavingPerUnit ? (
@@ -83,7 +83,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
       <Card className="p-4">
         <div className="flex items-baseline justify-between">
           <p className="text-sm font-semibold text-anthracite-700">Progression</p>
-          <p className="text-3xl font-black tabular text-bordeaux-700">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
+          <p className="text-3xl font-black tabular text-brand-700">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
         </div>
         <p className="mb-2 text-xl font-extrabold tabular">
           {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="text-base font-semibold text-anthracite-600">{unitNoun(gb.supplierUnitLabel, gb.targetUnits)}</span>
@@ -100,7 +100,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
             const reached = p.committedUnits >= t.minUnits;
             const isNext = p.nextTier?.minUnits === t.minUnits;
             return (
-              <li key={t.id} className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm ${reached ? "bg-economie-50 font-semibold" : isNext ? "bg-canari-100" : "bg-gris-50"}`}>
+              <li key={t.id} className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm ${reached ? "bg-economie-50 font-semibold" : isNext ? "bg-accent-100" : "bg-gris-50"}`}>
                 <span>
                   {reached ? "✅" : isNext ? "🎯" : "⬜"} {t.minUnits} {unitNoun(gb.supplierUnitLabel, t.minUnits)}
                 </span>
@@ -137,7 +137,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
         <div className="mt-3 rounded-xl bg-gris-50 p-3">
           <p className="font-bold">Si le seuil n&apos;est pas atteint</p>
           <p className="mt-1 text-anthracite-700">{gb.failurePolicyText}</p>
-          <p className="mt-2 font-bold">Garantie CANARI</p>
+          <p className="mt-2 font-bold">Garantie Sesam-Market</p>
           <p className="mt-1 text-anthracite-700">Vous payez le prix actuel. Si un meilleur palier est atteint à la clôture, la différence vous est remboursée. Le prix ne peut jamais augmenter.</p>
         </div>
       </Card>

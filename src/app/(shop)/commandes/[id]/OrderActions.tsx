@@ -94,10 +94,10 @@ export function OrderActions({ orderId, canPay, canCancel }: { orderId: string; 
 export function AlternativeDecision({ orderId, itemId, label, supplement }: { orderId: string; itemId: string; label: string; supplement: number }) {
   const { busy, run, router } = useAction();
   return (
-    <div className="rounded-[var(--radius-card)] border-2 border-canari-500 bg-canari-100 p-4">
+    <div className="rounded-[var(--radius-card)] border-2 border-accent-500 bg-accent-100 p-4">
       <p className="font-bold">Une décision est attendue de votre part</p>
       <p className="mt-1 text-sm text-anthracite-800">
-        L&apos;achat groupé pour « {label} » n&apos;a pas atteint son seuil. CANARI vous propose un prix alternatif
+        L&apos;achat groupé pour « {label} » n&apos;a pas atteint son seuil. Sesam-Market vous propose un prix alternatif
         {supplement > 0 ? ` (supplément de ${formatFcfa(supplement)})` : ""}. Sans réponse sous 72 h, vous êtes remboursé.
       </p>
       <div className="mt-3 flex gap-2">

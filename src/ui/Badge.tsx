@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { cn } from "./cn";
 
-type Tone = "neutral" | "bordeaux" | "canari" | "economie" | "alerte" | "info";
+type Tone = "neutral" | "brand" | "accent" | "economie" | "alerte" | "info";
 
 const tones: Record<Tone, string> = {
   neutral: "bg-gris-200 text-anthracite-800",
-  bordeaux: "bg-bordeaux-100 text-bordeaux-800",
-  canari: "bg-canari-100 text-canari-700",
+  brand: "bg-brand-100 text-brand-800",
+  accent: "bg-accent-100 text-accent-700",
   economie: "bg-economie-100 text-economie-700",
   alerte: "bg-alerte-100 text-alerte-700",
   info: "bg-info-100 text-info-700",

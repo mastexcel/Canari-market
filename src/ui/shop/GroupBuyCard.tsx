@@ -24,11 +24,11 @@ export function GroupBuyCard({ gb, now = new Date() }: { gb: GroupBuyView; now?:
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <h3 className="font-bold leading-snug text-anthracite-900">{gb.title}</h3>
-            {gb.community && <Badge tone="bordeaux">{gb.community.name.replace(/^CANARI /, "")}</Badge>}
+            {gb.community && <Badge tone="brand">{gb.community.name.replace(/^Sesam /, "")}</Badge>}
           </div>
           <p className="mt-0.5 text-sm text-anthracite-600">
             {gb.referenceIsFresh && <span className="mr-1.5 line-through">{formatFcfa(gb.referenceUnitPrice)}</span>}
-            <strong className="text-bordeaux-700">{formatFcfa(p.targetUnitPrice)}</strong> <span className="text-xs">/ {unit}</span>
+            <strong className="text-brand-700">{formatFcfa(p.targetUnitPrice)}</strong> <span className="text-xs">/ {unit}</span>
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@ export function GroupBuyCard({ gb, now = new Date() }: { gb: GroupBuyView; now?:
           <span className="font-bold tabular text-anthracite-900">
             {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="font-normal text-anthracite-600">{unitNoun(gb.supplierUnitLabel, gb.targetUnits)}</span>
           </span>
-          <span className="font-extrabold tabular text-bordeaux-700">{Math.floor(p.percentOfTarget)} %</span>
+          <span className="font-extrabold tabular text-brand-700">{Math.floor(p.percentOfTarget)} %</span>
         </div>
         <GroupProgress percent={p.percentOfTarget} markers={tierMarkers(gb)} label={`Progression de ${gb.title}`} />
         <div className="mt-2 flex items-center justify-between gap-2 text-xs">

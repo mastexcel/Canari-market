@@ -21,7 +21,7 @@ migrations versionnées dans `prisma/migrations`.
 `Merchant`, `Address`, `AuditLog`, `AnalyticsEvent` (sans données personnelles).
 
 **Catalogue** — `Category` (arborescence), `Product` (unité de base),
-`ProductVariant` (unité vendue, poids, prix CANARI), `ReferencePrice` (prix daté,
+`ProductVariant` (unité vendue, poids, prix Sesam-Market), `ReferencePrice` (prix daté,
 source, méthode), `FamilyBasket` / `FamilyBasketItem`.
 
 **Fournisseurs** — `Supplier` (scores qualité/fiabilité/ponctualité, statut KYB),

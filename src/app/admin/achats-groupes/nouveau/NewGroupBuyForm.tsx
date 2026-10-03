@@ -27,7 +27,7 @@ export function NewGroupBuyForm({ products, communities }: { products: Product[]
     targetUnits: "200",
     maxUnits: "500",
     referenceUnitPrice: "",
-    referenceSource: "Relevé CANARI — marché d'Adjamé",
+    referenceSource: "Relevé Sesam-Market — marché d'Adjamé",
     referenceMethod: "Médiane de 3 relevés, même conditionnement",
     referenceObservedAt: day(0),
     opensAt: day(0),

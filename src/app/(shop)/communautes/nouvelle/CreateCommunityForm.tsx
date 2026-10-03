@@ -32,7 +32,7 @@ export function CreateCommunityForm({ communes, points, defaultCommune }: { comm
         }
       }}
     >
-      <Input label="Nom" required value={f.name} onChange={set("name")} placeholder="Ex. Angré 8e Tranche" hint="« CANARI » sera ajouté automatiquement." />
+      <Input label="Nom" required value={f.name} onChange={set("name")} placeholder="Ex. Angré 8e Tranche" hint="« Sesam » sera ajouté automatiquement." />
       <Select label="Type" value={f.type} onChange={set("type")}>
         <option value="NEIGHBORHOOD">Quartier</option>
         <option value="RESIDENCE">Résidence</option>

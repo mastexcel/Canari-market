@@ -6,7 +6,7 @@ export function Fcfa({ amount, className }: { amount: number; className?: string
   return <span className={cn("tabular whitespace-nowrap", className)}>{formatFcfa(amount)}</span>;
 }
 
-/** Bloc comparateur : référence datée et sourcée, prix CANARI, économie. */
+/** Bloc comparateur : référence datée et sourcée, prix Sesam-Market, économie. */
 export function PriceCompare({
   canari,
   reference,
@@ -39,14 +39,14 @@ export function PriceCompare({
         </p>
       )}
       <p className="text-anthracite-900">
-        Prix CANARI : <strong className="tabular text-bordeaux-700">{formatFcfa(canari)}</strong>
+        Prix Sesam-Market : <strong className="tabular text-brand-700">{formatFcfa(canari)}</strong>
       </p>
       {saving !== null && saving > 0 && (
         <p className="font-semibold text-economie-700">
           Économie : <span className="tabular">{formatFcfa(saving)}</span> ({formatBps(bps!)})
         </p>
       )}
-      {reference !== null && !fresh && <p className="text-xs text-canari-700">Économie non affichée : prix de référence à actualiser.</p>}
+      {reference !== null && !fresh && <p className="text-xs text-accent-700">Économie non affichée : prix de référence à actualiser.</p>}
     </div>
   );
 }

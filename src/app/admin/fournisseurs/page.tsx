@@ -6,9 +6,9 @@ import { H1, Table } from "@/ui/pro/ProShell";
 
 export const metadata = { title: "Fournisseurs" };
 
-const V: Record<string, { label: string; tone: "economie" | "canari" | "alerte" | "neutral" }> = {
+const V: Record<string, { label: string; tone: "economie" | "accent" | "alerte" | "neutral" }> = {
   VERIFIED: { label: "Vérifié", tone: "economie" },
-  IN_REVIEW: { label: "En revue", tone: "canari" },
+  IN_REVIEW: { label: "En revue", tone: "accent" },
   PENDING: { label: "À vérifier", tone: "neutral" },
   REJECTED: { label: "Refusé", tone: "alerte" },
 };

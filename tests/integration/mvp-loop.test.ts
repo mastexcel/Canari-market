@@ -145,7 +145,7 @@ describe("boucle MVP", () => {
     expect(po.totalAmount).toBe(5 * 22_000);
     expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("SUPPLIER_ORDERED");
 
-    // Fournisseur confirme et expédie ; CANARI réceptionne (avec 1 kg d'avarie)
+    // Fournisseur confirme et expédie ; Sesam-Market réceptionne (avec 1 kg d'avarie)
     await confirmPurchaseOrder(f.supplierUser.id, po.id);
     expect((await prisma.order.findUniqueOrThrow({ where: { id: order.id } })).status).toBe("SUPPLIER_CONFIRMED");
     await shipPurchaseOrder(f.supplierUser.id, po.id);

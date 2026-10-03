@@ -1,6 +1,6 @@
 /**
  * Abstraction des prestataires de paiement (Mobile Money, carte, wallet).
- * CANARI ne voit ni ne stocke JAMAIS de données de carte : le prestataire
+ * Sesam-Market ne voit ni ne stocke JAMAIS de données de carte : le prestataire
  * héberge la saisie (redirection) et ne renvoie que des références.
  */
 export type ProviderPaymentStatus = "PENDING" | "AUTHORIZED" | "PAID" | "FAILED";

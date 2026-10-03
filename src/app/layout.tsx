@@ -4,17 +4,17 @@ import { ToastProvider } from "@/ui/Toast";
 import { ServiceWorker } from "@/ui/ServiceWorker";
 
 export const metadata: Metadata = {
-  title: { default: "CANARI — Acheter ensemble, mieux vivre", template: "%s · CANARI" },
+  title: { default: "Sesam-Market — À plusieurs, les prix s’ouvrent", template: "%s · Sesam-Market" },
   description: "Centrale d'achat numérique pour les ménages et petits commerces de Côte d'Ivoire. Plus nous sommes nombreux à acheter ensemble, moins nous payons cher.",
   manifest: "/manifest.webmanifest",
-  applicationName: "CANARI",
-  appleWebApp: { capable: true, title: "CANARI", statusBarStyle: "black-translucent" },
+  applicationName: "Sesam-Market",
+  appleWebApp: { capable: true, title: "Sesam-Market", statusBarStyle: "black-translucent" },
   icons: { apple: "/icons/apple-touch-icon.png" },
   formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#8e1b3a",
+  themeColor: "#0e5f36",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",

@@ -18,7 +18,7 @@ export default async function PrivacyPage() {
       <PageHeader title="Confidentialité" back={<BackLink href="/compte" />} />
       <Card className="space-y-2 p-4 text-sm text-anthracite-700">
         <p className="font-bold text-anthracite-900">Nos engagements</p>
-        <p>Nous collectons uniquement ce qui sert à vos commandes : prénom, téléphone, quartier, adresse de livraison. Aucune donnée bancaire n&apos;est stockée par CANARI.</p>
+        <p>Nous collectons uniquement ce qui sert à vos commandes : prénom, téléphone, quartier, adresse de livraison. Aucune donnée bancaire n&apos;est stockée par Sesam-Market.</p>
         <p>Vos achats individuels ne sont jamais vendus. Les analyses partagées avec des partenaires sont agrégées et anonymisées.</p>
         <p>Conservation : données de compte tant que le compte est actif ; pièces comptables 10 ans (obligation légale), détachées de votre identité après suppression du compte.</p>
       </Card>

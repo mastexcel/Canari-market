@@ -13,7 +13,7 @@ export default async function PickupHome() {
       <H1>{d.point.name}</H1>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         <StatCard label="En route vers vous" value={String(d.incoming.length)} />
-        <StatCard tone="bordeaux" label="À remettre" value={String(d.waiting.length)} />
+        <StatCard tone="brand" label="À remettre" value={String(d.waiting.length)} />
         <StatCard tone="economie" label="Rémunération du mois" value={formatFcfa(d.earnings.thisMonth)} hint={`${d.earnings.monthParcels} colis × ${formatFcfa(d.point.feePerParcel)}`} />
         <StatCard label="Total perçu" value={formatFcfa(d.earnings.total)} hint={`${d.earnings.parcels} colis remis`} />
       </div>

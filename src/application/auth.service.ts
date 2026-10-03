@@ -11,7 +11,7 @@ import { normalizeIvorianPhone } from "@/domain/phone";
 import type { SignupInput } from "./schemas";
 import { track } from "./analytics.service";
 
-export const SESSION_COOKIE = "canari_session";
+export const SESSION_COOKIE = "sesam_session";
 export const SESSION_TTL_MS = 30 * 24 * 3600 * 1000;
 const MAX_FAILED_LOGINS = 5;
 const LOCK_MS = 15 * 60 * 1000;
@@ -34,7 +34,7 @@ export type SessionUser = Prisma.UserGetPayload<{ select: typeof sessionUserSele
 
 async function uniqueReferralCode(db: Db): Promise<string> {
   for (let i = 0; i < 10; i++) {
-    const code = `CAN${humanCode(5)}`;
+    const code = `SES${humanCode(5)}`;
     if (!(await db.user.findUnique({ where: { referralCode: code }, select: { id: true } }))) return code;
   }
   throw new Error("Impossible de générer un code de parrainage unique.");

@@ -30,8 +30,8 @@ export default async function BasketPage({ params }: { params: Promise<{ slug: s
             <dd className="tabular line-through">{formatFcfa(b.referenceTotal)}</dd>
           </div>
           <div className="flex justify-between text-lg">
-            <dt className="font-bold">Prix CANARI</dt>
-            <dd className="tabular font-extrabold text-bordeaux-700">{formatFcfa(b.canariTotal)}</dd>
+            <dt className="font-bold">Prix Sesam-Market</dt>
+            <dd className="tabular font-extrabold text-brand-700">{formatFcfa(b.canariTotal)}</dd>
           </div>
           <div className="flex justify-between font-bold text-economie-700">
             <dt>Économie</dt>
@@ -40,7 +40,7 @@ export default async function BasketPage({ params }: { params: Promise<{ slug: s
             </dd>
           </div>
         </dl>
-        {b.oldestReference && <p className="mt-2 text-xs text-anthracite-500">Prix de référence : relevés CANARI sur les marchés d&apos;Abidjan, le plus ancien du {formatShortDate(b.oldestReference)}.</p>}
+        {b.oldestReference && <p className="mt-2 text-xs text-anthracite-500">Prix de référence : relevés Sesam-Market sur les marchés d&apos;Abidjan, le plus ancien du {formatShortDate(b.oldestReference)}.</p>}
         {!b.referenceComplete && (
           <Alert tone="warning" className="mt-2">
             Certains relevés sont anciens : leur économie n&apos;est pas comptée.

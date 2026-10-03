@@ -1,5 +1,5 @@
 /**
- * Seed de démonstration CANARI (Abidjan).
+ * Seed de démonstration Sesam-Market (Abidjan).
  * Toutes les commandes passent par les VRAIS services (panier → commande →
  * paiement → clôture → RFQ → bon de commande → réception → fractionnement →
  * livraison) : les compteurs, stocks, remboursements et économies sont donc
@@ -53,17 +53,17 @@ async function main() {
   const t0 = Date.now();
   console.log("→ Réinitialisation…");
   await reset();
-  const passwordHash = await hashPassword("canari2026");
+  const passwordHash = await hashPassword("sesam2026");
 
   const mkUser = (data: Omit<Prisma.UserCreateInput, "passwordHash" | "referralCode"> & { referralCode?: string }) =>
-    prisma.user.create({ data: { passwordHash, referralCode: data.referralCode ?? code("CAN"), ...data } });
+    prisma.user.create({ data: { passwordHash, referralCode: data.referralCode ?? code("SES"), ...data } });
 
   // ─── Référentiels ───────────────────────────────────────
   console.log("→ Catalogue, zones, points relais…");
   const cats = new Map<string, string>();
   for (const [i, c] of CATEGORIES.entries()) cats.set(c.slug, (await prisma.category.create({ data: { ...c, sortOrder: i } })).id);
 
-  const warehouse = await prisma.warehouse.create({ data: { name: "Entrepôt CANARI Yopougon", commune: "Yopougon", address: "Zone industrielle, lot 42" } });
+  const warehouse = await prisma.warehouse.create({ data: { name: "Entrepôt Sesam-Market Yopougon", commune: "Yopougon", address: "Zone industrielle, lot 42" } });
   for (const z of COMMUNES_ZONES) {
     await prisma.deliveryZone.create({ data: { commune: z.commune, baseFee: z.baseFee, distanceKm: z.distanceKm, perKmFee: 20, perKgFee: 50, includedWeightKg: 10, scheduledSurcharge: 500, quartiers: z.quartiers } });
   }
@@ -82,7 +82,7 @@ async function main() {
         emoji,
         baseUnit: unit,
         categoryId: cats.get(cat)!,
-        description: `${name}${brand ? ` de marque ${brand}` : ""}, sélectionné par CANARI auprès de fournisseurs vérifiés.`,
+        description: `${name}${brand ? ` de marque ${brand}` : ""}, sélectionné par Sesam-Market auprès de fournisseurs vérifiés.`,
         popularity: between(5, 100),
         variants: { create: { sku: `SKU-${String(i + 1).padStart(3, "0")}`, name: vLabel, quantityBase: qty, weightGrams: weight, canariPrice: price } },
       },
@@ -93,8 +93,8 @@ async function main() {
     const stale = i % 17 === 5;
     await prisma.referencePrice.createMany({
       data: [
-        { variantId: v.id, price: Math.round((ref * 1.02) / 25) * 25, source: "MARKET_SURVEY", sourceLabel: "Relevé CANARI — marchés d'Adjamé et de Cocody", method: "Médiane de 3 relevés en boutique et au marché", observedAt: daysAgo(stale ? 75 : 40) },
-        { variantId: v.id, price: ref, source: i % 3 ? "MARKET_SURVEY" : "RETAILER_PRICE", sourceLabel: i % 3 ? "Relevé CANARI — marché d'Adjamé" : "Prix affiché en supérette (Cocody)", method: "Médiane de 3 relevés", observedAt: daysAgo(stale ? 45 : between(1, 20)) },
+        { variantId: v.id, price: Math.round((ref * 1.02) / 25) * 25, source: "MARKET_SURVEY", sourceLabel: "Relevé Sesam-Market — marchés d'Adjamé et de Cocody", method: "Médiane de 3 relevés en boutique et au marché", observedAt: daysAgo(stale ? 75 : 40) },
+        { variantId: v.id, price: ref, source: i % 3 ? "MARKET_SURVEY" : "RETAILER_PRICE", sourceLabel: i % 3 ? "Relevé Sesam-Market — marché d'Adjamé" : "Prix affiché en supérette (Cocody)", method: "Médiane de 3 relevés", observedAt: daysAgo(stale ? 45 : between(1, 20)) },
       ],
     });
     await prisma.inventory.create({ data: { warehouseId: warehouse.id, productId: p.id, quantityBase: qty * between(150, 400) } });
@@ -108,8 +108,8 @@ async function main() {
 
   // ─── Comptes ────────────────────────────────────────────
   console.log("→ Comptes (admins, fournisseurs, livreurs, points relais, ménages)…");
-  const admin = await mkUser({ phone: "+2250700000099", firstName: "Admin", lastName: "CANARI", role: "ADMIN", adminPermissions: ["SUPER_ADMIN"], commune: "Plateau", quartier: "Centre", referralCode: "CANADMIN" });
-  await mkUser({ phone: "+2250700000098", firstName: "Opérations", lastName: "CANARI", role: "ADMIN", adminPermissions: ["ORDERS_MANAGE", "LOGISTICS_MANAGE", "ANALYTICS_VIEW"], commune: "Yopougon", quartier: "Zone industrielle" });
+  const admin = await mkUser({ phone: "+2250700000099", firstName: "Admin", lastName: "Sesam-Market", role: "ADMIN", adminPermissions: ["SUPER_ADMIN"], commune: "Plateau", quartier: "Centre", referralCode: "SESADMIN" });
+  await mkUser({ phone: "+2250700000098", firstName: "Opérations", lastName: "Sesam-Market", role: "ADMIN", adminPermissions: ["ORDERS_MANAGE", "LOGISTICS_MANAGE", "ANALYTICS_VIEW"], commune: "Yopougon", quartier: "Zone industrielle" });
 
   const points = new Map<string, { id: string; managerId: string }>();
   for (const [i, p] of PICKUP_POINTS.entries()) {
@@ -153,7 +153,7 @@ async function main() {
 
   // Ménages et commerçants
   const households: Array<{ id: string; commune: string }> = [];
-  const awa = await mkUser({ phone: "+2250700000001", firstName: "Awa", lastName: "Kouassi", role: "HOUSEHOLD", commune: "Cocody", quartier: "Angré 8e Tranche", referralCode: "CANAWA01", household: { create: { adults: 2, children: 3 } } });
+  const awa = await mkUser({ phone: "+2250700000001", firstName: "Awa", lastName: "Kouassi", role: "HOUSEHOLD", commune: "Cocody", quartier: "Angré 8e Tranche", referralCode: "SESAWA01", household: { create: { adults: 2, children: 3 } } });
   households.push({ id: awa.id, commune: "Cocody" });
   for (let i = 2; i <= 130; i++) {
     const zone = pick(COMMUNES_ZONES.slice(0, 7));
@@ -190,7 +190,7 @@ async function main() {
         type: c.type,
         commune: c.commune,
         quartier: c.quartier,
-        description: `Les habitants et membres de ${c.name.replace("CANARI ", "")} achètent ensemble pour payer moins cher.`,
+        description: `Les habitants et membres de ${c.name.replace("Sesam ", "")} achètent ensemble pour payer moins cher.`,
         createdById: creator.id,
         pickupPointId: c.point ? points.get(c.point)!.id : null,
         deliveryWeekday: c.weekday,
@@ -323,7 +323,7 @@ async function main() {
       data: {
         slug: slugify(def.title),
         title: def.title,
-        description: `Achat groupé direct auprès de ${def.supplier}. CANARI réceptionne, contrôle la qualité, fractionne et livre dans votre quartier.`,
+        description: `Achat groupé direct auprès de ${def.supplier}. Sesam-Market réceptionne, contrôle la qualité, fractionne et livre dans votre quartier.`,
         productId: product.id,
         communityId: def.community !== undefined ? communityIds[def.community] : null,
         status: "OPEN",
@@ -332,7 +332,7 @@ async function main() {
         targetUnits: def.target,
         maxUnits: def.max,
         referenceUnitPrice: def.ref,
-        referenceSource: "Relevé CANARI — marchés d'Adjamé, Yopougon et Cocody",
+        referenceSource: "Relevé Sesam-Market — marchés d'Adjamé, Yopougon et Cocody",
         referenceMethod: "Médiane de 3 relevés au prix de gros-détail, même conditionnement",
         referenceObservedAt: new Date(opensAt.getTime() - 2 * DAY),
         opensAt,
@@ -405,12 +405,12 @@ async function main() {
     if (closed.status !== "CLOSED_SUCCESS") continue;
 
     // Approvisionnement : RFQ, offres concurrentes, attribution motivée
-    const rfq = await createRfqFromGroupBuy(gb.id, { quality: "Conforme à l'échantillon validé", packaging: def.unitLabel, destination: "Entrepôt CANARI Yopougon", neededBy: new Date(Date.now() + 5 * DAY), closesAt: new Date(Date.now() + 2 * DAY) }, admin.id);
+    const rfq = await createRfqFromGroupBuy(gb.id, { quality: "Conforme à l'échantillon validé", packaging: def.unitLabel, destination: "Entrepôt Sesam-Market Yopougon", neededBy: new Date(Date.now() + 5 * DAY), closesAt: new Date(Date.now() + 2 * DAY) }, admin.id);
     const bidders = [sup(def.supplier), ...suppliers.filter((s) => s.verified && s.name !== def.supplier).slice(gi, gi + 2)];
     for (const [bi, b] of bidders.entries()) {
       const spId = await prisma.supplierProduct.findFirst({ where: { supplierId: b.id, productId: product.id } });
       if (!spId) await prisma.supplierProduct.create({ data: { supplierId: b.id, productId: product.id, supplierUnitLabel: def.unitLabel, supplierUnitQuantityBase: def.unitBase, capacityUnitsPerWeek: def.max, leadTimeDays: 3 } });
-      await submitRfqResponse(b.userId, rfq.id, { unitPrice: def.cost + bi * Math.round(def.cost * (bi === 1 ? -0.015 : 0.02)), unitsOffered: def.max, leadTimeDays: 2 + bi * 2, deliveryLocation: "Entrepôt CANARI Yopougon", validUntil: new Date(Date.now() + 10 * DAY), conditions: "Paiement à 15 jours après réception" });
+      await submitRfqResponse(b.userId, rfq.id, { unitPrice: def.cost + bi * Math.round(def.cost * (bi === 1 ? -0.015 : 0.02)), unitsOffered: def.max, leadTimeDays: 2 + bi * 2, deliveryLocation: "Entrepôt Sesam-Market Yopougon", validUntil: new Date(Date.now() + 10 * DAY), conditions: "Paiement à 15 jours après réception" });
     }
     const { ranked } = await getRfqWithRanking(rfq.id);
     const po = await awardRfq(rfq.id, ranked[0].responseId, null, admin.id);
@@ -495,7 +495,7 @@ async function main() {
 
   const delivered = await prisma.order.findMany({ where: { status: "DELIVERED" }, include: { items: { take: 1 } }, take: 80 });
   for (const o of delivered.slice(0, 60)) {
-    await prisma.review.create({ data: { userId: o.userId, orderId: o.id, target: "ORDER", rating: between(3, 5), comment: pick(["Très bon rapport qualité-prix.", "Retrait rapide au point relais.", "Riz de bonne qualité, merci CANARI !", "Économie réelle par rapport au marché.", null]) } }).catch(() => undefined);
+    await prisma.review.create({ data: { userId: o.userId, orderId: o.id, target: "ORDER", rating: between(3, 5), comment: pick(["Très bon rapport qualité-prix.", "Retrait rapide au point relais.", "Riz de bonne qualité, merci Sesam-Market !", "Économie réelle par rapport au marché.", null]) } }).catch(() => undefined);
     if (o.items[0]) await prisma.review.create({ data: { userId: o.userId, orderId: o.id, target: "PRODUCT", productId: o.items[0].productId, rating: between(3, 5) } }).catch(() => undefined);
   }
   await prisma.supportTicket.create({ data: { userId: households[4].id, category: "DELIVERY", subject: "Horaires du point relais", messages: { create: { authorId: households[4].id, body: "Bonjour, le point relais de Niangon est-il ouvert le dimanche ?" } } } });
@@ -525,7 +525,7 @@ async function main() {
     delivered: await prisma.order.count({ where: { status: "DELIVERED" } }),
   };
   console.log(`✔ Seed terminé en ${Math.round((Date.now() - t0) / 1000)} s (${orderCount} commandes passées par les services)`, counts);
-  console.log("  Mot de passe de tous les comptes de démo : canari2026");
+  console.log("  Mot de passe de tous les comptes de démo : sesam2026");
 }
 
 main()

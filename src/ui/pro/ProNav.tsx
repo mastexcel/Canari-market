@@ -16,7 +16,7 @@ export function ProNav({ items }: { items: NavItem[] }) {
             key={it.href}
             href={it.href}
             aria-current={active ? "page" : undefined}
-            className={cn("flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold", active ? "bg-bordeaux-600 text-white" : "text-anthracite-700 hover:bg-gris-100")}
+            className={cn("flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold", active ? "bg-brand-600 text-white" : "text-anthracite-700 hover:bg-gris-100")}
           >
             <span aria-hidden>{it.emoji}</span>
             {it.label}

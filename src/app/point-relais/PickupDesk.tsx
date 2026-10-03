@@ -7,14 +7,14 @@ import { useCommand } from "@/ui/pro/Command";
 /**
  * Guichet : réception des colis (scan ou saisie du n° de commande) et remise
  * au client contre son code à 6 chiffres. Le QR du client contient
- * « CANARI:<n° commande>:<code> » : un lecteur QR en mode clavier remplit les deux champs.
+ * « SESAM:<n° commande>:<code> » : un lecteur QR en mode clavier remplit les deux champs.
  */
 export function PickupDesk({ incoming }: { incoming: Array<{ number: string; name: string; id: string }> }) {
   const { send, busy } = useCommand("pickup");
   const [number, setNumber] = useState("");
   const [code, setCode] = useState("");
   function onScan(v: string) {
-    const m = v.trim().match(/^CANARI:([A-Z0-9-]+):(\d{6})$/i);
+    const m = v.trim().match(/^SESAM:([A-Z0-9-]+):(\d{6})$/i);
     if (m) {
       setNumber(m[1].toUpperCase());
       setCode(m[2]);
@@ -43,7 +43,7 @@ export function PickupDesk({ incoming }: { incoming: Array<{ number: string; nam
       </section>
       <section className="space-y-3 rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
         <h2 className="font-bold">📤 Remise au client</h2>
-        <Input label="N° de commande (ou scan du QR)" value={number} onChange={(e) => onScan(e.target.value)} placeholder="CAN-261003-XXXXX" />
+        <Input label="N° de commande (ou scan du QR)" value={number} onChange={(e) => onScan(e.target.value)} placeholder="SES-261003-XXXXX" />
         <Input label="Code de retrait du client" inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} />
         <Button
           block
@@ -58,7 +58,7 @@ export function PickupDesk({ incoming }: { incoming: Array<{ number: string; nam
         >
           Valider la remise
         </Button>
-        <p className="text-xs text-anthracite-500">5 essais maximum par colis : en cas d&apos;échecs répétés, contactez le support CANARI.</p>
+        <p className="text-xs text-anthracite-500">5 essais maximum par colis : en cas d&apos;échecs répétés, contactez le support Sesam-Market.</p>
       </section>
     </div>
   );

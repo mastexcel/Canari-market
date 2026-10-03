@@ -30,7 +30,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
     throw e;
   }
   const showCode = ["READY_FOR_PICKUP", "OUT_FOR_DELIVERY", "READY"].includes(order.status);
-  const qr = showCode ? await QRCode.toString(`CANARI:${order.number}:${order.pickupCode}`, { type: "svg", margin: 1, color: { dark: "#1f2023", light: "#ffffff" } }) : null;
+  const qr = showCode ? await QRCode.toString(`SESAM:${order.number}:${order.pickupCode}`, { type: "svg", margin: 1, color: { dark: "#17241c", light: "#ffffff" } }) : null;
   const refunded = order.refunds.reduce((s, r) => s + r.amount, 0);
   const awaiting = order.items.filter((i) => i.participant?.status === "AWAITING_DECISION" && i.groupBuy?.alternativeUnitPrice);
   const cancellable = ["PENDING_PAYMENT", "GROUP_PENDING", "RECEIVED_WAREHOUSE"].includes(order.status) && order.items.every((i) => !i.groupBuy || i.groupBuy.status === "OPEN");
@@ -50,7 +50,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
 
       <Card className="flex items-center justify-between p-4">
         <span className="text-sm text-anthracite-600">Statut</span>
-        <Badge tone="bordeaux">{ORDER_STATUS_LABELS[order.status]}</Badge>
+        <Badge tone="brand">{ORDER_STATUS_LABELS[order.status]}</Badge>
       </Card>
 
       {awaiting.map((i) => (
@@ -171,7 +171,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
       {order.status === "DELIVERED" && <ReviewForm orderId={order.id} done={order.reviews.map((r) => r.target)} />}
 
       <p className="text-center text-sm">
-        Un problème ? <Link href={`/support?commande=${order.id}`} className="font-semibold text-bordeaux-700 underline">Contacter le support</Link>
+        Un problème ? <Link href={`/support?commande=${order.id}`} className="font-semibold text-brand-700 underline">Contacter le support</Link>
       </p>
     </div>
   );

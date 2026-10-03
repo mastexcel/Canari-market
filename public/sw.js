@@ -1,10 +1,10 @@
 /*
- * Service worker CANARI — stratégie « faible connexion » :
+ * Service worker Sesam-Market — stratégie « faible connexion » :
  *  - ressources statiques Next (/_next/static) : cache d'abord (immuables) ;
  *  - pages : réseau d'abord, repli sur le cache puis sur la page hors-ligne ;
  *  - API : jamais mises en cache (données de commande/paiement toujours fraîches).
  */
-const VERSION = "canari-v1";
+const VERSION = "sesam-v1";
 const STATIC = `${VERSION}-static`;
 const PAGES = `${VERSION}-pages`;
 const OFFLINE_URL = "/hors-ligne";
@@ -55,7 +55,7 @@ self.addEventListener("fetch", (event) => {
 // Notifications push (architecture prête : charge utile { title, body, url })
 self.addEventListener("push", (event) => {
   const data = event.data ? event.data.json() : {};
-  event.waitUntil(self.registration.showNotification(data.title || "CANARI", { body: data.body, icon: "/icons/icon-192.png", data: { url: data.url || "/" } }));
+  event.waitUntil(self.registration.showNotification(data.title || "Sesam-Market", { body: data.body, icon: "/icons/icon-192.png", data: { url: data.url || "/" } }));
 });
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
