@@ -32,12 +32,12 @@ export default async function HomePage() {
     <div className="space-y-8">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
       <section className="brand-pattern relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-6 text-white">
-        <Image src={heroImage ?? "/brand/mark.webp"} alt="" width={heroImage ? 260 : 170} height={heroImage ? 260 : 114} priority className={heroImage ? "pointer-events-none absolute -right-8 -bottom-2 w-44 opacity-95" : "pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]"} />
+        <Image src={heroImage ?? "/brand/mark.webp"} alt="" width={heroImage ? 260 : 170} height={heroImage ? 260 : 114} priority className={heroImage ? "pointer-events-none absolute top-8 -right-5 w-40 min-[400px]:w-44" : "pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]"} />
         <p className="relative text-sm font-semibold text-accent-400">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
-        <h1 className="relative mt-1 max-w-[15rem] text-[28px] leading-[1.1] font-black">
+        <h1 className="relative mt-1 max-w-[13.5rem] text-[28px] leading-[1.1] font-black">
           À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
         </h1>
-        <p className="relative mt-2 max-w-[17rem] text-sm text-white/80">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
+        <p className="relative mt-2 max-w-[13.5rem] text-sm text-white/80">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
         {mine && mine.total > 0 && (
           <Link href="/compte/economies" className="relative mt-4 flex items-center justify-between rounded-2xl bg-white/10 p-3 ring-1 ring-white/20 backdrop-blur-sm">
             <span className="text-sm">Vous avez économisé</span>

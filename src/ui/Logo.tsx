@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { cn } from "./cn";
 
-/** Emblème : le canari et son chariot (extrait du logo officiel). */
+/** Emblème : le canari et son chariot (496 × 376). */
 export function BrandMark({ size = 40, className }: { size?: number; className?: string }) {
-  return <Image src="/brand/mark.webp" alt="" width={Math.round(size * 1.49)} height={size} className={cn("object-contain", className)} priority />;
+  return <Image src="/brand/mark.webp" alt="" width={Math.round((size * 496) / 376)} height={size} className={cn("object-contain", className)} priority />;
 }
 
 /** Nom de marque : « Sesam » vert forêt, tiret soleil, « Market » dégradé lime. */
@@ -17,15 +17,16 @@ export function Wordmark({ className, light = false }: { className?: string; lig
   );
 }
 
-/** Logo horizontal : emblème + nom, avec slogan optionnel (espaces pro, pied de page). */
-export function Logo({ className, light = false, tagline = false }: { className?: string; light?: boolean; tagline?: boolean }) {
+/**
+ * Logo horizontal officiel (emblème + nom, 732 × 198), version blanche sur fond foncé,
+ * avec slogan optionnel (espaces pro, pied de page).
+ */
+export function Logo({ className, light = false, tagline = false, height = 40 }: { className?: string; light?: boolean; tagline?: boolean; height?: number }) {
+  const ratio = light ? 732 / 166 : 732 / 198;
   return (
-    <span className={cn("inline-flex items-center gap-2", className)} aria-label="Sesam-Market">
-      <BrandMark size={34} className="-my-1 shrink-0" />
-      <span className="flex flex-col">
-        <Wordmark light={light} />
-        {tagline && <span className={cn("mt-1 text-[10.5px] font-semibold tracking-wide", light ? "text-white/80" : "text-brand-700/80")}>À plusieurs, les prix s’ouvrent.</span>}
-      </span>
+    <span className={cn("inline-flex flex-col items-start", className)}>
+      <Image src={light ? "/brand/logo-blanc.webp" : "/brand/logo-horizontal.webp"} alt="Sesam-Market" width={Math.round(height * ratio)} height={height} className="-my-0.5 h-auto w-auto" style={{ height }} priority />
+      {tagline && <span className={cn("mt-0.5 pl-1 text-[10.5px] font-semibold tracking-wide", light ? "text-white/80" : "text-brand-700/80")}>À plusieurs, les prix s’ouvrent.</span>}
     </span>
   );
 }
