@@ -8,6 +8,7 @@ import { PageHeader } from "@/ui/Card";
 import { Badge } from "@/ui/Badge";
 import { EmptyState } from "@/ui/EmptyState";
 import { ButtonLink } from "@/ui/Button";
+import { illustration } from "@/infrastructure/assets";
 
 export const metadata = { title: "Mes commandes" };
 
@@ -20,7 +21,7 @@ export default async function OrdersPage() {
     <div>
       <PageHeader title="Mes commandes" />
       {orders.length === 0 ? (
-        <EmptyState title="Pas encore de commande" emoji="📦" action={<ButtonLink href="/achats-groupes">Rejoindre un achat groupé</ButtonLink>} />
+        <EmptyState title="Pas encore de commande" emoji="📦" image={illustration("etats", "aucune-commande")} action={<ButtonLink href="/achats-groupes">Rejoindre un achat groupé</ButtonLink>} />
       ) : (
         <ul className="space-y-2">
           {orders.map((o) => (

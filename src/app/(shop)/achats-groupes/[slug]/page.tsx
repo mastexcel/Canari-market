@@ -33,7 +33,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
   try {
     gb = await getGroupBuyDetail(slug, user?.id ?? null);
   } catch (e) {
-    if (e instanceof DomainError && e.code === "NOT_FOUND") notFound();
+    if (e instanceof DomainError) notFound();
     throw e;
   }
   const now = new Date();
@@ -50,7 +50,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
         <Badge tone={open ? "economie" : "neutral"}>{open ? `Ouvert · clôture ${timeLeft(gb.closesAt, now)}` : "Clôturé"}</Badge>
       </div>
 
-      <ProductTile emoji={gb.product.emoji} name={gb.product.name} size="lg" />
+      <ProductTile emoji={gb.product.emoji} name={gb.product.name} src={gb.image} size="lg" />
       <div>
         <h1 className="text-2xl leading-tight font-extrabold uppercase">{gb.title}</h1>
         <p className="mt-1 text-sm text-anthracite-600">{gb.description}</p>

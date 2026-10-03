@@ -3,13 +3,19 @@
  * Les prix de référence sont des valeurs FICTIVES plausibles pour la démo,
  * pas des relevés réels.
  */
+/**
+ * Phase 1 : non périssables (épicerie sèche, boissons, entretien, hygiène, scolaire).
+ * Les catégories périssables existent déjà dans les données mais restent
+ * fermées (« bientôt ») tant que PERISHABLES_ENABLED n'est pas activé.
+ */
 export const CATEGORIES = [
-  { slug: "alimentation", name: "Alimentation", emoji: "🍚" },
-  { slug: "frais", name: "Frais & protéines", emoji: "🐟" },
-  { slug: "legumes", name: "Fruits & légumes", emoji: "🍅" },
-  { slug: "entretien", name: "Entretien", emoji: "🧴" },
-  { slug: "hygiene", name: "Hygiène & bébé", emoji: "🧼" },
-  { slug: "scolaire", name: "Fournitures scolaires", emoji: "🎒" },
+  { slug: "alimentation", name: "Épicerie sèche", emoji: "🍚", isPerishable: false },
+  { slug: "boissons", name: "Boissons", emoji: "🧃", isPerishable: false },
+  { slug: "entretien", name: "Entretien", emoji: "🧴", isPerishable: false },
+  { slug: "hygiene", name: "Hygiène & bébé", emoji: "🧼", isPerishable: false },
+  { slug: "scolaire", name: "Fournitures scolaires", emoji: "🎒", isPerishable: false },
+  { slug: "frais", name: "Frais & protéines", emoji: "🐟", isPerishable: true },
+  { slug: "legumes", name: "Fruits & légumes", emoji: "🍅", isPerishable: true },
 ] as const;
 
 type Unit = "GRAM" | "MILLILITER" | "PIECE";
@@ -123,6 +129,34 @@ export const PRODUCTS: ProductRow[] = [
   ["scolaire", "Protège-cahiers", null, "📘", "PIECE", "Lot de 10", 10, 300, 1050, 1250],
   ["scolaire", "Calculatrice", "Casio", "🧮", "PIECE", "Pièce", 1, 150, 4700, 5500],
   ["scolaire", "Crayons de couleur", "Maped", "🖍️", "PIECE", "Boîte de 12", 12, 200, 1250, 1500],
+  // Compléments non périssables (phase 1)
+  ["alimentation", "Thon à l'huile", null, "🐟", "GRAM", "Boîte 160 g", 160, 190, 750, 900],
+  ["alimentation", "Petits pois en conserve", null, "🥫", "GRAM", "Boîte 400 g", 400, 450, 550, 650],
+  ["alimentation", "Haricots blancs en conserve", null, "🥫", "GRAM", "Boîte 400 g", 400, 450, 600, 720],
+  ["alimentation", "Maïs doux en conserve", null, "🌽", "GRAM", "Boîte 300 g", 300, 340, 600, 700],
+  ["alimentation", "Lentilles", null, "🫘", "GRAM", "Sachet 1 kg", 1000, 1000, 1250, 1500],
+  ["alimentation", "Pois chiches", null, "🫘", "GRAM", "Sachet 1 kg", 1000, 1000, 1350, 1600],
+  ["alimentation", "Couscous", null, "🍚", "GRAM", "Paquet 1 kg", 1000, 1000, 1100, 1300],
+  ["alimentation", "Vermicelles", null, "🍜", "GRAM", "Paquet 500 g", 500, 500, 350, 420],
+  ["alimentation", "Huile de soja", null, "🫗", "MILLILITER", "Bouteille 1 L", 1000, 950, 1250, 1450],
+  ["alimentation", "Biscuits secs", null, "🍪", "GRAM", "Paquet 400 g", 400, 420, 850, 1000],
+  ["alimentation", "Miel", "Coop. Korhogo", "🍯", "GRAM", "Pot 500 g", 500, 650, 2700, 3200],
+  ["alimentation", "Pâte d'arachide", null, "🥜", "GRAM", "Pot 500 g", 500, 600, 1400, 1650],
+  ["alimentation", "Poivre noir moulu", null, "🧂", "GRAM", "Sachet 100 g", 100, 110, 650, 800],
+  ["alimentation", "Thé noir", null, "🍵", "PIECE", "Boîte de 25 sachets", 25, 80, 900, 1050],
+  ["boissons", "Eau minérale", null, "💧", "MILLILITER", "Pack 6 × 1,5 L", 9000, 9300, 1800, 2100],
+  ["boissons", "Jus de fruits UHT", null, "🧃", "MILLILITER", "Brique 1 L", 1000, 1050, 900, 1100],
+  ["boissons", "Sirop de bissap", null, "🍹", "MILLILITER", "Bouteille 75 cL", 750, 900, 1350, 1600],
+  ["boissons", "Lait de coco", null, "🥥", "MILLILITER", "Boîte 400 mL", 400, 450, 650, 800],
+  ["entretien", "Eau de Javel", "La Croix", "🧴", "MILLILITER", "Bidon 5 L", 5000, 5200, 2100, 2500],
+  ["entretien", "Savon liquide mains", null, "🧴", "MILLILITER", "Flacon 500 mL", 500, 560, 1100, 1300],
+  ["entretien", "Mouchoirs en papier", null, "🤧", "PIECE", "Lot de 10 paquets", 10, 150, 650, 800],
+  ["entretien", "Désodorisant", null, "🌸", "MILLILITER", "Aérosol 300 mL", 300, 350, 1300, 1550],
+  ["hygiene", "Shampoing", null, "🧴", "MILLILITER", "Flacon 400 mL", 400, 450, 1650, 1950],
+  ["hygiene", "Crème hydratante", null, "🧴", "MILLILITER", "Flacon 400 mL", 400, 450, 1900, 2200],
+  ["hygiene", "Rasoirs jetables", null, "🪒", "PIECE", "Lot de 5", 5, 60, 900, 1100],
+  ["scolaire", "Cahiers de dessin", null, "🎨", "PIECE", "Lot de 5", 5, 900, 1300, 1550],
+  ["scolaire", "Taille-crayons", null, "✏️", "PIECE", "Lot de 10", 10, 100, 700, 850],
 ];
 
 export const COMMUNES_ZONES = [

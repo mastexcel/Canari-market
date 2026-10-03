@@ -5,6 +5,9 @@
 import { prisma, type Db } from "@/infrastructure/db";
 import { DomainError } from "@/domain/errors";
 import { computeProgress } from "@/domain/group-buy";
+import { assertSellable, isSellable } from "@/domain/assortment";
+import { assortment } from "@/infrastructure/env";
+import { productImage } from "@/infrastructure/assets";
 import { priceGroupPortion, priceVariant, toGroupBuyState, type LinePrice } from "./pricing.service";
 import { track } from "./analytics.service";
 
@@ -14,7 +17,7 @@ const cartInclude = {
     include: {
       groupBuy: { include: { tiers: true, product: { select: { name: true, emoji: true, slug: true, baseUnit: true, variants: { select: { quantityBase: true, weightGrams: true }, take: 1 } } } } },
       portion: true,
-      variant: { include: { referencePrices: { orderBy: { observedAt: "desc" as const }, take: 1 }, product: { select: { id: true, name: true, emoji: true, slug: true } } } },
+      variant: { include: { referencePrices: { orderBy: { observedAt: "desc" as const }, take: 1 }, product: { select: { id: true, name: true, emoji: true, slug: true, category: { select: { isPerishable: true, isActive: true } } } } } },
     },
   },
 };
@@ -25,6 +28,7 @@ export interface CartLine {
   label: string;
   sublabel: string;
   emoji: string;
+  image: string | null;
   href: string;
   quantity: number;
   weightGrams: number;
@@ -79,6 +83,7 @@ export async function getCart(userId: string, db: Db = prisma, now = new Date())
         label: gb.product.name,
         sublabel: `Achat groupé · portion ${it.portion.label}`,
         emoji: gb.product.emoji,
+        image: productImage(gb.product.slug),
         href: `/achats-groupes/${gb.slug}`,
         quantity: it.quantity,
         weightGrams: portionWeightGrams(gb.product, it.portion.quantityBase) * it.quantity,
@@ -101,12 +106,19 @@ export async function getCart(userId: string, db: Db = prisma, now = new Date())
         label: v.product.name,
         sublabel: v.name,
         emoji: v.product.emoji,
+        image: productImage(v.product.slug),
         href: `/produits/${v.product.slug}`,
         quantity: it.quantity,
         weightGrams: v.weightGrams * it.quantity,
         price,
         lineTotal: price ? price.unitPrice * it.quantity : 0,
-        issue: !price ? "Produit indisponible." : enough ? null : `Stock insuffisant (max ${Math.floor(available / v.quantityBase)}).`,
+        issue: !isSellable(v.product.category, assortment())
+          ? "Bientôt disponible : retirez cette ligne."
+          : !price
+            ? "Produit indisponible."
+            : enough
+              ? null
+              : `Stock insuffisant (max ${Math.floor(available / v.quantityBase)}).`,
       });
     }
   }
@@ -130,8 +142,9 @@ export async function addToCart(
 ) {
   const cart = await getOrCreateCart(userId, db);
   if (item.kind === "GROUP_BUY") {
-    const portion = await db.groupBuyPortion.findUnique({ where: { id: item.portionId }, include: { groupBuy: true } });
+    const portion = await db.groupBuyPortion.findUnique({ where: { id: item.portionId }, include: { groupBuy: { include: { product: { include: { category: true } } } } } });
     if (!portion) throw new DomainError("NOT_FOUND", "Portion introuvable.");
+    assertSellable(portion.groupBuy.product.category, assortment());
     if (portion.groupBuy.status !== "OPEN" || portion.groupBuy.closesAt <= new Date()) {
       throw new DomainError("INVALID_STATE", "Cet achat groupé n'accepte plus de participations.");
     }
@@ -141,8 +154,9 @@ export async function addToCart(
       update: { quantity: { increment: item.quantity } },
     });
   } else {
-    const variant = await db.productVariant.findUnique({ where: { id: item.variantId } });
+    const variant = await db.productVariant.findUnique({ where: { id: item.variantId }, include: { product: { include: { category: true } } } });
     if (!variant || !variant.isActive || variant.canariPrice === null) throw new DomainError("NOT_FOUND", "Produit indisponible.");
+    assertSellable(variant.product.category, assortment());
     await db.cartItem.upsert({
       where: { cartId_variantId: { cartId: cart.id, variantId: variant.id } },
       create: { cartId: cart.id, kind: "STOCK", variantId: variant.id, quantity: item.quantity },

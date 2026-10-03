@@ -6,6 +6,9 @@ import { prisma, type Db } from "@/infrastructure/db";
 import { DomainError } from "@/domain/errors";
 import { latestReference, referenceFreshness, usableReferencePrice } from "@/domain/reference-price";
 import { ratioBps } from "@/domain/money";
+import { assertSellable, sellableCategoryWhere } from "@/domain/assortment";
+import { assortment } from "@/infrastructure/env";
+import { productImage } from "@/infrastructure/assets";
 
 export interface PriceComparison {
   canariPrice: number;
@@ -44,10 +47,16 @@ export function comparePrice(
 
 export async function listCategories(db: Db = prisma) {
   return db.category.findMany({
-    where: { isActive: true, parentId: null },
+    where: { ...sellableCategoryWhere(assortment()), parentId: null },
     orderBy: { sortOrder: "asc" },
     include: { _count: { select: { products: { where: { isActive: true } } } } },
   });
+}
+
+/** Catégories annoncées « bientôt » (phase 2 : périssables). */
+export async function upcomingCategories(db: Db = prisma) {
+  if (assortment().perishablesEnabled) return [];
+  return db.category.findMany({ where: { isActive: true, isPerishable: true, parentId: null }, orderBy: { sortOrder: "asc" }, select: { slug: true, name: true, emoji: true } });
 }
 
 const variantInclude = {
@@ -61,7 +70,7 @@ export async function searchProducts(
   const q = params.q?.trim();
   const where: Prisma.ProductWhereInput = {
     isActive: true,
-    ...(params.categorySlug ? { category: { slug: params.categorySlug } } : {}),
+    category: { ...sellableCategoryWhere(assortment()), ...(params.categorySlug ? { slug: params.categorySlug } : {}) },
     ...(q
       ? {
           OR: [
@@ -95,6 +104,7 @@ export async function searchProducts(
       name: p.name,
       brand: p.brand,
       emoji: p.emoji,
+      image: productImage(p.slug, p.imageUrl),
       category: p.category,
       fromPrice: sellable.length ? Math.min(...sellable.map((v) => v.canariPrice!)) : null,
       bestComparison: best?.cmp ?? null,
@@ -118,10 +128,12 @@ export async function getProduct(slug: string, db: Db = prisma) {
     },
   });
   if (!product || !product.isActive) throw new DomainError("NOT_FOUND", "Produit introuvable.");
+  assertSellable(product.category, assortment());
   const now = new Date();
   const onHand = product.inventories.reduce((s, i) => s + i.quantityBase - i.reservedBase, 0);
   return {
     ...product,
+    image: productImage(product.slug, product.imageUrl),
     variants: product.variants.map((v) => ({
       ...v,
       comparison: v.canariPrice !== null ? comparePrice(v.canariPrice, v.referencePrices, now) : null,
@@ -144,7 +156,8 @@ export async function bestSavings(take = 6, db: Db = prisma) {
 
 export async function listBaskets(db: Db = prisma) {
   const baskets = await db.familyBasket.findMany({
-    where: { isActive: true },
+    // Un panier n'est proposé que si tous ses articles sont vendables dans la phase en cours.
+    where: { isActive: true, items: { every: { variant: { product: { category: sellableCategoryWhere(assortment()) } } } } },
     orderBy: { sortOrder: "asc" },
     include: {
       items: {

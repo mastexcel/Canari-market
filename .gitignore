@@ -46,3 +46,6 @@ next-env.d.ts
 /test-results
 /playwright-report
 scripts/.shots.mjs
+
+# images générées non optimisées (sources lourdes)
+/images-source

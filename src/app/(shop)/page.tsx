@@ -2,10 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { currentUser } from "@/lib/session";
 import { listOpenGroupBuys } from "@/application/group-buy.service";
-import { bestSavings, listBaskets, listCategories, searchProducts } from "@/application/catalog.service";
+import { bestSavings, listBaskets, listCategories, searchProducts, upcomingCategories } from "@/application/catalog.service";
 import { listCommunities } from "@/application/community.service";
 import { platformSavings, userSavings } from "@/application/savings.service";
 import { formatFcfa, formatBps } from "@/domain/money";
+import { categoryImage, iconImage, illustration } from "@/infrastructure/assets";
 import { SectionTitle } from "@/ui/Card";
 import { GroupBuyCard } from "@/ui/shop/GroupBuyCard";
 import { ProductCard } from "@/ui/shop/ProductCard";
@@ -14,7 +15,7 @@ import { EmptyState } from "@/ui/EmptyState";
 
 export default async function HomePage() {
   const user = await currentUser();
-  const [groupBuys, categories, savers, baskets, popular, communities, platform, mine] = await Promise.all([
+  const [groupBuys, categories, savers, baskets, popular, communities, platform, mine, upcoming] = await Promise.all([
     listOpenGroupBuys({ take: 4 }),
     listCategories(),
     bestSavings(6),
@@ -23,13 +24,15 @@ export default async function HomePage() {
     listCommunities({ commune: user?.commune }),
     platformSavings(),
     user ? userSavings(user.id) : Promise.resolve(null),
+    upcomingCategories(),
   ]);
 
+  const heroImage = illustration("hero", "accueil");
   return (
     <div className="space-y-8">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
       <section className="brand-pattern relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-6 text-white">
-        <Image src="/brand/mark.webp" alt="" width={170} height={114} priority className="pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]" />
+        <Image src={heroImage ?? "/brand/mark.webp"} alt="" width={heroImage ? 260 : 170} height={heroImage ? 260 : 114} priority className={heroImage ? "pointer-events-none absolute -right-8 -bottom-2 w-44 opacity-95" : "pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]"} />
         <p className="relative text-sm font-semibold text-accent-400">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
         <h1 className="relative mt-1 max-w-[15rem] text-[28px] leading-[1.1] font-black">
           À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
@@ -55,15 +58,15 @@ export default async function HomePage() {
       {/* Les 4 promesses du logo */}
       <ul className="-mt-4 grid grid-cols-4 gap-2" aria-label="Nos services">
         {[
-          { e: "👨‍👩‍👧", t: "Achats groupés", href: "/achats-groupes" },
-          { e: "🚚", t: "Livraison à domicile", href: "/points-relais" },
-          { e: "📍", t: "Points relais", href: "/points-relais" },
-          { e: "🛡️", t: "Produits pour tous", href: "/categories" },
-        ].map((f) => (
+          { e: "👨‍👩‍👧", t: "Achats groupés", href: "/achats-groupes", icon: "achats-groupes" },
+          { e: "🚚", t: "Livraison à domicile", href: "/points-relais", icon: "livraison-domicile" },
+          { e: "📍", t: "Points relais", href: "/points-relais", icon: "points-relais" },
+          { e: "🛡️", t: "Produits pour tous", href: "/categories", icon: "produits-pour-tous" },
+        ].map((f) => ({ ...f, img: iconImage(f.icon) })).map((f) => (
           <li key={f.t}>
             <Link href={f.href} className="flex h-full flex-col items-center gap-1 rounded-2xl bg-white/90 px-1 py-2.5 text-center shadow-[var(--shadow-card)] ring-1 ring-brand-100 backdrop-blur">
-              <span className="grid size-9 place-items-center rounded-full bg-gradient-to-br from-lime-100 to-accent-100 text-lg" aria-hidden>
-                {f.e}
+              <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-lime-100 to-accent-100 text-lg" aria-hidden>
+                {f.img ? <Image src={f.img} alt="" width={36} height={36} /> : f.e}
               </span>
               <span className="text-[10.5px] leading-tight font-extrabold tracking-wide text-brand-800 uppercase">{f.t}</span>
             </Link>
@@ -79,8 +82,8 @@ export default async function HomePage() {
           {categories.map((c) => (
             <li key={c.id} className="shrink-0">
               <Link href={`/categories/${c.slug}`} className="flex w-20 flex-col items-center gap-1 text-center">
-                <span className="grid size-16 place-items-center rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
-                  {c.emoji}
+                <span className="grid size-16 place-items-center overflow-hidden rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
+                  {categoryImage(c.slug) ? <Image src={categoryImage(c.slug)!} alt="" width={64} height={64} className="size-16 object-cover" /> : c.emoji}
                 </span>
                 <span className="text-xs leading-tight font-semibold text-anthracite-800">{c.name}</span>
               </Link>
@@ -88,6 +91,20 @@ export default async function HomePage() {
           ))}
         </ul>
       </section>
+
+      {upcoming.length > 0 && (
+        <aside className="flex items-center gap-3 rounded-[var(--radius-card)] border border-dashed border-lime-500/50 bg-lime-100/60 px-4 py-3" aria-label="Bientôt">
+          <span className="flex -space-x-1 text-2xl" aria-hidden>
+            {upcoming.map((c) => (
+              <span key={c.slug}>{c.emoji}</span>
+            ))}
+          </span>
+          <p className="text-sm text-anthracite-800">
+            <strong className="text-brand-800">Pour commencer : le non-périssable.</strong> Riz, huile, sucre, entretien, hygiène, fournitures…{" "}
+            <span className="text-anthracite-600">Les produits frais arrivent bientôt.</span>
+          </p>
+        </aside>
+      )}
 
       <section>
         <SectionTitle title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />

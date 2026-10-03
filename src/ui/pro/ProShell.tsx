@@ -17,7 +17,7 @@ export function ProShell({ title, user, nav, children }: { title: string; user: 
       <aside className="border-b border-gris-200 bg-white lg:sticky lg:top-0 lg:h-dvh lg:w-60 lg:shrink-0 lg:border-r lg:border-b-0">
         <div className="flex items-center justify-between px-4 py-3 lg:block lg:py-5">
           <Link href="/" aria-label="Accueil Sesam-Market">
-            <Logo />
+            <Logo tagline />
           </Link>
           <p className="text-xs font-semibold tracking-wide text-accent-700 uppercase lg:mt-2">{title}</p>
         </div>

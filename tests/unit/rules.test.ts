@@ -153,3 +153,18 @@ describe("communautés, permissions, téléphone", () => {
     expect(guessOperator("+2252720000000")).toBeNull();
   });
 });
+
+describe("assortiment par phases (non périssable d'abord)", () => {
+  it("ferme les catégories périssables tant que la phase 2 n'est pas ouverte", async () => {
+    const { isSellable, assertSellable, sellableCategoryWhere } = await import("@/domain/assortment");
+    const phase1 = { perishablesEnabled: false };
+    const phase2 = { perishablesEnabled: true };
+    expect(isSellable({ isPerishable: false }, phase1)).toBe(true);
+    expect(isSellable({ isPerishable: true }, phase1)).toBe(false);
+    expect(isSellable({ isPerishable: true }, phase2)).toBe(true);
+    expect(isSellable({ isPerishable: false, isActive: false }, phase2)).toBe(false);
+    expect(() => assertSellable({ isPerishable: true }, phase1)).toThrow(/bientôt/);
+    expect(sellableCategoryWhere(phase1)).toEqual({ isActive: true, isPerishable: false });
+    expect(sellableCategoryWhere(phase2)).toEqual({ isActive: true });
+  });
+});

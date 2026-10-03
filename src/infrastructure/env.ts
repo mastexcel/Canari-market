@@ -8,6 +8,8 @@ const schema = z.object({
   PAYMENT_WEBHOOK_SECRET: z.string().min(12),
   CRON_SECRET: z.string().min(12),
   REDIS_URL: z.string().optional(),
+  /** Phase 2 : ouvre les catégories périssables (frais, fruits & légumes). */
+  PERISHABLES_ENABLED: z.enum(["true", "false"]).default("false").transform((v) => v === "true"),
 });
 
 export type Env = z.infer<typeof schema>;
@@ -15,6 +17,11 @@ export type Env = z.infer<typeof schema>;
 let cached: Env | null = null;
 
 /** Variables d'environnement validées (échec explicite au démarrage si mal configuré). */
+/** Configuration d'assortiment (lue à chaque appel : modifiable sans redéploiement de code). */
+export function assortment() {
+  return { perishablesEnabled: process.env.PERISHABLES_ENABLED === "true" };
+}
+
 export function env(): Env {
   if (cached) return cached;
   const parsed = schema.safeParse(process.env);

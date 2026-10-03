@@ -71,6 +71,25 @@ La boucle complète fonctionne de bout en bout, testée en intégration et en E2
 10. Point relais (code/QR de retrait) ou livreur (OTP), incidents.
 11. Économies client, marge brute/nette par campagne, tableau de bord admin.
 
+## Assortiment par phases
+
+Sesam-Market démarre avec les **produits non périssables** (épicerie sèche, boissons,
+entretien, hygiène, fournitures scolaires) : stockables, sans chaîne du froid et avec peu
+de pertes, ils permettent d'agréger la demande sur plusieurs semaines. Les catégories
+périssables (frais, fruits & légumes) existent déjà dans les données mais restent
+affichées « Bientôt » ; on les ouvre avec `PERISHABLES_ENABLED="true"`.
+
+## Images
+
+L'interface fonctionne sans aucune image (pictogrammes légers). Chaque visuel a un
+emplacement fixe dans `public/images/` : dès qu'un fichier est déposé, il est utilisé.
+
+1. Générez les visuels avec les prompts de [docs/PROMPTS_IMAGES.md](docs/PROMPTS_IMAGES.md) (ChatGPT).
+2. Rangez les PNG dans `images-source/<dossier>/` avec le nom exact indiqué.
+3. `npm run images:optimize` → WebP optimisés dans `public/images/` (redémarrez le serveur de production).
+
+`npm run images:prompts` régénère le document de prompts depuis le catalogue.
+
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md) — couches, décisions, évolution vers mobile et verticales
@@ -80,6 +99,7 @@ La boucle complète fonctionne de bout en bout, testée en intégration et en E2
 - [Sécurité & confidentialité](docs/SECURITY.md)
 - [Déploiement](docs/DEPLOYMENT.md)
 - [Audit final](docs/AUDIT.md) — UX, sécurité, performance, logique métier
+- [Prompts images](docs/PROMPTS_IMAGES.md) — génération de tous les visuels avec ChatGPT
 
 ## Pile technique
 

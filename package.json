@@ -19,7 +19,8 @@
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset --force",
     "jobs": "tsx scripts/run-jobs.ts",
-    "icons": "node scripts/generate-icons.mjs"
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:prompts": "tsx scripts/image-prompts.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

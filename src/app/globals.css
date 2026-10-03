@@ -10,6 +10,7 @@
  */
 @theme {
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-fredoka), "Trebuchet MS", system-ui, sans-serif;
 
   --color-brand-950: #04261a;
   --color-brand-900: #063821;
@@ -75,6 +76,10 @@
 }
 
 html {
+  /* L'élément ciblé (focus clavier, ancre, défilement) ne passe jamais sous l'en-tête
+     collant ni sous la navigation basse fixe (WCAG 2.4.11). */
+  scroll-padding-top: 4.5rem;
+  scroll-padding-bottom: 6rem;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
@@ -95,6 +100,14 @@ body {
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
 }
+
+/* Titres, nom de marque et boutons : police arrondie du logo */
+h1, h2, h3, .font-display, .btn {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+h1 { font-weight: 700; }
+h2, h3 { font-weight: 700; }
 
 /* Focus visible et cohérent (accessibilité clavier / lecteurs d'écran) */
 :focus-visible {

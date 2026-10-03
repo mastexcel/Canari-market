@@ -8,6 +8,8 @@ import { ButtonLink } from "@/ui/Button";
 import { Alert } from "@/ui/Alert";
 import { CartLineControls } from "./CartLineControls";
 import Link from "next/link";
+import { ProductTile } from "@/ui/ProductTile";
+import { illustration } from "@/infrastructure/assets";
 
 export const metadata = { title: "Panier" };
 
@@ -18,7 +20,7 @@ export default async function CartPage() {
     return (
       <div>
         <PageHeader title="Panier" />
-        <EmptyState title="Votre panier est vide" emoji="🧺" action={<ButtonLink href="/achats-groupes">Voir les achats groupés</ButtonLink>}>
+        <EmptyState title="Votre panier est vide" emoji="🧺" image={illustration("etats", "panier-vide")} action={<ButtonLink href="/achats-groupes">Voir les achats groupés</ButtonLink>}>
           Rejoignez un achat groupé ou choisissez un panier famille.
         </EmptyState>
       </div>
@@ -32,9 +34,7 @@ export default async function CartPage() {
         {cart.lines.map((l) => (
           <div key={l.id} className="p-3">
             <div className="flex gap-3">
-              <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gris-100 text-2xl" aria-hidden>
-                {l.emoji}
-              </span>
+              <ProductTile emoji={l.emoji} name={l.label} src={l.image} size="sm" className="shrink-0" />
               <div className="min-w-0 flex-1">
                 <Link href={l.href} className="font-semibold leading-snug">
                   {l.label}

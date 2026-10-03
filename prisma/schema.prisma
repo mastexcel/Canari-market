@@ -444,14 +444,17 @@ model Address {
 // ─────────────────────────────────────────────────────────────
 
 model Category {
-  id        String   @id @default(cuid())
-  slug      String   @unique
-  name      String
-  emoji     String
-  parentId  String?
-  sortOrder Int      @default(0)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  emoji        String
+  parentId     String?
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  /// Produits périssables (frais, fruits & légumes) : ouverts plus tard,
+  /// quand la chaîne du froid et la rotation rapide seront en place.
+  isPerishable Boolean  @default(false)
+  createdAt    DateTime @default(now())
 
   parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
   children Category[] @relation("CategoryTree")

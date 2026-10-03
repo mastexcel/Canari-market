@@ -50,6 +50,32 @@ describe("catalogue & comparateur", () => {
   });
 });
 
+describe("phase 1 : non périssable", () => {
+  beforeEach(resetDb);
+
+  it("masque et bloque les produits périssables, sauf si la phase 2 est ouverte", async () => {
+    const f = await baseFixture();
+    const frais = await prisma.category.create({ data: { slug: "frais", name: "Frais", emoji: "🐟", isPerishable: true } });
+    const poisson = await prisma.product.create({
+      data: { slug: "poisson-fume", name: "Poisson fumé", description: "x", categoryId: frais.id, baseUnit: "GRAM", emoji: "🐟", variants: { create: { sku: "P-1", name: "500 g", quantityBase: 500, weightGrams: 520, canariPrice: 2_300 } } },
+      include: { variants: true },
+    });
+    const user = await makeUser();
+    expect((await searchProducts({})).map((p) => p.slug)).toEqual(["riz-parfume"]);
+    expect((await listCategories()).map((c) => c.slug)).toEqual(["alimentation"]);
+    await expect(getProduct("poisson-fume")).rejects.toThrow(/bientôt/);
+    await expect(addToCart(user.id, { kind: "STOCK", variantId: poisson.variants[0].id, quantity: 1 })).rejects.toThrow(/bientôt/);
+    process.env.PERISHABLES_ENABLED = "true";
+    try {
+      expect((await searchProducts({})).length).toBe(2);
+      await addToCart(user.id, { kind: "STOCK", variantId: poisson.variants[0].id, quantity: 1 });
+    } finally {
+      process.env.PERISHABLES_ENABLED = "false";
+    }
+    void f;
+  });
+});
+
 describe("communautés", () => {
   beforeEach(resetDb);
 

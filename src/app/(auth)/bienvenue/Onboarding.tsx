@@ -1,6 +1,7 @@
 "use client";
 /** Splash (logo animé) puis 3 écrans d'onboarding : le groupe → le volume → le prix → l'économie. */
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { FullLogo } from "@/ui/Logo";
 import { buttonClasses } from "@/ui/Button";
@@ -16,7 +17,7 @@ function markOnboarded() {
   document.cookie = "sesam_onboarded=1; path=/; max-age=31536000; samesite=lax";
 }
 
-export function Onboarding() {
+export function Onboarding({ images = [] }: { images?: Array<string | null> }) {
   const [splash, setSplash] = useState(true);
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -43,9 +44,13 @@ export function Onboarding() {
         </Link>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center text-center" aria-live="polite">
-        <div className="grid size-40 place-items-center rounded-full bg-accent-100 text-7xl" aria-hidden>
-          {s.emoji}
-        </div>
+        {images[i] ? (
+          <Image src={images[i]!} alt="" width={300} height={300} className="h-auto w-[min(72vw,300px)]" priority />
+        ) : (
+          <div className="grid size-40 place-items-center rounded-full bg-accent-100 text-7xl" aria-hidden>
+            {s.emoji}
+          </div>
+        )}
         <h1 className="mt-8 text-2xl font-extrabold">{s.title}</h1>
         <p className="mt-3 max-w-xs text-anthracite-700">{s.text}</p>
       </div>

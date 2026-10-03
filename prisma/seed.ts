@@ -68,7 +68,8 @@ async function main() {
     await prisma.deliveryZone.create({ data: { commune: z.commune, baseFee: z.baseFee, distanceKm: z.distanceKm, perKmFee: 20, perKgFee: 50, includedWeightKg: 10, scheduledSurcharge: 500, quartiers: z.quartiers } });
   }
 
-  const products = new Map<string, { id: string; variantId: string; price: number; qty: number; unit: string }>();
+  const perishableCats = new Set<string>(CATEGORIES.filter((c) => c.isPerishable).map((c) => c.slug));
+  const products = new Map<string, { id: string; variantId: string; price: number; qty: number; unit: string; perishable: boolean }>();
   for (const [i, row] of PRODUCTS.entries()) {
     const [cat, name, brand, emoji, unit, vLabel, qty, weight, price, ref] = row;
     const fullName = brand ? `${name} ${brand}` : name;
@@ -98,7 +99,7 @@ async function main() {
       ],
     });
     await prisma.inventory.create({ data: { warehouseId: warehouse.id, productId: p.id, quantityBase: qty * between(150, 400) } });
-    products.set(slug, { id: p.id, variantId: v.id, price: price ?? 0, qty, unit });
+    products.set(slug, { id: p.id, variantId: v.id, price: price ?? 0, qty, unit, perishable: perishableCats.has(cat) });
   }
   const productBy = (name: string) => {
     const e = [...products.entries()].find(([s]) => s.startsWith(slugify(name)));
@@ -251,13 +252,13 @@ async function main() {
     { title: "Sucre en poudre — sac de 50 kg (août)", product: "Sucre en poudre", unitLabel: "Sac 50 kg", unitBase: 50_000, target: 40, max: 100, tiers: [[15, 36_000], [30, 34_500], [40, 33_800]], ref: 39_500, cost: 30_500, portions: [["1 kg", 1000], ["5 kg", 5000], ["25 kg", 25_000], ["50 kg", 50_000]], fee: 100, policy: "REFUND", opens: 62, closes: 48, delivery: 42, fill: 1.1, supplier: "Sucrerie du Sud Distribution", avg: 6_000 },
     { title: "Lessive en poudre — carton de 10 kg (septembre)", product: "Lessive en poudre OMO", unitLabel: "Carton 10 kg", unitBase: 10_000, target: 50, max: 120, tiers: [[20, 11_200], [35, 10_800], [50, 10_400]], ref: 13_200, cost: 9_000, portions: [["1 kg", 1000], ["3 kg", 3000], ["10 kg", 10_000]], fee: 100, policy: "REFUND", opens: 38, closes: 26, delivery: 21, fill: 0.95, supplier: "Hygiène Plus Distribution", community: 0, avg: 3_000 },
     // Passé, non abouti (remboursement)
-    { title: "Poisson fumé — carton de 10 kg", product: "Poisson fumé", unitLabel: "Carton 10 kg", unitBase: 10_000, target: 40, max: 80, tiers: [[25, 46_000], [40, 44_000]], ref: 54_000, cost: 39_000, portions: [["500 g", 500], ["1 kg", 1000], ["2 kg", 2000]], fee: 100, policy: "REFUND", opens: 24, closes: 12, delivery: 8, fill: 0.4, supplier: "Coopérative des pêcheurs de Grand-Lahou", avg: 1_000 },
+    { title: "Lait en poudre — carton de 12 boîtes", product: "Lait en poudre entier", unitLabel: "Carton 12 boîtes", unitBase: 4_800, target: 60, max: 120, tiers: [[40, 34_500], [60, 33_000]], ref: 38_400, cost: 29_000, portions: [["1 boîte", 400], ["3 boîtes", 1_200], ["12 boîtes", 4_800]], fee: 0, policy: "REFUND", opens: 24, closes: 12, delivery: 8, fill: 0.4, supplier: "Ivoire Import Alimentaire", avg: 1_200 },
     // En cours
     { title: "Riz parfumé — sac de 50 kg", product: "Riz parfumé long grain", unitLabel: "Sac 50 kg", unitBase: 50_000, target: 200, max: 600, tiers: [[50, 26_500], [100, 25_500], [200, 24_500], [500, 23_800]], ref: 27_500, cost: 22_000, portions: [["5 kg", 5000], ["10 kg", 10_000], ["25 kg", 25_000], ["50 kg", 50_000]], fee: 150, policy: "EXTEND", opens: 9, closes: -6, delivery: -10, fill: 0.865, supplier: "Riz du Nord SARL", avg: 12_500 },
     { title: "Huile de palme — bidon de 20 L", product: "Huile de palme raffinée Dinor", unitLabel: "Bidon 20 L", unitBase: 20_000, target: 120, max: 250, tiers: [[40, 24_800], [80, 23_900], [120, 23_200]], ref: 26_500, cost: 20_300, portions: [["1 L", 1000], ["5 L", 5000], ["20 L", 20_000]], fee: 100, policy: "REFUND", opens: 7, closes: -4, delivery: -9, fill: 0.92, supplier: "Huileries de l'Agnéby", avg: 4_500 },
-    { title: "Oignons — sac de 25 kg", product: "Oignons", unitLabel: "Sac 25 kg", unitBase: 25_000, target: 80, max: 160, tiers: [[30, 13_800], [60, 13_000], [80, 12_400]], ref: 16_000, cost: 10_500, portions: [["2 kg", 2000], ["5 kg", 5000], ["25 kg", 25_000]], fee: 100, policy: "ALTERNATIVE_PRICE", opens: 5, closes: -5, delivery: -8, fill: 0.46, supplier: "Maraîchers de Bouaflé", avg: 5_000 },
+    { title: "Spaghetti — carton de 20 paquets", product: "Spaghetti", unitLabel: "Carton 20 paquets", unitBase: 10_000, target: 80, max: 160, tiers: [[30, 7_600], [60, 7_300], [80, 7_000]], ref: 9_000, cost: 6_000, portions: [["5 paquets", 2_500], ["10 paquets", 5_000], ["20 paquets", 10_000]], fee: 0, policy: "ALTERNATIVE_PRICE", opens: 5, closes: -5, delivery: -8, fill: 0.46, supplier: "Ivoire Import Alimentaire", avg: 4_000 },
     { title: "Kits scolaires primaire — carton de 10", product: "Kit scolaire primaire", unitLabel: "Carton de 10 kits", unitBase: 10, target: 60, max: 120, tiers: [[20, 92_000], [40, 88_000], [60, 85_000]], ref: 118_000, cost: 72_000, portions: [["1 kit", 1], ["2 kits", 2], ["5 kits", 5], ["10 kits", 10]], fee: 0, policy: "CREDIT_WITH_CONSENT", opens: 3, closes: -12, delivery: -16, fill: 0.31, supplier: "Papeterie Centrale du Plateau", avg: 2 },
-    { title: "Œufs frais — carton de 12 plateaux", product: "Œufs frais", unitLabel: "Carton 12 plateaux", unitBase: 360, target: 50, max: 100, tiers: [[20, 27_600], [35, 26_400], [50, 25_800]], ref: 33_600, cost: 23_000, portions: [["1 plateau (30)", 30], ["3 plateaux (90)", 90], ["12 plateaux (360)", 360]], fee: 0, policy: "REFUND", opens: 4, closes: -3, delivery: -5, fill: 0.7, supplier: "Ferme avicole d'Azaguié", community: 0, avg: 60 },
+    { title: "Savon de ménage — carton de 48 barres", product: "Savon de ménage", unitLabel: "Carton 48 barres", unitBase: 48, target: 50, max: 100, tiers: [[20, 11_800], [35, 11_400], [50, 11_000]], ref: 13_600, cost: 9_300, portions: [["6 barres", 6], ["12 barres", 12], ["48 barres", 48]], fee: 0, policy: "REFUND", opens: 4, closes: -3, delivery: -5, fill: 0.7, supplier: "Hygiène Plus Distribution", community: 0, avg: 12 },
   ];
 
   const pickupCodes = PICKUP_POINTS.map((p) => p.code);
@@ -436,7 +437,8 @@ async function main() {
 
   // ─── Ventes en stock (historique sur 6 mois) ────────────
   console.log("→ Commandes en stock (historique)…");
-  const stockProducts = [...products.values()];
+  // Phase 1 : historique de ventes uniquement sur le non périssable.
+  const stockProducts = [...products.values()].filter((p) => !p.perishable);
   const stockOrderIds: string[] = [];
   for (let i = 0; i < 170; i++) {
     const buyer = i < 6 ? households[0] : pick(households);
@@ -484,7 +486,7 @@ async function main() {
     prisma.familyBasket.create({ data: { slug, name, targetPrice: target, householdHint: hint, description, sortOrder, items: { create: items.map(([n, q]) => ({ variantId: productBy(n).variantId, quantity: q })) } } });
   await basket("panier-essentiel", "Panier Essentiel", 10_000, "1 à 2 personnes", "Les indispensables de la semaine.", [["Riz parfumé long grain", 1], ["Huile de palme raffinée Aya", 1], ["Sucre en poudre", 1], ["Spaghetti", 2], ["Concentré de tomate", 1], ["Savon de ménage", 1], ["Sel iodé", 1]], 0);
   await basket("panier-famille", "Panier Famille", 25_000, "4 à 5 personnes", "Deux semaines de base pour une famille.", [["Riz parfumé long grain", 2], ["Huile de palme raffinée Dinor", 1], ["Sucre en poudre", 2], ["Farine de blé", 2], ["Spaghetti", 4], ["Concentré de tomate", 2], ["Lait concentré sucré", 2], ["Lessive en poudre Kalia", 1], ["Savon de ménage", 1], ["Papier hygiénique", 1]], 1);
-  await basket("panier-famille-plus", "Panier Famille Plus", 50_000, "6 personnes et plus", "Le mois complet : alimentation, entretien et hygiène.", [["Riz parfumé premium", 2], ["Riz parfumé long grain", 2], ["Huile de palme raffinée Dinor", 2], ["Sucre en poudre", 3], ["Farine de blé", 2], ["Spaghetti", 6], ["Concentré de tomate", 4], ["Lait en poudre entier", 1], ["Lessive en poudre OMO", 1], ["Savon de ménage", 2], ["Papier hygiénique", 1], ["Dentifrice", 2], ["Œufs frais", 1]], 2);
+  await basket("panier-famille-plus", "Panier Famille Plus", 50_000, "6 personnes et plus", "Le mois complet : alimentation, entretien et hygiène.", [["Riz parfumé premium", 2], ["Riz parfumé long grain", 2], ["Huile de palme raffinée Dinor", 2], ["Sucre en poudre", 3], ["Farine de blé", 2], ["Spaghetti", 6], ["Concentré de tomate", 4], ["Lait en poudre entier", 1], ["Sardines à l'huile", 4], ["Lessive en poudre OMO", 1], ["Savon de ménage", 2], ["Papier hygiénique", 1], ["Dentifrice", 2]], 2);
 
   await prisma.promotion.createMany({
     data: [

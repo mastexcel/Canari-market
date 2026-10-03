@@ -4,6 +4,12 @@ Toutes ces règles sont implémentées dans `src/domain/` et couvertes par des t
 (`tests/unit`, `tests/integration`). Montants en **FCFA entiers** ; quantités en
 **unité de base entière** (g, mL, pièce) ; taux en **points de base** (100 bps = 1 %).
 
+## 0. Assortiment par phases
+
+- **Phase 1 (lancement)** : uniquement des catégories non périssables. Les catégories marquées `isPerishable` sont masquées du catalogue, des recherches, des achats groupés et des paniers famille ; leurs fiches renvoient une page introuvable ; l'ajout au panier et la création d'un achat groupé périssable sont refusés.
+- **Phase 2** : `PERISHABLES_ENABLED="true"` ouvre ces catégories sans migration ni changement de code.
+- Raison : sans chaîne du froid ni rotation rapide, le non-périssable permet des achats groupés plus longs, des pertes quasi nulles et un fractionnement simple.
+
 ## 1. Achat groupé
 
 - Un achat groupé porte sur un produit vendu par **unité fournisseur** (ex. sac de 50 kg = 50 000 g).

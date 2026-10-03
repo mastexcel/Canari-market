@@ -8,7 +8,7 @@ export function ProductCard({ p }: { p: Product }) {
   const cmp = p.bestComparison;
   return (
     <Link href={`/produits/${p.slug}`} className="flex flex-col rounded-[var(--radius-card)] bg-white p-3 shadow-[var(--shadow-card)]">
-      <ProductTile emoji={p.emoji} name={p.name} />
+      <ProductTile emoji={p.emoji} name={p.name} src={p.image} />
       <p className="mt-2 line-clamp-2 text-sm font-semibold leading-snug text-anthracite-900">{p.name}</p>
       {p.brand && <p className="text-xs text-anthracite-500">{p.brand}</p>}
       <div className="mt-auto pt-2">

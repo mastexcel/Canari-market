@@ -22,6 +22,9 @@ import { referenceFreshness } from "@/domain/reference-price";
 import { formatDate } from "@/domain/dates";
 import { prorate } from "@/domain/money";
 import type { GroupBuyInput } from "./schemas";
+import { assertSellable, sellableCategoryWhere } from "@/domain/assortment";
+import { assortment } from "@/infrastructure/env";
+import { productImage } from "@/infrastructure/assets";
 import { toGroupBuyState, type GroupBuyWithTiers } from "./pricing.service";
 import { advanceGroupItems, recomputeOrderStatus } from "./order.service";
 import { processPendingRefunds, requestRefund } from "./payment.service";
@@ -32,7 +35,7 @@ import { track } from "./analytics.service";
 const listInclude = {
   tiers: true,
   portions: { orderBy: { quantityBase: "asc" } },
-  product: { select: { id: true, name: true, emoji: true, slug: true, baseUnit: true, category: { select: { name: true, slug: true } } } },
+  product: { select: { id: true, name: true, emoji: true, slug: true, baseUnit: true, category: { select: { name: true, slug: true, isPerishable: true, isActive: true } } } },
   community: { select: { name: true, slug: true } },
 } satisfies Prisma.GroupBuyInclude;
 
@@ -41,6 +44,7 @@ function view(gb: Prisma.GroupBuyGetPayload<{ include: typeof listInclude }>, no
   const fresh = referenceFreshness(gb.referenceObservedAt, now) === "fresh";
   return {
     ...gb,
+    image: productImage(gb.product.slug),
     progress,
     referenceIsFresh: fresh,
     /** Économie par unité fournisseur au prix objectif (null si référence périmée) */
@@ -53,7 +57,11 @@ export type GroupBuyView = ReturnType<typeof view>;
 
 export async function listOpenGroupBuys(params: { take?: number; categorySlug?: string } = {}, db: Db = prisma, now = new Date()) {
   const gbs = await db.groupBuy.findMany({
-    where: { status: "OPEN", closesAt: { gt: now }, ...(params.categorySlug ? { product: { category: { slug: params.categorySlug } } } : {}) },
+    where: {
+      status: "OPEN",
+      closesAt: { gt: now },
+      product: { category: { ...sellableCategoryWhere(assortment()), ...(params.categorySlug ? { slug: params.categorySlug } : {}) } },
+    },
     include: listInclude,
     orderBy: { closesAt: "asc" },
     take: params.take ?? 50,
@@ -64,6 +72,7 @@ export async function listOpenGroupBuys(params: { take?: number; categorySlug?: 
 export async function getGroupBuyDetail(slug: string, userId: string | null, db: Db = prisma, now = new Date()) {
   const gb = await db.groupBuy.findUnique({ where: { slug }, include: listInclude });
   if (!gb || gb.status === "DRAFT") throw new DomainError("NOT_FOUND", "Achat groupé introuvable.");
+  assertSellable(gb.product.category, assortment());
   const v = view(gb, now);
   const avgParticipantBase = gb.participantCount > 0 ? gb.committedBase / gb.participantCount : gb.expectedAvgPortionBase;
   const portions = gb.portions.map((p) => {
@@ -126,6 +135,8 @@ function validateInput(input: GroupBuyInput) {
 
 export async function createGroupBuy(input: GroupBuyInput, actorId: string, db: Db = prisma) {
   validateInput(input);
+  const product = await db.product.findUniqueOrThrow({ where: { id: input.productId }, include: { category: true } });
+  assertSellable(product.category, assortment());
   const { tiers, portions, ...data } = input;
   const base = `${input.title}`
     .normalize("NFD")

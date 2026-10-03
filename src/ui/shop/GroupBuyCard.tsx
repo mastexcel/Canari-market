@@ -20,7 +20,7 @@ export function GroupBuyCard({ gb, now = new Date() }: { gb: GroupBuyView; now?:
   return (
     <Link href={`/achats-groupes/${gb.slug}`} className="block rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-float)]">
       <div className="flex gap-3">
-        <ProductTile emoji={gb.product.emoji} name={gb.product.name} size="sm" className="size-14 text-3xl" />
+        <ProductTile emoji={gb.product.emoji} name={gb.product.name} src={gb.image} size="sm" className="size-16 text-3xl" />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <h3 className="font-bold leading-snug text-anthracite-900">{gb.title}</h3>

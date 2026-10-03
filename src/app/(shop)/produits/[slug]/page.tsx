@@ -18,7 +18,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   try {
     product = await getProduct(slug);
   } catch (e) {
-    if (e instanceof DomainError && e.code === "NOT_FOUND") notFound();
+    if (e instanceof DomainError) notFound();
     throw e;
   }
   if (user) await track("product_viewed", user.id, { productId: product.id });
@@ -27,7 +27,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <div className="space-y-4">
       <BackLink href={`/categories/${product.category.slug}`} />
-      <ProductTile emoji={product.emoji} name={product.name} size="lg" />
+      <ProductTile emoji={product.emoji} name={product.name} src={product.image} size="lg" />
       <div>
         <Badge tone="neutral">{product.category.name}</Badge>
         <h1 className="mt-2 text-2xl font-extrabold">{product.name}</h1>
