@@ -83,7 +83,7 @@ export function route<P = Record<string, string>>(
   opts: HandlerOptions,
   fn: (ctx: HandlerContext<P>) => Promise<unknown>,
 ) {
-  return async (req: NextRequest, routeCtx?: RouteCtx): Promise<NextResponse> => {
+  return async (req: NextRequest, routeCtx: RouteCtx): Promise<NextResponse> => {
     try {
       const ip = clientIp(req);
       if (MUTATING.has(req.method) && !opts.external && !originAllowed(req)) {

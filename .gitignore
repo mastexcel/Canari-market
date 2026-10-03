@@ -45,3 +45,4 @@ next-env.d.ts
 /coverage
 /test-results
 /playwright-report
+scripts/.shots.mjs

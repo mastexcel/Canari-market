@@ -42,3 +42,16 @@ export function formatUnits(units: number, digits = 1): string {
 export function baseUnitLabel(unit: BaseUnit): string {
   return unit === "GRAM" ? "g" : unit === "MILLILITER" ? "mL" : "pièce";
 }
+
+/**
+ * Nom d'unité fournisseur accordé : unitNoun("Sac 50 kg", 2) → « sacs de 50 kg »,
+ * unitNoun("Bidon 20 L", 1) → « bidon de 20 L ».
+ */
+export function unitNoun(label: string, count: number): string {
+  const [first, ...rest] = label.trim().split(/\s+/);
+  const word = first.toLowerCase();
+  const plural = Math.abs(count) >= 2 && !/[sx]$/.test(word) ? `${word}s` : word;
+  if (!rest.length) return plural;
+  const tail = rest.join(" ");
+  return /^(de|d'|du|des)\b/i.test(tail) ? `${plural} ${tail}` : `${plural} de ${tail}`;
+}

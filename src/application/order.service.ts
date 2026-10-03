@@ -204,6 +204,7 @@ export async function placeOrder(
     const created = await tx.order.create({
       data: {
         number: await uniqueOrderNumber(tx, now),
+        createdAt: now,
         userId,
         status: "PENDING_PAYMENT",
         fulfillmentMode: input.fulfillmentMode,
@@ -227,7 +228,7 @@ export async function placeOrder(
         creditConsent: input.creditConsent,
         expectedReadyAt: q.readyAt,
         idempotencyKey: idempotencyKey ? `${userId}:${idempotencyKey}` : null,
-        events: { create: { status: "PENDING_PAYMENT", note: "Commande créée", actorId: userId } },
+        events: { create: { status: "PENDING_PAYMENT", note: "Commande créée", actorId: userId, createdAt: now } },
         items: {
           create: cartItems.map((ci) => {
             const l = lineById.get(ci.id)!;

@@ -1,0 +1,162 @@
+import Link from "next/link";
+import { currentUser } from "@/lib/session";
+import { listOpenGroupBuys } from "@/application/group-buy.service";
+import { bestSavings, listBaskets, listCategories, searchProducts } from "@/application/catalog.service";
+import { listCommunities } from "@/application/community.service";
+import { platformSavings, userSavings } from "@/application/savings.service";
+import { formatFcfa, formatBps } from "@/domain/money";
+import { SectionTitle } from "@/ui/Card";
+import { GroupBuyCard } from "@/ui/shop/GroupBuyCard";
+import { ProductCard } from "@/ui/shop/ProductCard";
+import { HowItWorks } from "@/ui/shop/HowItWorks";
+import { EmptyState } from "@/ui/EmptyState";
+
+export default async function HomePage() {
+  const user = await currentUser();
+  const [groupBuys, categories, savers, baskets, popular, communities, platform, mine] = await Promise.all([
+    listOpenGroupBuys({ take: 4 }),
+    listCategories(),
+    bestSavings(6),
+    listBaskets(),
+    searchProducts({ take: 6, sort: "popular" }),
+    listCommunities({ commune: user?.commune }),
+    platformSavings(),
+    user ? userSavings(user.id) : Promise.resolve(null),
+  ]);
+
+  return (
+    <div className="space-y-8">
+      {/* Accroche : le groupe → le volume → le prix → l'économie */}
+      <section className="brand-pattern -mx-4 -mt-4 px-4 pt-6 pb-5 text-white">
+        <p className="text-sm font-semibold text-canari-400">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez CANARI"}</p>
+        <h1 className="mt-1 text-[26px] leading-tight font-extrabold">Acheter ensemble, mieux vivre.</h1>
+        <p className="mt-1 text-sm text-white/80">Plus nous sommes nombreux à acheter ensemble, moins nous payons cher.</p>
+        {mine && mine.total > 0 && (
+          <Link href="/compte/economies" className="mt-4 flex items-center justify-between rounded-2xl bg-white/10 p-3 ring-1 ring-white/15">
+            <span className="text-sm">Vous avez économisé</span>
+            <strong className="text-lg text-canari-400">{formatFcfa(mine.total)}</strong>
+          </Link>
+        )}
+        <form action="/recherche" className="mt-4" role="search">
+          <label htmlFor="q" className="sr-only">
+            Rechercher un produit
+          </label>
+          <input id="q" name="q" type="search" placeholder="Riz, huile, savon, cahiers…" className="h-12 w-full rounded-xl bg-white px-4 text-anthracite-900 placeholder:text-anthracite-500" />
+        </form>
+      </section>
+
+      <section aria-labelledby="cats">
+        <h2 id="cats" className="sr-only">
+          Catégories
+        </h2>
+        <ul className="scrollbar-none -mx-4 flex gap-3 overflow-x-auto px-4">
+          {categories.map((c) => (
+            <li key={c.id} className="shrink-0">
+              <Link href={`/categories/${c.slug}`} className="flex w-20 flex-col items-center gap-1 text-center">
+                <span className="grid size-16 place-items-center rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
+                  {c.emoji}
+                </span>
+                <span className="text-xs leading-tight font-semibold text-anthracite-800">{c.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <SectionTitle title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="text-sm font-semibold text-bordeaux-700">Tout voir</Link>} />
+        {groupBuys.length ? (
+          <div className="space-y-3">
+            {groupBuys.map((gb) => (
+              <GroupBuyCard key={gb.id} gb={gb} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState title="Aucun achat groupé ouvert" emoji="🕊️">
+            Les prochains achats groupés arrivent bientôt.
+          </EmptyState>
+        )}
+      </section>
+
+      {savers.length > 0 && (
+        <section>
+          <SectionTitle title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
+          <div className="grid grid-cols-2 gap-3">
+            {savers.slice(0, 4).map((p) => (
+              <ProductCard key={p.id} p={p} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {baskets.length > 0 && (
+        <section>
+          <SectionTitle title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé — modifiable." />
+          <div className="scrollbar-none -mx-4 flex snap-x gap-3 overflow-x-auto px-4">
+            {baskets.map((b) => (
+              <Link key={b.id} href={`/paniers-famille/${b.slug}`} className="w-64 shrink-0 snap-start rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
+                <p className="text-xs font-semibold tracking-wide text-canari-700 uppercase">{b.householdHint}</p>
+                <p className="mt-1 text-lg font-extrabold">{b.name}</p>
+                <p className="mt-2 text-sm text-anthracite-600">
+                  Valeur au détail : <span className="line-through">{formatFcfa(b.referenceTotal)}</span>
+                </p>
+                <p className="text-xl font-extrabold text-bordeaux-700">{formatFcfa(b.canariTotal)}</p>
+                {b.saving > 0 && (
+                  <p className="mt-1 text-sm font-bold text-economie-700">
+                    Économie {formatFcfa(b.saving)} · {formatBps(b.savingBps)}
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section>
+        <SectionTitle title="Produits populaires" action={<Link href="/categories" className="text-sm font-semibold text-bordeaux-700">Catalogue</Link>} />
+        <div className="grid grid-cols-2 gap-3">
+          {popular.map((p) => (
+            <ProductCard key={p.id} p={p} />
+          ))}
+        </div>
+      </section>
+
+      {communities.length > 0 && (
+        <section>
+          <SectionTitle title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="text-sm font-semibold text-bordeaux-700">Tout voir</Link>} />
+          <ul className="space-y-2">
+            {communities.slice(0, 3).map((c) => (
+              <li key={c.id}>
+                <Link href={`/communautes/${c.slug}`} className="flex items-center justify-between rounded-[var(--radius-card)] bg-white p-3 shadow-[var(--shadow-card)]">
+                  <span>
+                    <span className="block font-semibold">{c.name}</span>
+                    <span className="text-xs text-anthracite-600">
+                      {c.commune}
+                      {c.quartier ? ` · ${c.quartier}` : ""} · {c.memberCount} membres
+                    </span>
+                  </span>
+                  <span aria-hidden className="text-bordeaux-600">
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section>
+        <SectionTitle title="Comment ça marche ?" />
+        <HowItWorks />
+      </section>
+
+      <section className="rounded-[var(--radius-card)] bg-economie-600 p-5 text-white">
+        <p className="text-sm text-white/85">Ensemble, la communauté CANARI a déjà économisé</p>
+        <p className="mt-1 text-3xl font-extrabold tabular">{formatFcfa(platform.total)}</p>
+        <p className="mt-1 text-sm text-white/85">
+          {platform.households} ménages · {formatFcfa(platform.average)} en moyenne par ménage
+        </p>
+      </section>
+    </div>
+  );
+}

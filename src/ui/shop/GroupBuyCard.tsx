@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { GroupBuyView } from "@/application/group-buy.service";
 import { formatFcfa } from "@/domain/money";
-import { formatUnits } from "@/domain/units";
+import { formatUnits, unitNoun } from "@/domain/units";
 import { timeLeft } from "@/domain/dates";
 import { GroupProgress } from "../ProgressBar";
 import { ProductTile } from "../ProductTile";
@@ -35,7 +35,7 @@ export function GroupBuyCard({ gb, now = new Date() }: { gb: GroupBuyView; now?:
       <div className="mt-3">
         <div className="mb-1.5 flex items-baseline justify-between text-sm">
           <span className="font-bold tabular text-anthracite-900">
-            {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="font-normal text-anthracite-600">{unit}s</span>
+            {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="font-normal text-anthracite-600">{unitNoun(gb.supplierUnitLabel, gb.targetUnits)}</span>
           </span>
           <span className="font-extrabold tabular text-bordeaux-700">{Math.floor(p.percentOfTarget)} %</span>
         </div>

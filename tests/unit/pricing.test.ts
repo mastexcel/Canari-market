@@ -110,3 +110,13 @@ describe("paliers de prix", () => {
     expect(() => validatePortions([], SACK)).toThrow();
   });
 });
+
+describe("unitNoun", () => {
+  it("accorde le nom d'unité fournisseur", async () => {
+    const { unitNoun } = await import("@/domain/units");
+    expect(unitNoun("Sac 50 kg", 2)).toBe("sacs de 50 kg");
+    expect(unitNoun("Sac 50 kg", 1)).toBe("sac de 50 kg");
+    expect(unitNoun("Bidon 20 L", 27)).toBe("bidons de 20 L");
+    expect(unitNoun("Carton de 10 kits", 3)).toBe("cartons de 10 kits");
+  });
+});

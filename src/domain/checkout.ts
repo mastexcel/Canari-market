@@ -66,7 +66,7 @@ export function computeCheckoutTotals(input: {
   const referenceTotal = input.lines.reduce((s, l) => s + l.referenceUnitPrice * l.quantity, 0);
   const savings = input.lines.reduce((s, l) => s + lineSavings(l), 0);
 
-  let deliveryFee = input.deliveryFee;
+  const deliveryFee = input.deliveryFee;
   let discount = 0;
   if (input.promotion) {
     assertPromotionUsable(input.promotion, subtotal, input.now);
