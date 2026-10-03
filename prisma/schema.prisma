@@ -178,6 +178,11 @@ enum MobileMoneyOperator {
   WAVE
 }
 
+enum PaymentPurpose {
+  ORDER
+  SUPPLEMENT
+}
+
 enum PaymentTransactionType {
   CHARGE
   WEBHOOK
@@ -938,6 +943,8 @@ model OrderStatusEvent {
 model Payment {
   id               String               @id @default(cuid())
   orderId          String
+  purpose          PaymentPurpose       @default(ORDER)
+  orderItemId      String? // pour un supplément (prix alternatif)
   provider         String // « mock », « cinetpay », « wave »…
   method           PaymentMethod
   operator         MobileMoneyOperator?
