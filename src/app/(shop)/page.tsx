@@ -32,8 +32,21 @@ export default async function HomePage() {
   return (
     <div className="space-y-8">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
-      <section className="brand-pattern relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-6 text-white">
-        <Image src={heroImage ?? "/brand/mark.webp"} alt="" width={heroImage ? 260 : 170} height={heroImage ? 260 : 114} priority className={heroImage ? "pointer-events-none absolute top-8 -right-5 w-40 min-[400px]:w-44" : "pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]"} />
+      <section className="brand-pattern relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-8 text-white">
+        {heroImage ? (
+          // Illustration du groupe dans un « soleil » aux couleurs du wax
+          <div aria-hidden className="pointer-events-none absolute top-5 -right-7 size-44 min-[400px]:size-48">
+            <svg className="animate-spin-slow absolute inset-0 size-full" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="96" fill="none" stroke="#FFBF1A" strokeWidth="4" strokeDasharray="3 10" strokeLinecap="round" />
+              <circle cx="100" cy="100" r="87" fill="none" stroke="#9CCC3C" strokeOpacity=".6" strokeWidth="2" strokeDasharray="16 8" />
+            </svg>
+            <div className="absolute inset-[11%] overflow-hidden rounded-full shadow-[0_14px_30px_-12px_rgba(0,0,0,0.5)] ring-4 ring-accent-400">
+              <Image src={heroImage} alt="" fill sizes="200px" priority className="object-cover" />
+            </div>
+          </div>
+        ) : (
+          <Image src="/brand/mark.webp" alt="" width={170} height={114} priority className="pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]" />
+        )}
         <p className="relative text-sm font-semibold text-accent-400">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
         <h1 className="relative mt-1 max-w-[13.5rem] text-[28px] leading-[1.1] font-black">
           À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
@@ -58,6 +71,14 @@ export default async function HomePage() {
         <ButtonLink href="/achats-groupes" variant="accent" size="lg" block className="relative mt-3">
           Rejoindre un achat groupé →
         </ButtonLink>
+        {platform.households > 0 && (
+          <p className="relative mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs font-semibold text-white">
+            <span>👥 {platform.households.toLocaleString("fr-FR")} ménages</span>
+            <span aria-hidden>•</span>
+            <span>💰 {formatFcfa(platform.total)} économisés ensemble</span>
+          </p>
+        )}
+        <div aria-hidden className="kente-band absolute inset-x-0 bottom-0" />
       </section>
 
       {/* Les 4 promesses du logo */}

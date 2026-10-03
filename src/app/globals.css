@@ -54,6 +54,13 @@
   --color-economie-100: #ddf3ef;
   --color-economie-50: #eefaf7;
 
+  /* Couleurs de fête (motifs wax / kente) : terre cuite et lagune */
+  --color-terre-600: #d9622b;
+  --color-terre-100: #fbe4d6;
+  --color-lagune-600: #1fa39a;
+  --color-lagune-100: #d9f2ef;
+  --color-creme-50: #fffaf0;
+
   --color-alerte-700: #a3201a;
   --color-alerte-100: #fde8e6;
   --color-info-700: #1e4f8a;
@@ -85,16 +92,19 @@ html {
 }
 
 /*
- * Fond professionnel : toile claire légèrement verte, halos lime (gauche) et
- * soleil (droite) fixes, trame de points très discrète. Pur CSS, 0 octet d'image.
+ * Fond « ambiance africaine » : toile crème chaude, grandes taches de couleur
+ * (soleil, lime, terre cuite, lagune) et motif wax répété (SVG de 2 Ko).
+ * Les cartes restent blanches : la lisibilité du contenu ne change pas.
  */
 body {
-  background-color: var(--color-gris-100);
+  background-color: var(--color-creme-50);
   background-image:
-    radial-gradient(60rem 30rem at -10% -10%, rgb(124 184 47 / 0.14), transparent 60%),
-    radial-gradient(50rem 28rem at 110% 0%, rgb(255 191 26 / 0.14), transparent 60%),
-    radial-gradient(rgb(14 95 54 / 0.07) 1px, transparent 1px);
-  background-size: auto, auto, 22px 22px;
+    radial-gradient(42rem 26rem at -8% -6%, rgb(255 191 26 / 0.22), transparent 62%),
+    radial-gradient(38rem 24rem at 108% 4%, rgb(124 184 47 / 0.2), transparent 62%),
+    radial-gradient(34rem 26rem at 105% 70%, rgb(217 98 43 / 0.13), transparent 62%),
+    radial-gradient(36rem 26rem at -10% 85%, rgb(31 163 154 / 0.13), transparent 62%),
+    url("/patterns/wax.svg");
+  background-size: auto, auto, auto, auto, 240px 240px;
   background-attachment: fixed;
   color: var(--color-anthracite-900);
   font-family: var(--font-sans);
@@ -140,10 +150,12 @@ h2, h3 { font-weight: 700; }
 .brand-pattern {
   background-color: var(--color-brand-800);
   background-image:
+    url("/patterns/wax-light.svg"),
     radial-gradient(28rem 16rem at 100% 0%, rgb(255 191 26 / 0.32), transparent 65%),
     radial-gradient(26rem 18rem at -5% 115%, rgb(124 184 47 / 0.45), transparent 65%),
     repeating-linear-gradient(-12deg, rgb(255 255 255 / 0.05) 0 2px, transparent 2px 26px),
     linear-gradient(140deg, var(--color-brand-900), var(--color-brand-700) 70%, var(--color-brand-600));
+  background-size: 240px 240px, auto, auto, auto, auto;
 }
 
 /* Texte « Market » : dégradé lime du logo */
@@ -228,3 +240,23 @@ h2, h3 { font-weight: 700; }
 /* Les éléments de grille peuvent rétrécir : un tableau large défile dans son cadre
    au lieu d'élargir toute la page sur mobile. */
 .grid > * { min-width: 0; }
+
+/* Bande kente (bordure décorative de section) */
+.kente-band {
+  height: 10px;
+  background: url("/patterns/kente.svg") repeat-x left center / auto 100%;
+}
+
+/* Page de garde : apparition douce des contenus */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(4deg); }
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-rise { animation: rise-in 520ms cubic-bezier(.2,.7,.2,1) both; }
+.animate-float { animation: float-soft 5s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 40s linear infinite; }
