@@ -35,7 +35,7 @@ export async function createRfqFromGroupBuy(
   db: Db = prisma,
 ) {
   const { groupBuy: gb, demand } = await consolidatedDemand(groupBuyId, db);
-  if (!["CLOSED_SUCCESS", "CLOSED_FAILED", "OPEN"].includes(gb.status)) throw new DomainError("INVALID_STATE", "Achat groupé non éligible à une RFQ.");
+  if (!["CLOSED_SUCCESS", "CLOSED_FAILED"].includes(gb.status)) throw new DomainError("INVALID_STATE", "La demande de cotation s'ouvre après la clôture : les quantités doivent être définitives.");
   if (demand.supplierUnitsToOrder === 0) throw new DomainError("INVALID_STATE", "Aucune demande confirmée à consolider.");
   if (input.closesAt >= input.neededBy) throw new DomainError("VALIDATION", "La clôture des offres doit précéder la date souhaitée.");
   const number = await nextNumber("RFQ", async (n) => !!(await db.rFQ.findUnique({ where: { number: n }, select: { id: true } })));

@@ -12,7 +12,7 @@ const cartInclude = {
   items: {
     orderBy: { createdAt: "asc" as const },
     include: {
-      groupBuy: { include: { tiers: true, product: { select: { name: true, emoji: true, slug: true, baseUnit: true } } } },
+      groupBuy: { include: { tiers: true, product: { select: { name: true, emoji: true, slug: true, baseUnit: true, variants: { select: { quantityBase: true, weightGrams: true }, take: 1 } } } } },
       portion: true,
       variant: { include: { referencePrices: { orderBy: { observedAt: "desc" as const }, take: 1 }, product: { select: { id: true, name: true, emoji: true, slug: true } } } },
     },
@@ -35,6 +35,20 @@ export interface CartLine {
   closesAt?: Date;
   percent?: number;
   issue: string | null;
+}
+
+/**
+ * Poids logistique d'une portion : exact pour les produits au gramme ; pour les
+ * produits au litre ou à la pièce, déduit du poids d'une variante de référence.
+ */
+export function portionWeightGrams(
+  product: { baseUnit: string; variants: Array<{ quantityBase: number; weightGrams: number }> },
+  portionBase: number,
+): number {
+  if (product.baseUnit === "GRAM") return portionBase;
+  const v = product.variants[0];
+  if (!v || v.quantityBase <= 0) return portionBase;
+  return Math.round((portionBase * v.weightGrams) / v.quantityBase);
 }
 
 export async function getOrCreateCart(userId: string, db: Db = prisma) {
@@ -67,7 +81,7 @@ export async function getCart(userId: string, db: Db = prisma, now = new Date())
         emoji: gb.product.emoji,
         href: `/achats-groupes/${gb.slug}`,
         quantity: it.quantity,
-        weightGrams: it.portion.quantityBase * it.quantity, // vrac : 1 g ≈ 1 g
+        weightGrams: portionWeightGrams(gb.product, it.portion.quantityBase) * it.quantity,
         price,
         lineTotal: price ? (price.unitPrice + price.fractionationFee) * it.quantity : 0,
         groupBuyId: gb.id,

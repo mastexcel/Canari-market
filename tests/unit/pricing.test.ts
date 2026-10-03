@@ -120,3 +120,12 @@ describe("unitNoun", () => {
     expect(unitNoun("Carton de 10 kits", 3)).toBe("cartons de 10 kits");
   });
 });
+
+describe("poids logistique des portions", () => {
+  it("se déduit de la variante pour les pièces et litres", async () => {
+    const { portionWeightGrams } = await import("@/application/cart.service");
+    expect(portionWeightGrams({ baseUnit: "GRAM", variants: [] }, 5_000)).toBe(5_000);
+    expect(portionWeightGrams({ baseUnit: "PIECE", variants: [{ quantityBase: 30, weightGrams: 1_800 }] }, 90)).toBe(5_400);
+    expect(portionWeightGrams({ baseUnit: "MILLILITER", variants: [{ quantityBase: 1_000, weightGrams: 920 }] }, 5_000)).toBe(4_600);
+  });
+});

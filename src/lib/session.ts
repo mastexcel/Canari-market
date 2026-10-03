@@ -1,14 +1,16 @@
 /** Accès à la session dans les Server Components / layouts. */
 import "server-only";
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getUserBySessionToken, SESSION_COOKIE, type SessionUser } from "@/application/auth.service";
 import { hasPermission, homePathFor, type AdminPermission, type UserRole } from "@/domain/permissions";
 
-export async function currentUser(): Promise<SessionUser | null> {
+/** Mémorisé pour la durée d'une requête : layout et page partagent une seule lecture. */
+export const currentUser = cache(async (): Promise<SessionUser | null> => {
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
   return getUserBySessionToken(token);
-}
+});
 
 export async function requireUser(next = "/"): Promise<SessionUser> {
   const user = await currentUser();
