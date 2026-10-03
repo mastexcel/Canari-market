@@ -92,20 +92,17 @@ export function SignupForm({ communes, referralCode, next }: { communes: string[
       </div>
       <Input label="Code de parrainage" optional value={f.referralCode} onChange={(e) => setF({ ...f, referralCode: e.target.value.toUpperCase() })} />
       <div className="space-y-1 rounded-xl bg-white p-3">
-        <Checkbox
-          label={
-            <>
-              J&apos;accepte les{" "}
-              <a href="/cgu" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
-                conditions d&apos;utilisation
-              </a>{" "}
-              et la{" "}
-              <a href="/confidentialite" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
-                politique de confidentialité
-              </a>
-              .
-            </>
-          } checked={f.acceptTerms} onChange={(e) => setF({ ...f, acceptTerms: e.target.checked })} />
+        <Checkbox label="J'accepte les conditions d'utilisation et la politique de confidentialité." checked={f.acceptTerms} onChange={(e) => setF({ ...f, acceptTerms: e.target.checked })} />
+        {/* Liens hors du libellé : toucher le texte coche la case, sans ouvrir de page par erreur */}
+        <p className="pl-9 text-xs text-anthracite-600">
+          <a href="/cgu" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
+            Lire les conditions
+          </a>
+          {" · "}
+          <a href="/confidentialite" target="_blank" rel="noopener" className="font-semibold text-brand-700 underline">
+            Lire la politique de confidentialité
+          </a>
+        </p>
         {errors.acceptTerms && <p className="text-sm text-alerte-700">{errors.acceptTerms}</p>}
         <Checkbox label="Recevoir les bons plans par SMS" description="Facultatif, modifiable à tout moment." checked={f.marketingSms} onChange={(e) => setF({ ...f, marketingSms: e.target.checked })} />
         <Checkbox label="Recevoir les bons plans par WhatsApp" checked={f.marketingWhatsapp} onChange={(e) => setF({ ...f, marketingWhatsapp: e.target.checked })} />

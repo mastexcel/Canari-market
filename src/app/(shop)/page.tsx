@@ -48,7 +48,7 @@ export default async function HomePage() {
           <Image src="/brand/mark.webp" alt="" width={170} height={114} priority className="pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]" />
         )}
         <p className="relative text-sm font-semibold text-accent-400">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
-        <h1 className="relative mt-1 max-w-[13.5rem] text-[28px] leading-[1.1] font-black">
+        <h1 className="relative mt-1 max-w-[13.5rem] text-[29px] leading-[1.1] font-bold">
           À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
         </h1>
         <p className="relative mt-2 max-w-[13.5rem] text-sm text-white/90">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
@@ -94,7 +94,7 @@ export default async function HomePage() {
               <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-lime-100 to-accent-100 text-lg" aria-hidden>
                 {f.img ? <Image src={f.img} alt="" width={36} height={36} /> : f.e}
               </span>
-              <span className="text-[10.5px] leading-tight font-extrabold tracking-wide text-brand-800 uppercase">{f.t}</span>
+              <span className="text-[11.5px] leading-tight font-extrabold tracking-[0.02em] text-brand-800 uppercase">{f.t}</span>
             </Link>
           </li>
         ))}

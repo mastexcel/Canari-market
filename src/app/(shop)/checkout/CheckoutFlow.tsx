@@ -282,7 +282,7 @@ export function CheckoutFlow(props: {
         <div className="space-y-3">
           <Card className="p-4 text-center">
             <p className="text-sm text-anthracite-600">Montant à payer</p>
-            <p className="text-3xl font-black tabular text-brand-700">{formatFcfa(quote.totals.total)}</p>
+            <p className="text-3xl font-extrabold tabular text-brand-700">{formatFcfa(quote.totals.total)}</p>
           </Card>
           <div className="grid gap-2" role="radiogroup" aria-label="Moyen de paiement">
             <ChoiceCard name="method" value="MOBILE_MONEY" checked={method === "MOBILE_MONEY"} onChange={() => setMethod("MOBILE_MONEY")} title="📱 Mobile Money" description="Orange Money, MTN MoMo, Moov Money, Wave" />

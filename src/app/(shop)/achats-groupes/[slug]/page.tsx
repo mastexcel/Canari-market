@@ -52,7 +52,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
 
       <ProductTile emoji={gb.product.emoji} name={gb.product.name} src={gb.image} size="lg" />
       <div>
-        <h1 className="text-2xl leading-tight font-extrabold uppercase">{gb.title}</h1>
+        <h1 className="text-[26px] leading-tight font-bold">{gb.title}</h1>
         <p className="mt-1 text-sm text-anthracite-600">{gb.description}</p>
       </div>
 
@@ -83,7 +83,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
       <Card className="p-4">
         <div className="flex items-baseline justify-between">
           <p className="text-sm font-semibold text-anthracite-700">Progression</p>
-          <p className="text-3xl font-black tabular text-brand-700">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
+          <p className="text-3xl font-extrabold tabular text-brand-700">{Math.floor(p.percentOfTarget * 10) / 10} %</p>
         </div>
         <p className="mb-2 text-xl font-extrabold tabular">
           {formatUnits(p.committedUnits, 0)} / {gb.targetUnits} <span className="text-base font-semibold text-anthracite-600">{unitNoun(gb.supplierUnitLabel, gb.targetUnits)}</span>

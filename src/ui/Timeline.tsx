@@ -36,7 +36,7 @@ export function Stepper({ steps, current }: { steps: string[]; current: number }
       {steps.map((s, i) => (
         <li key={s} className="flex flex-1 flex-col items-center gap-1" aria-current={i === current ? "step" : undefined}>
           <span className={cn("h-1.5 w-full rounded-full", i <= current ? "bg-brand-600" : "bg-gris-300")} />
-          <span className={cn("text-[11px]", i === current ? "font-bold text-brand-700" : "text-anthracite-500")}>{s}</span>
+          <span className={cn("text-xs", i === current ? "font-bold text-brand-700" : "text-anthracite-500")}>{s}</span>
         </li>
       ))}
     </ol>

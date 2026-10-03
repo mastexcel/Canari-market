@@ -32,7 +32,7 @@ export default async function SavingsPage() {
           </div>
           <div className="flex justify-between border-t border-white/25 pt-2 text-xl">
             <dt className="font-semibold">Depuis votre inscription</dt>
-            <dd className="font-black tabular">{formatFcfa(s.total)}</dd>
+            <dd className="font-extrabold tabular">{formatFcfa(s.total)}</dd>
           </div>
         </dl>
       </section>
@@ -46,9 +46,9 @@ export default async function SavingsPage() {
               const [, mm] = m.month.split("-");
               return (
                 <li key={m.month} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
-                  <span className="text-[10px] font-semibold tabular text-anthracite-700">{m.amount ? `${Math.round(m.amount / 100) / 10}k` : ""}</span>
+                  <span className="text-[11.5px] font-bold tabular text-anthracite-700">{m.amount ? `${Math.round(m.amount / 100) / 10}k` : ""}</span>
                   <span className="w-full rounded-t-md bg-economie-600" style={{ height: `${Math.max(2, (m.amount / max) * 100)}%` }} title={`${formatFcfa(m.amount)}`} />
-                  <span className="text-[11px] text-anthracite-600">{MONTHS[Number(mm) - 1]}</span>
+                  <span className="text-xs text-anthracite-600">{MONTHS[Number(mm) - 1]}</span>
                   <span className="sr-only">{formatFcfa(m.amount)}</span>
                 </li>
               );

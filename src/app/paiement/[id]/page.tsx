@@ -34,7 +34,7 @@ export default async function MockPaymentPage({ params }: { params: Promise<{ id
           <span className="rounded-full bg-accent-100 px-3 py-1 text-xs font-bold text-accent-700">Prestataire de test</span>
         </div>
         <p className="text-sm text-anthracite-600">Commande {p.order.number}</p>
-        <p className="mt-1 text-3xl font-black tabular">{formatFcfa(p.amount)}</p>
+        <p className="mt-1 text-3xl font-extrabold tabular">{formatFcfa(p.amount)}</p>
         <p className="mt-2 text-sm text-anthracite-700">
           {p.method === "MOBILE_MONEY" ? `${OP[p.operator ?? ""] ?? "Mobile Money"} · ${p.payerPhoneMasked ?? ""}` : "Carte bancaire (saisie chez le prestataire)"}
         </p>

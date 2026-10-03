@@ -67,7 +67,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
         <Card className="p-4 text-center">
           <p className="font-bold">{order.fulfillmentMode === "PICKUP" ? "Code de retrait" : "Code de livraison"}</p>
           <div className="mx-auto my-3 w-44" dangerouslySetInnerHTML={{ __html: qr }} />
-          <p className="text-3xl font-black tracking-[0.3em] tabular">{order.pickupCode}</p>
+          <p className="text-3xl font-extrabold tracking-[0.3em] tabular">{order.pickupCode}</p>
           <p className="mt-1 text-xs text-anthracite-600">Ne communiquez ce code qu&apos;au moment de la remise.</p>
         </Card>
       )}

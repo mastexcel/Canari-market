@@ -27,7 +27,7 @@ export function CookieNotice() {
   return (
     // Dans le flux, en haut de page : ne recouvre jamais un bouton ou un formulaire.
     <div role="region" aria-label="Information cookies" className="bg-anthracite-900 text-white">
-      <div className="mx-auto flex max-w-lg items-center gap-3 px-4 py-2.5 text-[13px] leading-snug">
+      <div className="mx-auto flex max-w-lg items-center gap-3 px-4 py-2.5 text-xs leading-snug">
         <p className="flex-1">
           🍪 Uniquement des cookies nécessaires (connexion, préférences), aucun traceur publicitaire.{" "}
           <Link href="/confidentialite#cookies" className="font-semibold text-accent-400 underline">

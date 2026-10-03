@@ -23,7 +23,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
             {user ? (
               <Link href="/notifications" className="relative grid size-9 place-items-center rounded-full bg-gris-100" aria-label={`Notifications${unread ? ` (${unread} non lues)` : ""}`}>
                 <span aria-hidden>🔔</span>
-                {unread > 0 && <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">{unread > 9 ? "9+" : unread}</span>}
+                {unread > 0 && <span className="absolute -top-0.5 -right-0.5 grid min-w-4 place-items-center rounded-full bg-brand-600 px-1 text-[11px] font-bold text-white">{unread > 9 ? "9+" : unread}</span>}
               </Link>
             ) : (
               <Link href="/connexion" className="h-9 rounded-full bg-brand-600 px-3 text-sm leading-9 font-semibold text-white">

@@ -26,7 +26,7 @@ export function Logo({ className, light = false, tagline = false, height = 44 }:
   return (
     <span className={cn("inline-flex flex-col items-start", className)}>
       <Image src={light ? "/brand/logo-sombre.webp" : "/brand/logo-horizontal.webp"} alt="Sesam-Market" width={Math.round(height * ratio)} height={height} className="-my-0.5 h-auto w-auto" style={{ height }} priority />
-      {tagline && <span className={cn("mt-0.5 pl-1 text-[10.5px] font-semibold tracking-wide", light ? "text-white" : "text-brand-700")}>À plusieurs, les prix s’ouvrent.</span>}
+      {tagline && <span className={cn("mt-0.5 pl-1 text-xs font-semibold", light ? "text-white" : "text-brand-700")}>À plusieurs, les prix s’ouvrent.</span>}
     </span>
   );
 }

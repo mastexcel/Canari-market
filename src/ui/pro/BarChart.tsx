@@ -72,7 +72,7 @@ export function BarChart({
               </button>
             ))}
           </div>
-          <div className="mt-1 flex justify-between text-[11px] text-anthracite-500">
+          <div className="mt-1 flex justify-between text-xs text-anthracite-600">
             <span>{data[0]?.label}</span>
             <span>{data.at(-1)?.label}</span>
           </div>
