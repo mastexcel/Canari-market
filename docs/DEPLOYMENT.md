@@ -59,3 +59,18 @@ base PostgreSQL de service, tests unitaires + intégration avec couverture, buil
 2. L'enregistrer dans `registry.ts` et définir `PAYMENT_PROVIDER`.
 3. Déclarer l'URL de webhook `https://<domaine>/api/v1/webhooks/payments/<nom>` chez le prestataire.
 4. Tester en sandbox : succès, échec, webhook dupliqué, webhook tardif, remboursement partiel.
+
+## Démo hébergée sur Render
+
+`render.yaml` décrit une **démo publique** (pas une production) : site Node.js + PostgreSQL
+(offres gratuites, région Francfort), paiement simulé, données de démonstration chargées au
+premier déploiement uniquement (`npm run db:seed-if-empty`, actif si `DEMO_SEED="true"`).
+
+- `DEMO_PASSWORD` (à saisir dans Render, jamais dans le dépôt) remplace le mot de passe
+  public `sesam2026` de tous les comptes de démo, back-office compris.
+- `APP_URL` est facultatif : l'URL publique Render (`RENDER_EXTERNAL_URL`) est utilisée.
+- Offre gratuite : mise en veille après ~15 min sans visite (réveil 30 à 60 s) ;
+  la base gratuite expire au bout de 30 jours.
+
+Pour la production réelle : retirer `DEMO_SEED`, `DEMO_PASSWORD` et `ALLOW_MOCK_PAYMENTS`,
+brancher un prestataire de paiement réel et passer sur des offres payantes.

@@ -27,7 +27,7 @@ export function generateMetadata(): Metadata {
   const share = publicAsset("images/communication/partage.jpg");
   return {
     ...baseMetadata,
-    metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),
+    metadataBase: new URL(process.env.APP_URL ?? process.env.RENDER_EXTERNAL_URL ?? "http://localhost:3000"),
     openGraph: {
       title: "Sesam-Market — À plusieurs, les prix s’ouvrent",
       description: "Achats groupés de produits du quotidien à Abidjan : plus nous sommes nombreux, plus les prix baissent.",

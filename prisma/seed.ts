@@ -53,7 +53,8 @@ async function main() {
   const t0 = Date.now();
   console.log("→ Réinitialisation…");
   await reset();
-  const passwordHash = await hashPassword("sesam2026");
+  // Démo hébergée : DEMO_PASSWORD remplace le mot de passe public des comptes de démo.
+  const passwordHash = await hashPassword(process.env.DEMO_PASSWORD || "sesam2026");
 
   const mkUser = (data: Omit<Prisma.UserCreateInput, "passwordHash" | "referralCode"> & { referralCode?: string }) =>
     prisma.user.create({ data: { passwordHash, referralCode: data.referralCode ?? code("SES"), ...data } });
@@ -527,7 +528,7 @@ async function main() {
     delivered: await prisma.order.count({ where: { status: "DELIVERED" } }),
   };
   console.log(`✔ Seed terminé en ${Math.round((Date.now() - t0) / 1000)} s (${orderCount} commandes passées par les services)`, counts);
-  console.log("  Mot de passe de tous les comptes de démo : sesam2026");
+  console.log(process.env.DEMO_PASSWORD ? "  Mot de passe des comptes de démo : valeur de DEMO_PASSWORD" : "  Mot de passe de tous les comptes de démo : sesam2026");
 }
 
 main()

@@ -2,7 +2,8 @@ import { z } from "zod";
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  APP_URL: z.string().url().default("http://localhost:3000"),
+  // Sur Render, l'URL publique est fournie automatiquement (RENDER_EXTERNAL_URL).
+  APP_URL: z.string().url().default(process.env.RENDER_EXTERNAL_URL ?? "http://localhost:3000"),
   SESSION_SECRET: z.string().min(24, "SESSION_SECRET doit faire au moins 24 caractères"),
   PAYMENT_PROVIDER: z.string().default("mock"),
   PAYMENT_WEBHOOK_SECRET: z.string().min(12),
