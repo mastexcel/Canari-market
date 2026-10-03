@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { illustration } from "@/infrastructure/assets";
+import { publicAsset } from "@/infrastructure/assets";
 import { Fredoka } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/ui/Toast";
@@ -22,9 +22,9 @@ const baseMetadata: Metadata = {
   formatDetection: { telephone: false },
 };
 
-/** Aperçu de partage (WhatsApp, Facebook) dès que communication/partage.webp est déposé. */
+/** Aperçu de partage (WhatsApp, Facebook) : JPEG, format le mieux pris en charge par les aperçus de liens. */
 export function generateMetadata(): Metadata {
-  const share = illustration("communication", "partage");
+  const share = publicAsset("images/communication/partage.jpg");
   return {
     ...baseMetadata,
     metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),

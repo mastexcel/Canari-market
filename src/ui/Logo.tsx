@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { cn } from "./cn";
 
-/** Emblème : le canari et son chariot (496 × 376). */
+/** Emblème : le chariot garni et ses ailes (400 × 299). */
 export function BrandMark({ size = 40, className }: { size?: number; className?: string }) {
-  return <Image src="/brand/mark.webp" alt="" width={Math.round((size * 496) / 376)} height={size} className={cn("object-contain", className)} priority />;
+  return <Image src="/brand/mark.webp" alt="" width={Math.round((size * 400) / 299)} height={size} className={cn("object-contain", className)} priority />;
 }
 
 /** Nom de marque : « Sesam » vert forêt, tiret soleil, « Market » dégradé lime. */
@@ -18,11 +18,11 @@ export function Wordmark({ className, light = false }: { className?: string; lig
 }
 
 /**
- * Logo horizontal officiel (emblème + nom, 732 × 198), version blanche sur fond foncé,
+ * Logo horizontal officiel (emblème + nom, 760 × 221), version blanche (420 × 203) sur fond foncé,
  * avec slogan optionnel (espaces pro, pied de page).
  */
-export function Logo({ className, light = false, tagline = false, height = 40 }: { className?: string; light?: boolean; tagline?: boolean; height?: number }) {
-  const ratio = light ? 732 / 166 : 732 / 198;
+export function Logo({ className, light = false, tagline = false, height = 44 }: { className?: string; light?: boolean; tagline?: boolean; height?: number }) {
+  const ratio = light ? 420 / 203 : 760 / 221;
   return (
     <span className={cn("inline-flex flex-col items-start", className)}>
       <Image src={light ? "/brand/logo-blanc.webp" : "/brand/logo-horizontal.webp"} alt="Sesam-Market" width={Math.round(height * ratio)} height={height} className="-my-0.5 h-auto w-auto" style={{ height }} priority />
@@ -31,7 +31,14 @@ export function Logo({ className, light = false, tagline = false, height = 40 }:
   );
 }
 
-/** Logo complet officiel (emblème, nom, slogan). */
+/** Logo complet : logo horizontal et slogan (accueil, connexion, inscription). */
 export function FullLogo({ className, width = 320 }: { className?: string; width?: number }) {
-  return <Image src="/brand/logo-full.webp" alt="Sesam-Market — À plusieurs, les prix s’ouvrent." width={width} height={Math.round((width * 1024) / 1536)} className={className} priority />;
+  return (
+    <span className={cn("flex flex-col items-center", className)}>
+      <Image src="/brand/logo-horizontal.webp" alt="Sesam-Market" width={width} height={Math.round((width * 221) / 760)} className="h-auto w-full" priority />
+      <span className="mt-1 font-display text-sm font-semibold tracking-wide text-brand-700">
+        À plusieurs, <span className="text-lime-600">les prix s’ouvrent.</span>
+      </span>
+    </span>
+  );
 }
