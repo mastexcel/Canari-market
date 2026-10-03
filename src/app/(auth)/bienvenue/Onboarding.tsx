@@ -111,7 +111,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
 
   if (splash) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-creme-50">
+      <div className="fixed inset-0 z-50 flex flex-col bg-fond">
         <div className="kente-band" />
         <div className="relative grid flex-1 place-items-center px-6 text-center">
           <svg aria-hidden className="animate-spin-slow absolute size-[min(110vw,520px)] opacity-60" viewBox="0 0 200 200">
@@ -164,8 +164,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <Shapes color={s.ring} />
           </div>
 
-          {/* Voile crème derrière le texte : le motif reste visible sans gêner la lecture */}
-          <div className="mt-5 rounded-3xl bg-creme-50/85 px-4 py-3 backdrop-blur-[2px]">
+                    <div className="mt-5 px-4 py-1">
             <h1 className="animate-rise max-w-sm text-[28px] leading-[1.12] font-bold text-anthracite-950 [animation-delay:80ms]">{s.title}</h1>
             <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-anthracite-800 [animation-delay:140ms]">{s.text}</p>
           </div>

@@ -76,6 +76,8 @@
   --color-lagune-600: #1fa39a;
   --color-lagune-100: #d9f2ef;
   --color-creme-50: #fffaf0;
+  /* Fond général du site */
+  --color-fond: #f1f2f4;
 
   --color-alerte-700: #a3201a;
   --color-alerte-100: #fde8e6;
@@ -107,21 +109,9 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/*
- * Fond « ambiance africaine » : toile crème chaude, grandes taches de couleur
- * (soleil, lime, terre cuite, lagune) et motif wax répété (SVG de 2 Ko).
- * Les cartes restent blanches : la lisibilité du contenu ne change pas.
- */
+/* Fond uni gris clair : sobre, les cartes blanches et les couleurs du contenu ressortent. */
 body {
-  background-color: var(--color-creme-50);
-  background-image:
-    radial-gradient(42rem 26rem at -8% -6%, rgb(255 191 26 / 0.22), transparent 62%),
-    radial-gradient(38rem 24rem at 108% 4%, rgb(124 184 47 / 0.2), transparent 62%),
-    radial-gradient(34rem 26rem at 105% 70%, rgb(217 98 43 / 0.13), transparent 62%),
-    radial-gradient(36rem 26rem at -10% 85%, rgb(31 163 154 / 0.13), transparent 62%),
-    url("/patterns/wax.svg");
-  background-size: auto, auto, auto, auto, 240px 240px;
-  background-attachment: fixed;
+  background-color: var(--color-fond);
   color: var(--color-anthracite-900);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -172,12 +162,9 @@ p { text-wrap: pretty; }
 .brand-pattern {
   background-color: var(--color-brand-800);
   background-image:
-    url("/patterns/wax-light.svg"),
     radial-gradient(28rem 16rem at 100% 0%, rgb(255 191 26 / 0.32), transparent 65%),
     radial-gradient(26rem 18rem at -5% 115%, rgb(124 184 47 / 0.45), transparent 65%),
-    repeating-linear-gradient(-12deg, rgb(255 255 255 / 0.05) 0 2px, transparent 2px 26px),
     linear-gradient(140deg, var(--color-brand-900), var(--color-brand-700) 70%, var(--color-brand-600));
-  background-size: 240px 240px, auto, auto, auto, auto;
 }
 
 /* Texte « Market » : dégradé lime du logo */
