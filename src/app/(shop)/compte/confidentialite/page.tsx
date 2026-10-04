@@ -28,7 +28,7 @@ export default async function PrivacyPage() {
         <ul className="space-y-1 text-xs text-anthracite-700">
           {c.history.slice(0, 20).map((h) => (
             <li key={h.id}>
-              {formatDateTime(h.createdAt)} — {LABELS[h.type]} : {h.granted ? "accepté" : "refusé"} (v{h.version})
+              {formatDateTime(h.createdAt)} · {LABELS[h.type]} : {h.granted ? "accepté" : "refusé"} (v{h.version})
             </li>
           ))}
         </ul>

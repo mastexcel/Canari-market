@@ -62,7 +62,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
         <Card className="p-4 text-sm">
           <p className="font-bold">📍 Point Sesam de la communauté</p>
           <p className="mt-1">
-            {c.pickupPoint.name} — {c.pickupPoint.address}, {c.pickupPoint.quartier}
+            {c.pickupPoint.name}, {c.pickupPoint.address}, {c.pickupPoint.quartier}
             <br />
             {c.pickupPoint.openingHours}
           </p>

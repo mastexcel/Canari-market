@@ -175,7 +175,7 @@ export function CheckoutFlow(props: {
                 <optgroup key={commune} label={commune}>
                   {list.map((p) => (
                     <option key={p.id} value={p.id}>
-                      {p.name} — {p.quartier} ({p.fee ? formatFcfa(p.fee) : "gratuit"})
+                      {p.name}, {p.quartier} ({p.fee ? formatFcfa(p.fee) : "gratuit"})
                     </option>
                   ))}
                 </optgroup>
@@ -187,7 +187,7 @@ export function CheckoutFlow(props: {
                 <Select label="Adresse" value={addressId} onChange={(e) => setAddressId(e.target.value)}>
                   {props.addresses.map((a) => (
                     <option key={a.id} value={a.id}>
-                      {a.label} — {a.quartier}, {a.commune}
+                      {a.label} : {a.quartier}, {a.commune}
                     </option>
                   ))}
                   <option value="new">+ Nouvelle adresse</option>
@@ -286,7 +286,7 @@ export function CheckoutFlow(props: {
           </Card>
           <div className="grid gap-2" role="radiogroup" aria-label="Moyen de paiement">
             <ChoiceCard name="method" value="MOBILE_MONEY" checked={method === "MOBILE_MONEY"} onChange={() => setMethod("MOBILE_MONEY")} title="📱 Mobile Money" description="Orange Money, MTN MoMo, Moov Money, Wave" />
-            <ChoiceCard name="method" value="CARD" checked={method === "CARD"} onChange={() => setMethod("CARD")} title="💳 Carte bancaire" description="Saisie sécurisée chez le prestataire — Sesam-Market ne voit jamais votre carte." />
+            <ChoiceCard name="method" value="CARD" checked={method === "CARD"} onChange={() => setMethod("CARD")} title="💳 Carte bancaire" description="Saisie sécurisée chez le prestataire. Sesam-Market ne voit jamais votre carte." />
           </div>
           {method === "MOBILE_MONEY" && (
             <>

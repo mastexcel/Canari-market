@@ -89,7 +89,7 @@ export function JoinPanel(props: {
       {portion && (
         <p className="mt-3 text-sm text-anthracite-700">
           Total : <strong className="tabular">{formatFcfa((portion.unitPrice + portion.fee) * qty)}</strong>
-          {portion.targetPrice < portion.unitPrice && <> — tombera à {formatFcfa((portion.targetPrice + portion.fee) * qty)} si l&apos;objectif est atteint (différence remboursée).</>}
+          {portion.targetPrice < portion.unitPrice && <>, tombera à {formatFcfa((portion.targetPrice + portion.fee) * qty)} si l&apos;objectif est atteint (différence remboursée).</>}
         </p>
       )}
       {error && (

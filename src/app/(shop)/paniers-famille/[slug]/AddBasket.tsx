@@ -19,7 +19,7 @@ export function AddBasket({ slug, loggedIn }: { slug: string; loggedIn: boolean 
         setLoading(true);
         try {
           await api("/cart/baskets", { body: { slug } });
-          toast("Panier ajouté — modifiable à tout moment");
+          toast("Panier ajouté, modifiable à tout moment");
           router.push("/panier");
           router.refresh();
         } catch (e) {

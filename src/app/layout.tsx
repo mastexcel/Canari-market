@@ -15,7 +15,7 @@ const display = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["600", "700", "
 const text = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-inter", display: "swap" });
 
 const baseMetadata: Metadata = {
-  title: { default: "Sesam-Market — À plusieurs, les prix s’ouvrent", template: "%s · Sesam-Market" },
+  title: { default: "Sesam-Market : à plusieurs, les prix s’ouvrent", template: "%s · Sesam-Market" },
   description: "Centrale d'achat numérique pour les ménages et petits commerces de Côte d'Ivoire. Plus nous sommes nombreux à acheter ensemble, moins nous payons cher.",
   manifest: "/manifest.webmanifest",
   applicationName: "Sesam-Market",
@@ -31,12 +31,12 @@ export function generateMetadata(): Metadata {
     ...baseMetadata,
     metadataBase: new URL(process.env.APP_URL ?? process.env.RENDER_EXTERNAL_URL ?? "http://localhost:3000"),
     openGraph: {
-      title: "Sesam-Market — À plusieurs, les prix s’ouvrent",
+      title: "Sesam-Market : à plusieurs, les prix s’ouvrent",
       description: "Achats groupés de produits du quotidien à Abidjan : plus nous sommes nombreux, plus les prix baissent.",
       locale: "fr_CI",
       siteName: "Sesam-Market",
       type: "website",
-      ...(share ? { images: [{ url: share, width: 1200, height: 630, alt: "Sesam-Market — À plusieurs, les prix s’ouvrent" }] } : {}),
+      ...(share ? { images: [{ url: share, width: 1200, height: 630, alt: "Sesam-Market : à plusieurs, les prix s’ouvrent" }] } : {}),
     },
     twitter: { card: "summary_large_image", ...(share ? { images: [share] } : {}) },
   };

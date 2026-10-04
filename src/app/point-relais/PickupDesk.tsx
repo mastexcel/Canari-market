@@ -33,7 +33,7 @@ export function PickupDesk({ incoming }: { incoming: Array<{ number: string; nam
                 <span>
                   {i.number} · {i.name}
                 </span>
-                <Button size="sm" loading={busy} onClick={() => send({ type: "receive", orderNumber: i.number }, `Colis ${i.number} reçu — client prévenu`)}>
+                <Button size="sm" loading={busy} onClick={() => send({ type: "receive", orderNumber: i.number }, `Colis ${i.number} reçu, client prévenu`)}>
                   Reçu
                 </Button>
               </li>

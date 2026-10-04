@@ -8,7 +8,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
     <>
       <header className="border-b border-gris-200 bg-white">
         <div className="mx-auto flex h-14 max-w-2xl items-center px-4">
-          <Link href="/" aria-label="Sesam-Market — accueil">
+          <Link href="/" aria-label="Accueil Sesam-Market">
             <Logo />
           </Link>
         </div>

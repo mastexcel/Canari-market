@@ -78,7 +78,7 @@ test("inscription → achat groupé → paiement → suivi → admin", async ({ 
   await admin.getByRole("button", { name: "Se connecter" }).click();
   await expect(admin.getByRole("heading", { name: /Tableau de bord/ })).toBeVisible();
   await admin.getByRole("link", { name: /Achats groupés/ }).first().click();
-  await admin.getByRole("row", { name: /Riz parfumé — sac de 50 kg Ouvert/ }).getByRole("link", { name: "Piloter" }).click();
+  await admin.getByRole("row", { name: /Riz parfumé, sac de 50 kg Ouvert/ }).getByRole("link", { name: "Piloter" }).click();
   await expect(admin.getByText("Demande consolidée")).toBeVisible();
   await expect(admin.getByText("À commander au fournisseur")).toBeVisible();
 });

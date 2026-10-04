@@ -18,8 +18,8 @@ export default async function Logistics() {
       <H1>Logistique</H1>
       <div className="grid gap-3 sm:grid-cols-4">
         <StatCard label="Stock à préparer" value={String(b.toPrepare.length)} />
-        <StatCard label="Prêtes — point relais" value={String(pickupReady.length)} />
-        <StatCard label="Prêtes — domicile" value={String(homeReady.length)} />
+        <StatCard label="Prêtes pour le point relais" value={String(pickupReady.length)} />
+        <StatCard label="Prêtes pour le domicile" value={String(homeReady.length)} />
         <StatCard label="En cours" value={String(b.inProgress.length)} />
       </div>
 

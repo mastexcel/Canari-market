@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Achats groupés",
     title: (
       <>
-        Ensemble, on achète <Hl className="text-accent-700">comme les grossistes</Hl>
+        Ensemble, on achète <Hl className="text-accent-900 underline decoration-accent-500 decoration-[5px] underline-offset-[6px]">comme les grossistes</Hl>
       </>
     ),
     text: "Ménages et petits commerces d’Abidjan réunissent leurs besoins dans un même achat : riz, huile, savon, cahiers…",
@@ -44,7 +44,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Prix qui baisse",
     title: (
       <>
-        Plus on est nombreux, <Hl className="text-brand-600">plus le prix baisse</Hl>
+        Plus on est nombreux, <Hl className="text-brand-950 underline decoration-accent-500 decoration-[5px] underline-offset-[6px]">plus le prix baisse</Hl>
       </>
     ),
     text: "Chaque participant rapproche le groupe du palier suivant. Votre prix ne peut jamais monter : la différence vous est remboursée.",
@@ -57,7 +57,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Près de chez vous",
     title: (
       <>
-        Juste ce qu’il vous faut, <Hl className="text-accent-700">dans votre quartier</Hl>
+        Juste ce qu’il vous faut, <Hl className="text-accent-900 underline decoration-accent-500 decoration-[5px] underline-offset-[6px]">dans votre quartier</Hl>
       </>
     ),
     text: "Le sac de 50 kg est partagé en 5, 10 ou 25 kg. Retrait au point relais du quartier ou livraison à domicile.",
@@ -139,7 +139,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
           <span className="capsule-soleil rounded-full px-3 py-1 text-xs font-extrabold tracking-wide uppercase shadow-[var(--shadow-card)]">
             {i + 1}/{SLIDES.length} · {s.eyebrow}
           </span>
-          <Link href="/" onClick={markOnboarded} className="rounded-full px-3 py-1.5 text-sm font-semibold text-anthracite-800 hover:bg-white/60">
+          <Link href="/" onClick={markOnboarded} className="rounded-full px-3 py-1.5 text-sm font-bold text-anthracite-950 hover:bg-white/50">
             Passer
           </Link>
         </div>
@@ -166,14 +166,14 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
 
                     <div className="mt-5 px-4 py-1">
             <h1 className="animate-rise max-w-sm text-[28px] leading-[1.12] font-extrabold text-anthracite-950 [animation-delay:80ms]">{s.title}</h1>
-            <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-anthracite-800 [animation-delay:140ms]">{s.text}</p>
+            <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed font-medium text-anthracite-950 [animation-delay:140ms]">{s.text}</p>
           </div>
           {proof && <p className="animate-rise mt-3 rounded-full bg-white px-4 py-2 text-sm font-bold text-anthracite-900 shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
         </div>
 
         <div className="my-5 flex justify-center gap-2" aria-hidden>
           {SLIDES.map((_, k) => (
-            <span key={k} className={cn("h-2.5 rounded-full transition-all", k === i ? "w-8 bg-accent-600" : "w-2.5 bg-brand-400")} />
+            <span key={k} className={cn("h-2.5 rounded-full transition-all", k === i ? "w-8 bg-accent-700" : "w-2.5 bg-white/80")} />
           ))}
         </div>
 
@@ -185,7 +185,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <Link href="/connexion" onClick={markOnboarded} className={buttonClasses("secondary", "lg", true)}>
               J&apos;ai déjà un compte
             </Link>
-            <Link href="/" onClick={markOnboarded} className="block py-1.5 text-center text-sm font-semibold text-anthracite-800 underline underline-offset-2">
+            <Link href="/" onClick={markOnboarded} className="block py-1.5 text-center text-sm font-bold text-anthracite-950 underline underline-offset-2">
               Découvrir les achats groupés sans compte
             </Link>
           </div>

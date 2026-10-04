@@ -7,7 +7,7 @@ export default function MentionsLegalesPage() {
       <h1 className="text-2xl">Mentions légales</h1>
       <h2 className="pt-2 text-lg">Éditeur</h2>
       <p>
-        Sesam-Market — [forme juridique et capital], RCCM [numéro], [adresse du siège], Abidjan, Côte d’Ivoire.
+        Sesam-Market, [forme juridique et capital], RCCM [numéro], [adresse du siège], Abidjan, Côte d’Ivoire.
         <br />
         Directeur de la publication : [nom].
         <br />
@@ -17,7 +17,7 @@ export default function MentionsLegalesPage() {
         </a>
       </p>
       <h2 className="pt-2 text-lg">Hébergement</h2>
-      <p>Render Services, Inc. — 525 Brannan Street, Suite 300, San Francisco, CA 94107, États-Unis (serveurs situés à Francfort, Allemagne).</p>
+      <p>Render Services, Inc., 525 Brannan Street, Suite 300, San Francisco, CA 94107, États-Unis (serveurs situés à Francfort, Allemagne).</p>
       <h2 className="pt-2 text-lg">Propriété intellectuelle</h2>
       <p>La marque, le logo et les contenus de Sesam-Market sont protégés. Toute reproduction sans autorisation est interdite.</p>
     </>

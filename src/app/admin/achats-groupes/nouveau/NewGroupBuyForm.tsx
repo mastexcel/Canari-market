@@ -27,7 +27,7 @@ export function NewGroupBuyForm({ products, communities }: { products: Product[]
     targetUnits: "200",
     maxUnits: "500",
     referenceUnitPrice: "",
-    referenceSource: "Relevé Sesam-Market — marché d'Adjamé",
+    referenceSource: "Relevé Sesam-Market, marché d'Adjamé",
     referenceMethod: "Médiane de 3 relevés, même conditionnement",
     referenceObservedAt: day(0),
     opensAt: day(0),
@@ -121,7 +121,7 @@ export function NewGroupBuyForm({ products, communities }: { products: Product[]
             </option>
           ))}
         </Select>
-        <Input label="Titre" value={f.title} onChange={set("title")} placeholder="Riz parfumé — sac de 50 kg" />
+        <Input label="Titre" value={f.title} onChange={set("title")} placeholder="Riz parfumé, sac de 50 kg" />
         <Textarea label="Description" value={f.description} onChange={set("description")} />
         <div className="grid gap-3 sm:grid-cols-2">
           <Input label="Unité fournisseur" value={f.supplierUnitLabel} onChange={set("supplierUnitLabel")} />

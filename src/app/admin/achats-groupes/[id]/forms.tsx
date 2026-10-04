@@ -36,7 +36,7 @@ export function RfqForm({ id, unitLabel, units }: { id: string; unitLabel: strin
   const [f, setF] = useState({ quality: "Conforme à l'échantillon validé", packaging: unitLabel, destination: "Entrepôt Sesam-Market Yopougon", neededBy: d(5), closesAt: d(2) });
   return (
     <div className={card}>
-      <p className="font-bold">Créer la demande de cotation (RFQ) — {units} × {unitLabel}</p>
+      <p className="font-bold">Créer la demande de cotation (RFQ) : {units} × {unitLabel}</p>
       <div className="grid gap-3 sm:grid-cols-2">
         <Input label="Qualité" value={f.quality} onChange={(e) => setF({ ...f, quality: e.target.value })} />
         <Input label="Conditionnement" value={f.packaging} onChange={(e) => setF({ ...f, packaging: e.target.value })} />

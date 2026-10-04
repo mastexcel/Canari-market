@@ -47,11 +47,11 @@ export default async function HomePage() {
         ) : (
           <Image src="/brand/mark.webp" alt="" width={170} height={114} priority className="pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]" />
         )}
-        <p className="relative text-sm font-semibold text-accent-700">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
+        <p className="relative text-sm font-bold text-accent-900">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
         <h1 className="relative mt-1 max-w-[13.5rem] text-[29px] leading-[1.1] font-bold">
-          À plusieurs, <span className="text-brand-600">les prix s’ouvrent.</span>
+          À plusieurs, <span className="text-brand-950 underline decoration-accent-500 decoration-[5px] underline-offset-[6px]">les prix s’ouvrent.</span>
         </h1>
-        <p className="relative mt-2 max-w-[13.5rem] text-sm text-anthracite-700">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse — pour tout le monde.</p>
+        <p className="relative mt-2 max-w-[13.5rem] text-sm font-medium text-anthracite-950">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse pour tout le monde.</p>
         {mine && mine.total > 0 && (
           <Link href="/compte/economies" className="relative mt-4 flex items-center justify-between rounded-2xl bg-white/80 p-3 shadow-[var(--shadow-card)] ring-1 ring-brand-200 backdrop-blur-sm">
             <span className="text-sm">Vous avez économisé</span>
@@ -72,7 +72,7 @@ export default async function HomePage() {
           Rejoindre un achat groupé →
         </ButtonLink>
         {platform.households > 0 && (
-          <p className="relative mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs font-semibold text-anthracite-800">
+          <p className="relative mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs font-bold text-anthracite-950">
             <span>👥 {platform.households.toLocaleString("fr-FR")} ménages</span>
             <span aria-hidden>•</span>
             <span>💰 {formatFcfa(platform.total)} économisés ensemble</span>
@@ -111,7 +111,7 @@ export default async function HomePage() {
                 <span className="grid size-16 place-items-center overflow-hidden rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
                   {categoryImage(c.slug) ? <Image src={categoryImage(c.slug)!} alt="" width={64} height={64} className="size-16 object-cover" /> : c.emoji}
                 </span>
-                <span className="text-xs leading-tight font-semibold text-anthracite-900">{c.name}</span>
+                <span className="text-xs leading-tight font-bold text-anthracite-950">{c.name}</span>
               </Link>
             </li>
           ))}
@@ -133,7 +133,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="shrink-0 text-sm font-semibold whitespace-nowrap text-brand-700 underline-offset-2 hover:underline">Tout voir</Link>} />
+        <SectionTitle onOlive title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Tout voir</Link>} />
         {groupBuys.length ? (
           <div className="space-y-3">
             {groupBuys.map((gb, i) => (
@@ -149,7 +149,7 @@ export default async function HomePage() {
 
       {savers.length > 0 && (
         <section>
-          <SectionTitle title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
+          <SectionTitle onOlive title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
           <div className="grid grid-cols-2 gap-3">
             {savers.slice(0, 4).map((p) => (
               <ProductCard key={p.id} p={p} />
@@ -160,7 +160,7 @@ export default async function HomePage() {
 
       {baskets.length > 0 && (
         <section>
-          <SectionTitle title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé — modifiable." />
+          <SectionTitle onOlive title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé et modifiable." />
           <div className="scrollbar-none -mx-4 flex snap-x gap-3 overflow-x-auto px-4">
             {baskets.map((b) => (
               <Link key={b.id} href={`/paniers-famille/${b.slug}`} className="w-64 shrink-0 snap-start rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
@@ -182,7 +182,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Produits populaires" action={<Link href="/categories" className="shrink-0 text-sm font-semibold whitespace-nowrap text-brand-700 underline-offset-2 hover:underline">Catalogue</Link>} />
+        <SectionTitle onOlive title="Produits populaires" action={<Link href="/categories" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Catalogue</Link>} />
         <div className="grid grid-cols-2 gap-3">
           {popular.map((p) => (
             <ProductCard key={p.id} p={p} />
@@ -192,7 +192,7 @@ export default async function HomePage() {
 
       {communities.length > 0 && (
         <section>
-          <SectionTitle title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="shrink-0 text-sm font-semibold whitespace-nowrap text-brand-700 underline-offset-2 hover:underline">Tout voir</Link>} />
+          <SectionTitle onOlive title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Tout voir</Link>} />
           <ul className="space-y-2">
             {communities.slice(0, 3).map((c) => (
               <li key={c.id}>
@@ -215,7 +215,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Comment ça marche ?" />
+        <SectionTitle onOlive title="Comment ça marche ?" />
         <HowItWorks />
       </section>
 

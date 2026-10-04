@@ -177,7 +177,7 @@ export default async function AdminGroupBuy({ params }: { params: Promise<{ id: 
                 </tr>
               ))}
             </Table>
-            {rfq.status === "OPEN" && ranked.length > 0 && <AwardForm rfqId={rfq.id} offers={ranked.map((o) => ({ id: o.responseId, label: `#${o.rank} ${o.supplierName} — ${formatFcfa(o.unitPrice)}`, eligible: o.eligible }))} bestId={ranked[0].responseId} />}
+            {rfq.status === "OPEN" && ranked.length > 0 && <AwardForm rfqId={rfq.id} offers={ranked.map((o) => ({ id: o.responseId, label: `#${o.rank} ${o.supplierName} : ${formatFcfa(o.unitPrice)}`, eligible: o.eligible }))} bestId={ranked[0].responseId} />}
           </div>
         ))}
         {gb.purchaseOrders.map((po) => (

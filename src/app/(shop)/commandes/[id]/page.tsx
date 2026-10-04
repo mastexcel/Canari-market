@@ -94,7 +94,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
         ) : order.address ? (
           <p>
             {order.address.quartier}, {order.address.commune}
-            {order.address.landmark && ` — ${order.address.landmark}`}
+            {order.address.landmark && ` (${order.address.landmark})`}
             {order.slotStart && <><br />Créneau : {formatDateTime(order.slotStart)}</>}
             {order.delivery?.driver && <><br />Livreur : {order.delivery.driver.user.firstName}</>}
           </p>

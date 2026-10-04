@@ -25,7 +25,7 @@ export function MissionActions({ deliveryId, status }: { deliveryId: string; sta
         </div>
       )}
       {status === "ACCEPTED" && (
-        <Button block size="lg" loading={busy} onClick={() => send({ type: "pickup", deliveryId }, "Colis récupéré — le client est prévenu")}>
+        <Button block size="lg" loading={busy} onClick={() => send({ type: "pickup", deliveryId }, "Colis récupéré, le client est prévenu")}>
           J&apos;ai récupéré le colis à l&apos;entrepôt
         </Button>
       )}

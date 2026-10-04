@@ -78,7 +78,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
           </p>
         ) : null}
         <p className="mt-2 text-xs text-white/90">
-          {gb.referenceIsFresh ? "Référence" : "⚠️ Référence ancienne (économie non affichée)"} : {gb.referenceSource} — {gb.referenceMethod}, relevé du {formatDate(gb.referenceObservedAt)}.
+          {gb.referenceIsFresh ? "Référence" : "⚠️ Référence ancienne (économie non affichée)"} : {gb.referenceSource}, {gb.referenceMethod}, relevé du {formatDate(gb.referenceObservedAt)}.
         </p>
       </section>
 

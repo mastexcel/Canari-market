@@ -14,7 +14,7 @@ export default function ConfidentialitePage() {
   return (
     <>
       <h1 className="text-2xl">Politique de confidentialité</h1>
-      <p className="text-sm text-anthracite-600">Version 1 — en vigueur au 3 octobre 2026</p>
+      <p className="text-sm text-anthracite-600">Version 1, en vigueur au 3 octobre 2026</p>
 
       <h2 className="pt-2 text-lg">1. Qui est responsable de vos données ?</h2>
       <p>
@@ -27,8 +27,8 @@ export default function ConfidentialitePage() {
 
       <h2 className="pt-2 text-lg">2. Données collectées et pourquoi</h2>
       <ul className="list-disc space-y-1 pl-5">
-        <li><strong>Compte</strong> : prénom, numéro de téléphone, commune et quartier, composition du foyer (facultatif) — pour créer votre compte et vous proposer les achats groupés de votre zone.</li>
-        <li><strong>Commandes et livraison</strong> : articles, montants, point relais ou adresse de livraison — pour exécuter vos commandes (base légale : contrat).</li>
+        <li><strong>Compte</strong> : prénom, numéro de téléphone, commune et quartier, composition du foyer (facultatif), pour créer votre compte et vous proposer les achats groupés de votre zone.</li>
+        <li><strong>Commandes et livraison</strong> : articles, montants, point relais ou adresse de livraison, pour exécuter vos commandes (base légale : contrat).</li>
         <li><strong>Paiement</strong> : nous ne stockons <strong>aucune donnée bancaire</strong> ni code Mobile Money. Le paiement est traité par le prestataire agréé ; nous conservons seulement sa référence de transaction.</li>
         <li><strong>Sécurité</strong> : adresse IP et journaux techniques, pour prévenir la fraude et les abus (intérêt légitime).</li>
         <li><strong>Mesure d’audience</strong> : événements anonymes d’usage (par exemple « achat groupé consulté »), sans nom ni téléphone, pour améliorer le service.</li>

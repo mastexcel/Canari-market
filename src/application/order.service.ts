@@ -239,7 +239,7 @@ export async function placeOrder(
               groupBuyId: ci.groupBuyId,
               portionId: ci.portionId,
               variantId: ci.variantId,
-              label: `${l.label} — ${ci.kind === "GROUP_BUY" ? ci.portion!.label : ci.variant!.name}`,
+              label: `${l.label}, ${ci.kind === "GROUP_BUY" ? ci.portion!.label : ci.variant!.name}`,
               quantity: ci.quantity,
               unitQuantityBase: ci.kind === "GROUP_BUY" ? ci.portion!.quantityBase : ci.variant!.quantityBase,
               unitPrice: p.unitPrice,

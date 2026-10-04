@@ -27,7 +27,7 @@ export default async function Mission({ params }: { params: Promise<{ id: string
         </p>
         <p>
           📍 {a?.quartier}, {a?.commune}
-          {a?.landmark ? ` — ${a.landmark}` : ""}
+          {a?.landmark ? ` (${a.landmark})` : ""}
         </p>
         {d.scheduledStart && <p>🕘 Créneau : {formatDateTime(d.scheduledStart)}</p>}
         <p>

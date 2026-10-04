@@ -24,7 +24,7 @@ export default async function NewGroupBuyPage() {
           id: p.id,
           label: `${p.emoji} ${p.name}${p.brand ? ` (${p.brand})` : ""}`,
           baseUnit: p.baseUnit,
-          offers: p.supplierProducts.map((s) => ({ id: s.id, label: `${s.supplier.businessName} — ${s.supplierUnitLabel}`, unitLabel: s.supplierUnitLabel, unitBase: s.supplierUnitQuantityBase, cost: s.priceTiers[0]?.unitPrice ?? 0 })),
+          offers: p.supplierProducts.map((s) => ({ id: s.id, label: `${s.supplier.businessName} (${s.supplierUnitLabel})`, unitLabel: s.supplierUnitLabel, unitBase: s.supplierUnitQuantityBase, cost: s.priceTiers[0]?.unitPrice ?? 0 })),
         }))}
         communities={communities}
       />

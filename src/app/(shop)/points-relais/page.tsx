@@ -14,7 +14,7 @@ export default async function PickupPointsPage() {
           <li key={p.id} className="rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
             <p className="font-bold">{p.name}</p>
             <p className="text-sm text-anthracite-700">
-              {p.address}, {p.quartier} — {p.commune}
+              {p.address}, {p.quartier}, {p.commune}
             </p>
             {p.landmark && <p className="text-xs text-anthracite-600">Repère : {p.landmark}</p>}
             <p className="mt-1 text-xs text-anthracite-600">

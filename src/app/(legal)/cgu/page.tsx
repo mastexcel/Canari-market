@@ -10,7 +10,7 @@ export default function CguPage() {
   return (
     <>
       <h1 className="text-2xl">Conditions générales d’utilisation et de vente</h1>
-      <p className="text-sm text-anthracite-600">Version 1 — en vigueur au 3 octobre 2026</p>
+      <p className="text-sm text-anthracite-600">Version 1, en vigueur au 3 octobre 2026</p>
 
       <h2 className="pt-2 text-lg">1. Objet</h2>
       <p>Sesam-Market est une centrale d’achat numérique : elle regroupe la demande des ménages et petits commerces d’Abidjan, achète en gros auprès de fournisseurs vérifiés, fractionne les volumes et les met à disposition en point relais ou à domicile. Les présentes conditions s’appliquent à toute utilisation du site et de l’application.</p>

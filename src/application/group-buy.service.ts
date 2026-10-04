@@ -339,7 +339,7 @@ export async function closeGroupBuy(
         await tx.groupBuyParticipant.update({ where: { id: p.id }, data: { status: "CREDITED" } });
         await tx.orderItem.update({ where: { id: line.orderItemId }, data: { status: "REFUNDED", refundedAmount: line.amount } });
         await tx.creditLedgerEntry.create({
-          data: { userId: p.userId, amount: line.amount, reason: "GROUP_FAILED_CONVERSION", orderId: p.orderItem.orderId, note: `Avoir accepté — ${gb.title}` },
+          data: { userId: p.userId, amount: line.amount, reason: "GROUP_FAILED_CONVERSION", orderId: p.orderItem.orderId, note: `Avoir accepté : ${gb.title}` },
         });
         await notify(p.userId, "group_failed_credit", { title: gb.title, amount: line.amount }, {}, tx);
       } else {

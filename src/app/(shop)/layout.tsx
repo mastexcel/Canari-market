@@ -13,7 +13,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
     <>
       <header className="sticky top-0 z-30 border-b border-gris-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-lg items-center justify-between gap-2 px-4">
-          <Link href="/" aria-label="Sesam-Market — accueil">
+          <Link href="/" aria-label="Accueil Sesam-Market">
             <Logo />
           </Link>
           <div className="flex items-center gap-1.5">
