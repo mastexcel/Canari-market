@@ -31,12 +31,12 @@ const SLIDES: Slide[] = [
     eyebrow: "Achats groupés",
     title: (
       <>
-        Ensemble, on achète <Hl className="text-terre-600">comme les grossistes</Hl>
+        Ensemble, on achète <Hl className="text-accent-700">comme les grossistes</Hl>
       </>
     ),
     text: "Ménages et petits commerces d’Abidjan réunissent leurs besoins dans un même achat : riz, huile, savon, cahiers…",
     emoji: "👨‍👩‍👧‍👦",
-    ring: "#FFBF1A",
+    ring: "#FF9A3D",
     glow: "from-accent-200 via-accent-100 to-lime-100",
     proof: (s) => (s.households ? `👥 ${s.households.toLocaleString("fr-FR")} ménages ont déjà acheté ensemble` : null),
   },
@@ -49,7 +49,7 @@ const SLIDES: Slide[] = [
     ),
     text: "Chaque participant rapproche le groupe du palier suivant. Votre prix ne peut jamais monter : la différence vous est remboursée.",
     emoji: "📉",
-    ring: "#7CB82F",
+    ring: "#7D8C22",
     glow: "from-lime-100 via-brand-100 to-lagune-100",
     proof: (s) => (s.total ? `💰 ${formatFcfa(s.total)} déjà économisés ensemble` : null),
   },
@@ -57,12 +57,12 @@ const SLIDES: Slide[] = [
     eyebrow: "Près de chez vous",
     title: (
       <>
-        Juste ce qu’il vous faut, <Hl className="text-lagune-600">dans votre quartier</Hl>
+        Juste ce qu’il vous faut, <Hl className="text-accent-700">dans votre quartier</Hl>
       </>
     ),
     text: "Le sac de 50 kg est partagé en 5, 10 ou 25 kg. Retrait au point relais du quartier ou livraison à domicile.",
     emoji: "🧺",
-    ring: "#D9622B",
+    ring: "#E86C00",
     glow: "from-terre-100 via-accent-100 to-lagune-100",
     proof: (s) => (s.pickupPoints ? `📍 ${s.pickupPoints} points relais · ${s.openGroupBuys} achats groupés ouverts` : null),
   },
@@ -77,25 +77,25 @@ function Shapes({ color }: { color: string }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
       <svg className="animate-float absolute -top-2 left-1 size-10" viewBox="0 0 40 40">
-        <path d="M20 2C32 12 32 28 20 38C8 28 8 12 20 2Z" fill="#7CB82F" opacity=".85" />
-        <path d="M20 6V34" stroke="#0E5F36" strokeWidth="2" />
+        <path d="M20 2C32 12 32 28 20 38C8 28 8 12 20 2Z" fill="#7D8C22" opacity=".85" />
+        <path d="M20 6V34" stroke="#535F13" strokeWidth="2" />
       </svg>
       <svg className="animate-float absolute top-6 -right-1 size-8 [animation-delay:-1.5s]" viewBox="0 0 32 32">
         <path d="M16 1L31 16 16 31 1 16Z" fill={color} opacity=".9" />
         <path d="M16 9L23 16 16 23 9 16Z" fill="#fff" opacity=".9" />
       </svg>
       <svg className="animate-float absolute bottom-3 -left-2 size-9 [animation-delay:-3s]" viewBox="0 0 36 36">
-        <circle cx="18" cy="18" r="16" fill="none" stroke="#1FA39A" strokeWidth="4" />
-        <circle cx="18" cy="18" r="6" fill="#FFBF1A" />
+        <circle cx="18" cy="18" r="16" fill="none" stroke="#262F33" strokeWidth="4" />
+        <circle cx="18" cy="18" r="6" fill="#FF9A3D" />
       </svg>
       <svg className="animate-float absolute right-2 bottom-0 size-9 [animation-delay:-2.2s]" viewBox="0 0 36 36">
         {[6, 18, 30].map((x) => (
-          <circle key={x} cx={x} cy="10" r="4" fill="#D9622B" />
+          <circle key={x} cx={x} cy="10" r="4" fill="#E86C00" />
         ))}
         {[12, 24].map((x) => (
-          <circle key={x} cx={x} cy="21" r="4" fill="#D9622B" />
+          <circle key={x} cx={x} cy="21" r="4" fill="#E86C00" />
         ))}
-        <circle cx="18" cy="32" r="4" fill="#D9622B" />
+        <circle cx="18" cy="32" r="4" fill="#E86C00" />
       </svg>
     </div>
   );
@@ -115,9 +115,9 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
         <div className="kente-band" />
         <div className="relative grid flex-1 place-items-center px-6 text-center">
           <svg aria-hidden className="animate-spin-slow absolute size-[min(110vw,520px)] opacity-60" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="96" fill="none" stroke="#FFBF1A" strokeWidth="3" strokeDasharray="2 10" />
-            <circle cx="100" cy="100" r="80" fill="none" stroke="#7CB82F" strokeWidth="3" strokeDasharray="14 8" />
-            <circle cx="100" cy="100" r="64" fill="none" stroke="#D9622B" strokeWidth="2" strokeDasharray="4 6" />
+            <circle cx="100" cy="100" r="96" fill="none" stroke="#FF9A3D" strokeWidth="3" strokeDasharray="2 10" />
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#7D8C22" strokeWidth="3" strokeDasharray="14 8" />
+            <circle cx="100" cy="100" r="64" fill="none" stroke="#E86C00" strokeWidth="2" strokeDasharray="4 6" />
           </svg>
           <div className="animate-rise relative">
             <FullLogo width={340} className="mx-auto w-[min(82vw,360px)]" />
@@ -150,7 +150,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <div className={cn("absolute inset-3 rounded-full bg-gradient-to-br", s.glow)} />
             <svg aria-hidden className="animate-spin-slow absolute inset-0 size-full" viewBox="0 0 200 200">
               <circle cx="100" cy="100" r="97" fill="none" stroke={s.ring} strokeWidth="3" strokeDasharray="3 9" strokeLinecap="round" />
-              <circle cx="100" cy="100" r="90" fill="none" stroke="#0E5F36" strokeOpacity=".25" strokeWidth="1.5" />
+              <circle cx="100" cy="100" r="90" fill="none" stroke="#535F13" strokeOpacity=".25" strokeWidth="1.5" />
             </svg>
             <div className="absolute inset-[9%] overflow-hidden rounded-full bg-white shadow-[0_18px_40px_-18px_rgb(6_56_33/0.45)] ring-4 ring-white">
               {images[i] ? (

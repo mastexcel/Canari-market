@@ -41,7 +41,7 @@ export default async function GroupBuyDetailPage({ params }: { params: Promise<{
   const unit = gb.supplierUnitLabel.toLowerCase();
   const open = gb.status === "OPEN" && gb.closesAt > now;
   const shareUrl = `${env().APP_URL}/achats-groupes/${gb.slug}${user ? `?ref=${user.referralCode}` : ""}`;
-  const qrSvg = await QRCode.toString(shareUrl, { type: "svg", margin: 1, color: { dark: "#0e5f36", light: "#ffffff" } });
+  const qrSvg = await QRCode.toString(shareUrl, { type: "svg", margin: 1, color: { dark: "#535f13", light: "#ffffff" } });
 
   return (
     <div className="space-y-4">

@@ -30,7 +30,7 @@ export default async function OrderPage({ params, searchParams }: { params: Prom
     throw e;
   }
   const showCode = ["READY_FOR_PICKUP", "OUT_FOR_DELIVERY", "READY"].includes(order.status);
-  const qr = showCode ? await QRCode.toString(`SESAM:${order.number}:${order.pickupCode}`, { type: "svg", margin: 1, color: { dark: "#17241c", light: "#ffffff" } }) : null;
+  const qr = showCode ? await QRCode.toString(`SESAM:${order.number}:${order.pickupCode}`, { type: "svg", margin: 1, color: { dark: "#1f272b", light: "#ffffff" } }) : null;
   const refunded = order.refunds.reduce((s, r) => s + r.amount, 0);
   const awaiting = order.items.filter((i) => i.participant?.status === "AWAITING_DECISION" && i.groupBuy?.alternativeUnitPrice);
   const cancellable = ["PENDING_PAYMENT", "GROUP_PENDING", "RECEIVED_WAREHOUSE"].includes(order.status) && order.items.every((i) => !i.groupBuy || i.groupBuy.status === "OPEN");

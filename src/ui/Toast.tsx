@@ -21,7 +21,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={t.id}
             className={cn(
               "pointer-events-auto w-full max-w-sm rounded-xl px-4 py-3 text-sm font-semibold shadow-[var(--shadow-float)]",
-              t.tone === "success" && "bg-economie-600 text-white",
+              t.tone === "success" && "bg-brand-700 text-white",
               t.tone === "error" && "bg-alerte-700 text-white",
               t.tone === "info" && "bg-anthracite-800 text-white",
             )}

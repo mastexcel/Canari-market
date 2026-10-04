@@ -4,7 +4,7 @@ import { cn } from "./cn";
 type Tone = "info" | "success" | "warning" | "error";
 const styles: Record<Tone, string> = {
   info: "bg-info-100 text-info-700 border-info-700/20",
-  success: "bg-economie-100 text-economie-700 border-economie-700/20",
+  success: "bg-brand-50 text-brand-800 border-brand-700/20",
   warning: "bg-accent-100 text-accent-700 border-accent-600/30",
   error: "bg-alerte-100 text-alerte-700 border-alerte-700/20",
 };

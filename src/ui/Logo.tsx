@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { cn } from "./cn";
 
-/** Emblème : le chariot garni et ses ailes (420 × 281). */
+/** Emblème : le chariot garni et ses feuilles (420 × 292). */
 export function BrandMark({ size = 40, className }: { size?: number; className?: string }) {
-  return <Image src="/brand/mark.webp" alt="" width={Math.round((size * 420) / 281)} height={size} className={cn("object-contain", className)} priority />;
+  return <Image src="/brand/mark.webp" alt="" width={Math.round((size * 420) / 292)} height={size} className={cn("object-contain", className)} priority />;
 }
 
 /** Nom de marque : « Sesam » vert forêt, tiret soleil, « Market » dégradé lime. */
@@ -18,11 +18,11 @@ export function Wordmark({ className, light = false }: { className?: string; lig
 }
 
 /**
- * Logo horizontal officiel (900 × 248) et sa version pour fond sombre (900 × 265, « Sesam » en blanc),
+ * Logo horizontal officiel (900 × 259) et sa version pour fond sombre (900 × 198, « Sesam » en blanc),
  * avec slogan optionnel (espaces pro, pied de page).
  */
-export function Logo({ className, light = false, tagline = false, height = 44 }: { className?: string; light?: boolean; tagline?: boolean; height?: number }) {
-  const ratio = light ? 900 / 265 : 900 / 248;
+export function Logo({ className, light = false, tagline = false, height = 48 }: { className?: string; light?: boolean; tagline?: boolean; height?: number }) {
+  const ratio = light ? 900 / 198 : 900 / 259;
   return (
     <span className={cn("inline-flex flex-col items-start", className)}>
       <Image src={light ? "/brand/logo-sombre.webp" : "/brand/logo-horizontal.webp"} alt="Sesam-Market" width={Math.round(height * ratio)} height={height} className="-my-0.5 h-auto w-auto" style={{ height }} priority />
@@ -31,13 +31,13 @@ export function Logo({ className, light = false, tagline = false, height = 44 }:
   );
 }
 
-/** Logo complet : logo horizontal et slogan (accueil, connexion, inscription). */
+/** Logo complet : version empilée (chariot au-dessus du nom) et slogan — accueil, connexion, inscription. */
 export function FullLogo({ className, width = 320 }: { className?: string; width?: number }) {
   return (
     <span className={cn("flex flex-col items-center", className)}>
-      <Image src="/brand/logo-horizontal.webp" alt="Sesam-Market" width={width} height={Math.round((width * 248) / 900)} className="h-auto w-full" priority />
-      <span className="mt-1 font-display text-sm font-semibold tracking-wide text-brand-700">
-        À plusieurs, <span className="text-lime-700">les prix s’ouvrent.</span>
+      <Image src="/brand/logo-empile.webp" alt="Sesam-Market" width={width} height={Math.round((width * 367) / 640)} className="h-auto w-full" priority />
+      <span className="mt-1 font-display text-sm font-semibold tracking-wide text-anthracite-800">
+        À plusieurs, <span className="text-accent-700">les prix s’ouvrent.</span>
       </span>
     </span>
   );

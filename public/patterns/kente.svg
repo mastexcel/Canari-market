@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="14" viewBox="0 0 96 14">
-  <!-- Bande kente : blocs colorés répétés horizontalement -->
-  <rect width="96" height="14" fill="#0E5F36"/>
-  <rect x="0" width="16" height="14" fill="#FFBF1A"/>
-  <rect x="16" width="8" height="14" fill="#063821"/>
-  <rect x="24" width="16" height="14" fill="#D9622B"/>
-  <path d="M24 7h16" stroke="#FFBF1A" stroke-width="2"/>
-  <rect x="40" width="8" height="14" fill="#7CB82F"/>
-  <rect x="48" width="16" height="14" fill="#F08A00"/>
-  <path d="M48 0l8 7-8 7M56 0l8 7-8 7" stroke="#063821" stroke-width="2" fill="none"/>
-  <rect x="64" width="8" height="14" fill="#1FA39A"/>
-  <rect x="72" width="16" height="14" fill="#FFBF1A"/>
-  <path d="M72 3.5h16M72 10.5h16" stroke="#0E5F36" stroke-width="2"/>
-  <rect x="88" width="8" height="14" fill="#D9622B"/>
+  <!-- Bande kente aux couleurs du logo : anthracite, olive, orange, sable -->
+  <rect width="96" height="14" fill="#262F33"/>
+  <rect x="0" width="16" height="14" fill="#FE7801"/>
+  <rect x="16" width="8" height="14" fill="#1F272B"/>
+  <rect x="24" width="16" height="14" fill="#66741A"/>
+  <path d="M24 7h16" stroke="#F5EEDF" stroke-width="2"/>
+  <rect x="40" width="8" height="14" fill="#A9B84A"/>
+  <rect x="48" width="16" height="14" fill="#FF9A3D"/>
+  <path d="M48 0l8 7-8 7M56 0l8 7-8 7" stroke="#262F33" stroke-width="2" fill="none"/>
+  <rect x="64" width="8" height="14" fill="#F5EEDF"/>
+  <rect x="72" width="16" height="14" fill="#535F13"/>
+  <path d="M72 3.5h16M72 10.5h16" stroke="#FF9A3D" stroke-width="2"/>
+  <rect x="88" width="8" height="14" fill="#E86C00"/>
 </svg>

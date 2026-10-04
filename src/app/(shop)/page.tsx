@@ -37,8 +37,8 @@ export default async function HomePage() {
           // Illustration du groupe dans un « soleil » aux couleurs du wax
           <div aria-hidden className="pointer-events-none absolute top-5 -right-7 size-44 min-[400px]:size-48">
             <svg className="animate-spin-slow absolute inset-0 size-full" viewBox="0 0 200 200">
-              <circle cx="100" cy="100" r="96" fill="none" stroke="#FFBF1A" strokeWidth="4" strokeDasharray="3 10" strokeLinecap="round" />
-              <circle cx="100" cy="100" r="87" fill="none" stroke="#9CCC3C" strokeOpacity=".6" strokeWidth="2" strokeDasharray="16 8" />
+              <circle cx="100" cy="100" r="96" fill="none" stroke="#FF9A3D" strokeWidth="4" strokeDasharray="3 10" strokeLinecap="round" />
+              <circle cx="100" cy="100" r="87" fill="none" stroke="#A9B84A" strokeOpacity=".6" strokeWidth="2" strokeDasharray="16 8" />
             </svg>
             <div className="absolute inset-[11%] overflow-hidden rounded-full shadow-[0_14px_30px_-12px_rgba(0,0,0,0.5)] ring-4 ring-accent-400">
               <Image src={heroImage} alt="" fill sizes="200px" priority className="object-cover" />

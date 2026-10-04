@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 /*
- * Design system Sesam-Market — jetons issus du logo
- *  - brand  : vert forêt du nom « Sesam » (identité, actions principales)
- *  - lime   : vert lime de « Market » et des ailes (dynamisme, progression)
- *  - accent : jaune soleil → orange du canari (mise en avant ; jamais en texte clair sur blanc)
- *  - economie : vert d'eau, distinct du vert de marque, réservé aux économies
- * Police système : aucun téléchargement de police (réseaux lents).
+ * Design system Sesam-Market — charte v3, issue du logo « chariot garni »
+ *  - anthracite : « Sesam », le chariot — structure, texte, capsules sombres
+ *  - brand (olive) : « Market », les feuilles — identité, actions principales, progression
+ *  - accent (orange) : le tiret, la vague, les traits de vitesse — mise en avant, appels à l'action
+ *  - economie : orange profond, réservé aux économies (le « gain »)
+ *  - sable : surfaces chaudes et claires ; fond : gris clair neutre
+ * Contrastes vérifiés (WCAG AA) : texte blanc sur olive ≥ 600 / orange ≥ 700 ; anthracite sur orange.
  */
 @theme {
   --font-sans: var(--font-nunito), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -28,62 +29,67 @@
   --text-3xl--line-height: 2.25rem;
   --font-display: var(--font-fredoka), "Trebuchet MS", system-ui, sans-serif;
 
-  --color-brand-950: #04261a;
-  --color-brand-900: #063821;
-  --color-brand-800: #0a4a2b;
-  --color-brand-700: #0e5f36;
-  --color-brand-600: #12773f;
-  --color-brand-500: #1c9150;
-  --color-brand-400: #3aad62;
-  --color-brand-200: #bde3c6;
-  --color-brand-100: #e2f3e5;
-  --color-brand-50: #f1f9f2;
+  /* Olive (« Market ») */
+  --color-brand-950: #222808;
+  --color-brand-900: #323a0b;
+  --color-brand-800: #424c0f;
+  --color-brand-700: #535f13;
+  --color-brand-600: #66741a;
+  --color-brand-500: #7d8c22;
+  --color-brand-400: #9aa83a;
+  --color-brand-200: #dbe2a6;
+  --color-brand-100: #eef1d2;
+  --color-brand-50: #f7f8ea;
 
-  --color-lime-700: #437012;
-  --color-lime-600: #5f9e1b;
-  --color-lime-500: #7cb82f;
-  --color-lime-400: #9ccc3c;
-  --color-lime-100: #eef7dc;
+  /* Olive clair (dégradés, progression) */
+  --color-lime-700: #4c5810;
+  --color-lime-600: #6f7f1c;
+  --color-lime-500: #8d9e2a;
+  --color-lime-400: #a9b84a;
+  --color-lime-100: #f1f4dc;
 
-  --color-accent-700: #8f4500;
-  --color-accent-600: #f08a00;
-  --color-accent-500: #ffbf1a;
-  --color-accent-400: #ffd54a;
-  --color-accent-200: #ffe9a6;
-  --color-accent-100: #fff5d1;
+  /* Orange (tiret, vague, traits de vitesse) */
+  --color-accent-700: #a34a00;
+  --color-accent-600: #e86c00;
+  --color-accent-500: #fe7801;
+  --color-accent-400: #ff9a3d;
+  --color-accent-200: #ffd2a6;
+  --color-accent-100: #fff0e0;
 
-  --color-anthracite-950: #0f1712;
-  --color-anthracite-900: #17241c;
-  --color-anthracite-800: #24312a;
-  --color-anthracite-700: #36443c;
-  --color-anthracite-600: #4f5d55;
-  --color-anthracite-500: #5c6861;
+  /* Anthracite (« Sesam », chariot) */
+  --color-anthracite-950: #161c1f;
+  --color-anthracite-900: #1f272b;
+  --color-anthracite-800: #262f33;
+  --color-anthracite-700: #3a4448;
+  --color-anthracite-600: #535d62;
+  --color-anthracite-500: #5b656a;
 
-  --color-gris-400: #aab5a6;
-  --color-gris-300: #cfd8cc;
-  --color-gris-200: #e4eae2;
-  --color-gris-100: #f3f6f2;
-  --color-gris-50: #f9fbf8;
+  --color-gris-400: #a9b0b3;
+  --color-gris-300: #cfd4d6;
+  --color-gris-200: #e3e6e8;
+  --color-gris-100: #f2f3f4;
+  --color-gris-50: #f8f9fa;
 
-  --color-economie-700: #0b6157;
-  --color-economie-600: #0f7e70;
-  --color-economie-100: #ddf3ef;
-  --color-economie-50: #eefaf7;
+  /* Économies : orange profond */
+  --color-economie-700: #a34a00;
+  --color-economie-600: #c45a00;
+  --color-economie-100: #ffe7cf;
+  --color-economie-50: #fff4e8;
 
-  /* Couleurs de fête (motifs wax / kente) : terre cuite et lagune */
-  --color-terre-700: #b04a1c;
-  --color-terre-600: #d9622b;
-  --color-terre-100: #fbe4d6;
-  --color-lagune-700: #12786f;
-  --color-lagune-600: #1fa39a;
-  --color-lagune-100: #d9f2ef;
-  --color-creme-50: #fffaf0;
+  /* Capsules : terre (orange brûlé) et lagune (ardoise-olive) */
+  --color-terre-700: #b04f00;
+  --color-terre-600: #e86c00;
+  --color-terre-100: #ffe6cc;
+  --color-lagune-700: #3a4448;
+  --color-lagune-600: #535d62;
+  --color-lagune-100: #e9ecee;
+  --color-creme-50: #fbf8f1;
   /* Sable : surfaces chaudes et claires */
-  --color-sable-50: #fdf8ee;
-  --color-sable-100: #f8edd8;
-  --color-sable-300: #e8d3ab;
+  --color-sable-50: #fbf8f1;
+  --color-sable-100: #f5eedf;
+  --color-sable-300: #e3d5b8;
   /* Fond général du site */
-  --color-fond: #f1f2f4;
+  --color-fond: #f2f3f4;
 
   --color-alerte-700: #a3201a;
   --color-alerte-100: #fde8e6;
@@ -92,8 +98,8 @@
 
   --radius-card: 1.125rem;
   /* Relief des cartes : liseré très fin + ombre douce en deux couches (lisibles sur le fond gris) */
-  --shadow-card: 0 0 0 1px rgb(23 36 28 / 0.05), 0 1px 2px rgb(6 56 33 / 0.06), 0 6px 18px -6px rgb(6 56 33 / 0.12);
-  --shadow-float: 0 12px 32px -8px rgb(6 56 33 / 0.28);
+  --shadow-card: 0 0 0 1px rgb(38 47 51 / 0.06), 0 1px 2px rgb(38 47 51 / 0.06), 0 6px 18px -6px rgb(38 47 51 / 0.14);
+  --shadow-float: 0 12px 32px -8px rgb(38 47 51 / 0.3);
 
   --animate-shimmer: shimmer 1.4s ease-in-out infinite;
   @keyframes shimmer {
@@ -119,17 +125,17 @@ html {
 /*
  * Fond gris clair « sublimé », sans motif : une lumière douce plutôt qu'un décor.
  *  - léger dégradé vertical, du gris chaud (haut) au gris plus frais (bas) ;
- *  - lueur soleil en haut à droite, reflet vert forêt en bas à gauche, touche terre cuite
+ *  - lueur orange en haut à droite, reflet olive en bas à gauche, voile anthracite
  *    à peine perceptible : profondeur et chaleur, sans toucher au contraste du texte.
  * Fixé à l'écran : le contenu défile sur une lumière stable, sans effet de bande.
  */
 body {
   background-color: var(--color-fond);
   background-image:
-    radial-gradient(60rem 38rem at 105% -8%, rgb(255 191 26 / 0.13), transparent 62%),
-    radial-gradient(52rem 40rem at -12% 108%, rgb(14 95 54 / 0.09), transparent 62%),
-    radial-gradient(36rem 26rem at -8% 6%, rgb(217 98 43 / 0.05), transparent 62%),
-    linear-gradient(180deg, #f6f5f1 0%, var(--color-fond) 45%, #eceef1 100%);
+    radial-gradient(60rem 38rem at 105% -8%, rgb(254 120 1 / 0.1), transparent 62%),
+    radial-gradient(52rem 40rem at -12% 108%, rgb(99 108 22 / 0.11), transparent 62%),
+    radial-gradient(36rem 26rem at -8% 6%, rgb(38 47 51 / 0.04), transparent 62%),
+    linear-gradient(180deg, #f7f6f3 0%, var(--color-fond) 45%, #ebedef 100%);
   background-attachment: fixed;
   color: var(--color-anthracite-900);
   font-family: var(--font-sans);
@@ -179,14 +185,15 @@ p { text-wrap: pretty; }
 
 /* En-tête de marque : vert profond, lueur soleil, aile lime, fines lignes de vitesse (rappel du logo) */
 .brand-pattern {
-  background-color: var(--color-brand-800);
+  /* Bandeau de marque : anthracite du chariot vers l'olive de « Market », lueur orange de la vague */
+  background-color: var(--color-anthracite-800);
   background-image:
-    radial-gradient(28rem 16rem at 100% 0%, rgb(255 191 26 / 0.32), transparent 65%),
-    radial-gradient(26rem 18rem at -5% 115%, rgb(124 184 47 / 0.45), transparent 65%),
-    linear-gradient(140deg, var(--color-brand-900), var(--color-brand-700) 70%, var(--color-brand-600));
+    radial-gradient(28rem 16rem at 100% 0%, rgb(254 120 1 / 0.3), transparent 65%),
+    radial-gradient(26rem 18rem at -5% 115%, rgb(141 158 42 / 0.4), transparent 65%),
+    linear-gradient(140deg, var(--color-anthracite-900), var(--color-anthracite-800) 45%, var(--color-brand-800));
 }
 
-/* Texte « Market » : dégradé lime du logo */
+/* Texte « Market » : dégradé olive du logo */
 .text-gradient-lime {
   background: linear-gradient(90deg, var(--color-lime-600), var(--color-lime-400));
   -webkit-background-clip: text;
@@ -234,11 +241,11 @@ p { text-wrap: pretty; }
     radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.22), transparent 55%),
     linear-gradient(180deg, var(--color-brand-500), var(--color-brand-700) 60%, var(--color-brand-800));
   background-size: 56px 56px, auto, auto;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.12), 0 4px 0 var(--color-brand-900), 0 12px 22px -12px rgb(14 95 54 / 0.75);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.12), 0 4px 0 var(--color-brand-900), 0 12px 22px -12px rgb(83 95 19 / 0.7);
   text-shadow: 0 1px 0 rgb(0 0 0 / 0.18);
 }
 .btn-primary:not(:disabled):hover { filter: brightness(1.06) saturate(1.05); }
-.btn-primary:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 var(--color-brand-900), 0 4px 10px -6px rgb(14 95 54 / 0.6); }
+.btn-primary:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 var(--color-brand-900), 0 4px 10px -6px rgb(83 95 19 / 0.55); }
 
 .btn-accent {
   color: var(--color-anthracite-950);
@@ -248,10 +255,10 @@ p { text-wrap: pretty; }
     radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.5), transparent 55%),
     linear-gradient(180deg, var(--color-accent-400), var(--color-accent-500) 45%, var(--color-accent-600));
   background-size: 56px 56px, auto, auto;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), inset 0 -2px 0 rgb(0 0 0 / 0.08), 0 4px 0 #b35f00, 0 12px 22px -12px rgb(240 138 0 / 0.8);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), inset 0 -2px 0 rgb(0 0 0 / 0.08), 0 4px 0 #a34a00, 0 12px 22px -12px rgb(254 120 1 / 0.75);
 }
 .btn-accent:not(:disabled):hover { filter: brightness(1.04) saturate(1.08); }
-.btn-accent:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 1px 0 #b35f00; }
+.btn-accent:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 1px 0 #a34a00; }
 
 /* Secondaire : sable chaud, texte vert forêt, liseré */
 .btn-secondary {
@@ -272,7 +279,7 @@ p { text-wrap: pretty; }
 .btn-outline:not(:disabled):hover { box-shadow: inset 0 0 0 1.5px var(--color-brand-400), 0 2px 0 var(--color-gris-200); color: var(--color-brand-800); }
 
 .btn-ghost { color: var(--color-anthracite-800); background: transparent; }
-.btn-ghost:not(:disabled):hover { background: rgb(14 95 54 / 0.07); transform: none; }
+.btn-ghost:not(:disabled):hover { background: rgb(83 95 19 / 0.08); transform: none; }
 .btn-ghost::after { display: none; }
 
 .btn-danger {
@@ -298,12 +305,12 @@ p { text-wrap: pretty; }
 .capsule-terre {
   color: #fff;
   background-color: var(--color-terre-700);
-  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #8f3a15, var(--color-terre-700));
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #8a3d00, var(--color-terre-700));
 }
 .capsule-lagune {
   color: #fff;
   background-color: var(--color-lagune-700);
-  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #0a5c57, var(--color-lagune-700));
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-anthracite-800), var(--color-brand-800));
 }
 .capsule-nuit {
   color: #fff;
