@@ -91,7 +91,8 @@
   --color-info-100: #e5eef9;
 
   --radius-card: 1.125rem;
-  --shadow-card: 0 1px 2px rgb(6 56 33 / 0.06), 0 4px 14px -4px rgb(6 56 33 / 0.08);
+  /* Relief des cartes : liseré très fin + ombre douce en deux couches (lisibles sur le fond gris) */
+  --shadow-card: 0 0 0 1px rgb(23 36 28 / 0.05), 0 1px 2px rgb(6 56 33 / 0.06), 0 6px 18px -6px rgb(6 56 33 / 0.12);
   --shadow-float: 0 12px 32px -8px rgb(6 56 33 / 0.28);
 
   --animate-shimmer: shimmer 1.4s ease-in-out infinite;
@@ -115,9 +116,21 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Fond uni gris clair : sobre, les cartes blanches et les couleurs du contenu ressortent. */
+/*
+ * Fond gris clair « sublimé », sans motif : une lumière douce plutôt qu'un décor.
+ *  - léger dégradé vertical, du gris chaud (haut) au gris plus frais (bas) ;
+ *  - lueur soleil en haut à droite, reflet vert forêt en bas à gauche, touche terre cuite
+ *    à peine perceptible : profondeur et chaleur, sans toucher au contraste du texte.
+ * Fixé à l'écran : le contenu défile sur une lumière stable, sans effet de bande.
+ */
 body {
   background-color: var(--color-fond);
+  background-image:
+    radial-gradient(60rem 38rem at 105% -8%, rgb(255 191 26 / 0.13), transparent 62%),
+    radial-gradient(52rem 40rem at -12% 108%, rgb(14 95 54 / 0.09), transparent 62%),
+    radial-gradient(36rem 26rem at -8% 6%, rgb(217 98 43 / 0.05), transparent 62%),
+    linear-gradient(180deg, #f6f5f1 0%, var(--color-fond) 45%, #eceef1 100%);
+  background-attachment: fixed;
   color: var(--color-anthracite-900);
   font-family: var(--font-sans);
   font-size: 1rem;
