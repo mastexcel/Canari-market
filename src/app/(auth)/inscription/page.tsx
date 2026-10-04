@@ -14,7 +14,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
   return (
     <div>
       <Link href="/" aria-label="Accueil" className="block">
-        <FullLogo width={240} className="mx-auto h-auto w-56" />
+        <FullLogo halo width={240} className="mx-auto h-auto w-56" />
       </Link>
       <h1 className="mt-4 text-2xl font-extrabold">Créer mon compte</h1>
       <p className="mt-1 text-anthracite-600">Une minute pour commencer à économiser avec votre quartier.</p>

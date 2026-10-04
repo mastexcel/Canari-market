@@ -310,25 +310,34 @@ p { text-wrap: pretty; }
 }
 
 /*
- * Pages d'accueil (page de garde, accueil) : fond saturé et nuancé.
- * Olive profond → anthracite, lueur orange en haut ; les cartes blanches portent l'information.
+ * Pages d'accueil (page de garde, accueil) : fond lumineux en nuances d'olive.
+ * Lumière blanche en haut, olive tendre qui s'approfondit doucement vers le bas,
+ * touche orange discrète ; le texte reste anthracite (contraste AA).
  */
-.fond-accueil {
-  color: #fff;
-  background-color: var(--color-brand-800);
+.fond-accueil, body:has([data-fond="accueil"]) {
+  color: var(--color-anthracite-900);
+  background-color: var(--color-brand-100);
   background-image:
-    radial-gradient(40rem 26rem at 110% -5%, rgb(254 120 1 / 0.28), transparent 60%),
-    radial-gradient(36rem 28rem at -15% 40%, rgb(141 158 42 / 0.3), transparent 62%),
-    linear-gradient(170deg, var(--color-brand-700) 0%, var(--color-brand-800) 38%, #2f3a12 62%, var(--color-anthracite-900) 100%);
+    radial-gradient(44rem 30rem at 85% -12%, rgb(255 255 255 / 0.9), transparent 62%),
+    radial-gradient(34rem 24rem at 110% 6%, rgb(254 120 1 / 0.1), transparent 62%),
+    radial-gradient(40rem 32rem at -18% 60%, rgb(154 168 58 / 0.26), transparent 64%),
+    linear-gradient(176deg, var(--color-brand-50) 0%, var(--color-brand-100) 38%, #e2e8b9 72%, #d3dc98 100%);
   background-attachment: fixed;
 }
-body:has([data-fond="accueil"]) {
-  background-color: var(--color-brand-800);
-  background-image:
-    radial-gradient(40rem 26rem at 110% -5%, rgb(254 120 1 / 0.28), transparent 60%),
-    radial-gradient(36rem 28rem at -15% 40%, rgb(141 158 42 / 0.3), transparent 62%),
-    linear-gradient(170deg, var(--color-brand-700) 0%, var(--color-brand-800) 38%, #2f3a12 62%, var(--color-anthracite-900) 100%);
-  background-attachment: fixed;
+
+/* Halo vert adouci sous le logo : le logo reste lisible sur tous les fonds colorés */
+.halo-logo { position: relative; isolation: isolate; }
+.halo-logo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 118%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.96) 0%, rgb(251 252 243 / 0.92) 42%, rgb(219 226 166 / 0.55) 62%, transparent 72%);
 }
 
 /* Les éléments de grille peuvent rétrécir : un tableau large défile dans son cadre
@@ -354,6 +363,3 @@ body:has([data-fond="accueil"]) {
 .animate-rise { animation: rise-in 520ms cubic-bezier(.2,.7,.2,1) both; }
 .animate-float { animation: float-soft 5s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 40s linear infinite; }
-
-/* Sur les fonds saturés, le pied de page passe en clair */
-body:has([data-fond="accueil"]) .legal-footer { color: rgb(255 255 255 / 0.85); }

@@ -32,9 +32,9 @@ export function Logo({ className, light = false, tagline = false, height = 48 }:
 }
 
 /** Logo complet : version empilée (chariot au-dessus du nom) et slogan — accueil, connexion, inscription. */
-export function FullLogo({ className, width = 320, light = false }: { className?: string; width?: number; light?: boolean }) {
+export function FullLogo({ className, width = 320, light = false, halo = false }: { className?: string; width?: number; light?: boolean; halo?: boolean }) {
   return (
-    <span className={cn("flex flex-col items-center", className)}>
+    <span className={cn("flex flex-col items-center", halo && "halo-logo", className)}>
       {light ? (
         <Image src="/brand/logo-sombre.webp" alt="Sesam-Market" width={width} height={Math.round((width * 198) / 900)} className="h-auto w-full" priority />
       ) : (
