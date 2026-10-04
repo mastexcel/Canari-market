@@ -6,11 +6,24 @@ import { bestSavings, listBaskets, listCategories, searchProducts, upcomingCateg
 import { listCommunities } from "@/application/community.service";
 import { platformSavings, userSavings } from "@/application/savings.service";
 import { formatFcfa, formatBps } from "@/domain/money";
-import { basketImage, categoryImage, communityImage, iconImage, illustration } from "@/infrastructure/assets";
+import { basketImage, categoryImage, communityImage, iconImage, illustration, publicAsset } from "@/infrastructure/assets";
+
+/** Affiches de campagne (public/images/pub) : chacune mène à la page dont elle parle. */
+const PUBS: Array<[string, string, string]> = [
+  ["courses-moins-cheres", "Faites vos courses moins chères : rejoignez des achats groupés", "/achats-groupes"],
+  ["produits-essentiels", "Des produits essentiels : épicerie, boissons, entretien, hygiène, scolaire", "/categories"],
+  ["achetez-en-groupe", "Achetez en groupe : plus nous sommes nombreux, plus le prix baisse", "/achats-groupes"],
+  ["rejoignez-communaute", "Rejoignez votre communauté de quartier ou de résidence", "/communautes"],
+  ["retrait-pres-de-chez-vous", "Récupérez près de chez vous, en point relais ou en livraison", "/points-relais"],
+  ["reelles-economies", "De réelles économies : jusqu’à 30 % sur vos produits du quotidien", "/achats-groupes"],
+  ["comment-ca-marche", "Comment ça marche : on s’unit, on achète en gros, on fractionne, vous économisez", "/bienvenue"],
+  ["rejoignez-des-milliers", "Rejoignez des milliers de familles qui économisent déjà", "/inscription"],
+];
 import { SectionTitle } from "@/ui/Card";
 import { GroupBuyCard } from "@/ui/shop/GroupBuyCard";
 import { ProductCard } from "@/ui/shop/ProductCard";
 import { HowItWorks } from "@/ui/shop/HowItWorks";
+import { PubCarousel, type Pub } from "@/ui/shop/PubCarousel";
 import { EmptyState } from "@/ui/EmptyState";
 import { ButtonLink } from "@/ui/Button";
 
@@ -29,6 +42,10 @@ export default async function HomePage() {
   ]);
 
   const heroImage = illustration("hero", "accueil");
+  const pubs: Pub[] = PUBS.flatMap(([name, alt, href]) => {
+    const src = publicAsset(`images/pub/${name}.webp`);
+    return src ? [{ src, alt, href: user && href === "/inscription" ? "/achats-groupes" : href }] : [];
+  });
   return (
     <div className="space-y-8" data-fond="accueil">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
@@ -117,6 +134,13 @@ export default async function HomePage() {
           ))}
         </ul>
       </section>
+
+      {pubs.length > 0 && (
+        <section>
+          <SectionTitle light title="Sesam-Market en images" />
+          <PubCarousel pubs={pubs} />
+        </section>
+      )}
 
       {upcoming.length > 0 && (
         <aside className="capsule-soleil flex items-center gap-3 rounded-[var(--radius-card)] px-4 py-3 shadow-[var(--shadow-card)]" aria-label="Bientôt">
