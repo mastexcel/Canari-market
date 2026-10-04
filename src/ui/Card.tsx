@@ -9,11 +9,11 @@ export function SectionTitle({ title, action, subtitle, light = false, onOlive =
   return (
     <div className="mb-3 flex items-end justify-between gap-3">
       <div>
-        <h2 className={`flex items-center gap-2 text-lg font-bold ${light ? "text-white" : onOlive ? "text-anthracite-950" : "text-anthracite-900"}`}>
+        <h2 className={`flex items-center gap-2 text-lg font-bold ${light ? "sur-fond text-white" : onOlive ? "text-anthracite-950" : "text-anthracite-900"}`}>
           <span aria-hidden className="h-5 w-1.5 rounded-full bg-gradient-to-b from-accent-400 to-accent-600" />
           {title}
         </h2>
-        {subtitle && <p className={`text-sm ${light ? "text-white/85" : onOlive ? "font-medium text-anthracite-950" : "text-anthracite-600"}`}>{subtitle}</p>}
+        {subtitle && <p className={`text-sm ${light ? "sur-fond font-medium text-white" : onOlive ? "font-medium text-anthracite-950" : "text-anthracite-600"}`}>{subtitle}</p>}
       </div>
       {action}
     </div>

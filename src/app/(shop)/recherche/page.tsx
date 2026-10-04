@@ -27,7 +27,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           Essayez un autre mot (ex. « riz », « savon »).
         </EmptyState>
       ) : (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           {results.map((p) => (
             <ProductCard key={p.id} p={p} />
           ))}

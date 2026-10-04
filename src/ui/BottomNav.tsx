@@ -15,7 +15,7 @@ export function BottomNav({ cartCount }: { cartCount: number }) {
   const pathname = usePathname();
   return (
     <nav aria-label="Navigation principale" className="fixed inset-x-0 bottom-0 z-40 border-t border-gris-200 bg-white/95 pb-[var(--safe-bottom)] backdrop-blur">
-      <ul className="mx-auto grid max-w-lg grid-cols-5">
+      <ul className="mx-auto grid max-w-lg grid-cols-5 md:max-w-2xl">
         {ITEMS.map((it) => {
           const active = it.match(pathname);
           const Icon = it.icon;

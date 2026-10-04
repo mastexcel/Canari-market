@@ -27,7 +27,7 @@ export default async function GroupBuysPage({ searchParams }: { searchParams: Pr
         ))}
       </nav>
       {gbs.length ? (
-        <div className="space-y-3">
+        <div className="grid gap-3 lg:grid-cols-2">
           {gbs.map((gb, i) => (
             <GroupBuyCard key={gb.id} gb={gb} index={i} />
           ))}

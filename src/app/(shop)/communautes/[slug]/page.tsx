@@ -27,7 +27,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ slug
     <div className="space-y-4">
       <PageHeader title={c.name} subtitle={`${c.commune}${c.quartier ? ` · ${c.quartier}` : ""}`} back={<BackLink href="/communautes" />} />
       {c.description && <p className="text-sm text-anthracite-700">{c.description}</p>}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         <Stat label="Membres" value={String(c.memberCount)} />
         <Stat label="Commandes cumulées" value={String(stats.totalOrders)} />
         <Stat label="Économies cumulées" value={formatFcfa(stats.totalSavings)} highlight />

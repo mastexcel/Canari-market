@@ -32,7 +32,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-8" data-fond="accueil">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
-      <section className="relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-8 text-anthracite-900">
+      <section className="relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-8 text-white">
         {heroImage ? (
           // Illustration du groupe dans un « soleil » aux couleurs du wax
           <div aria-hidden className="pointer-events-none absolute top-5 -right-7 size-44 min-[400px]:size-48">
@@ -47,14 +47,14 @@ export default async function HomePage() {
         ) : (
           <Image src="/brand/mark.webp" alt="" width={170} height={114} priority className="pointer-events-none absolute -top-1 -right-6 w-40 opacity-95 drop-shadow-[0_10px_18px_rgba(0,0,0,0.25)]" />
         )}
-        <p className="relative text-sm font-bold text-accent-900">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
-        <h1 className="relative mt-1 max-w-[13.5rem] text-[29px] leading-[1.1] font-bold">
-          À plusieurs, <span className="text-brand-950 underline decoration-accent-500 decoration-[5px] underline-offset-[6px]">les prix s’ouvrent.</span>
+        <p className="sur-fond relative text-sm font-bold text-accent-200">{user ? `Bonjour ${user.firstName} 👋` : "Bienvenue chez Sesam-Market"}</p>
+        <h1 className="sur-fond relative mt-1 max-w-[13.5rem] text-[29px] leading-[1.1] font-bold text-white md:max-w-md md:text-4xl">
+          À plusieurs, <span className="text-accent-400">les prix s’ouvrent.</span>
         </h1>
-        <p className="relative mt-2 max-w-[13.5rem] text-sm font-medium text-anthracite-950">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse pour tout le monde.</p>
+        <p className="sur-fond relative mt-2 max-w-[13.5rem] text-sm font-medium text-white md:max-w-md md:text-base">Plus nous sommes nombreux à acheter ensemble, plus le prix baisse pour tout le monde.</p>
         {mine && mine.total > 0 && (
-          <Link href="/compte/economies" className="relative mt-4 flex items-center justify-between rounded-2xl bg-white/80 p-3 shadow-[var(--shadow-card)] ring-1 ring-brand-200 backdrop-blur-sm">
-            <span className="text-sm">Vous avez économisé</span>
+          <Link href="/compte/economies" className="relative mt-4 flex items-center justify-between rounded-2xl bg-white/95 p-3 shadow-[var(--shadow-card)] ring-1 ring-brand-200 backdrop-blur-sm">
+            <span className="text-sm text-anthracite-900">Vous avez économisé</span>
             <strong className="text-lg text-accent-700">{formatFcfa(mine.total)}</strong>
           </Link>
         )}
@@ -72,7 +72,7 @@ export default async function HomePage() {
           Rejoindre un achat groupé →
         </ButtonLink>
         {platform.households > 0 && (
-          <p className="relative mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs font-bold text-anthracite-950">
+          <p className="relative mx-auto mt-3 flex w-fit flex-wrap justify-center gap-x-3 gap-y-1 rounded-full bg-white/90 px-4 py-1.5 text-xs font-bold text-anthracite-900 shadow-[var(--shadow-card)]">
             <span>👥 {platform.households.toLocaleString("fr-FR")} ménages</span>
             <span aria-hidden>•</span>
             <span>💰 {formatFcfa(platform.total)} économisés ensemble</span>
@@ -107,11 +107,11 @@ export default async function HomePage() {
         <ul className="scrollbar-none -mx-4 flex gap-3 overflow-x-auto px-4">
           {categories.map((c) => (
             <li key={c.id} className="shrink-0">
-              <Link href={`/categories/${c.slug}`} className="flex w-20 flex-col items-center gap-1 text-center">
-                <span className="grid size-16 place-items-center overflow-hidden rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
+              <Link href={`/categories/${c.slug}`} className="flex w-20 flex-col items-center gap-1 rounded-2xl bg-white/95 px-1 pt-1.5 pb-2 text-center shadow-[var(--shadow-card)]">
+                <span className="grid size-16 place-items-center overflow-hidden rounded-xl bg-white text-3xl" aria-hidden>
                   {categoryImage(c.slug) ? <Image src={categoryImage(c.slug)!} alt="" width={64} height={64} className="size-16 object-cover" /> : c.emoji}
                 </span>
-                <span className="text-xs leading-tight font-bold text-anthracite-950">{c.name}</span>
+                <span className="text-xs leading-tight font-bold text-anthracite-900">{c.name}</span>
               </Link>
             </li>
           ))}
@@ -133,9 +133,9 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle onOlive title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Tout voir</Link>} />
+        <SectionTitle light title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="pill-action">Tout voir</Link>} />
         {groupBuys.length ? (
-          <div className="space-y-3">
+          <div className="grid gap-3 lg:grid-cols-2">
             {groupBuys.map((gb, i) => (
               <GroupBuyCard key={gb.id} gb={gb} index={i} />
             ))}
@@ -149,8 +149,8 @@ export default async function HomePage() {
 
       {savers.length > 0 && (
         <section>
-          <SectionTitle onOlive title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
-          <div className="grid grid-cols-2 gap-3">
+          <SectionTitle light title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {savers.slice(0, 4).map((p) => (
               <ProductCard key={p.id} p={p} />
             ))}
@@ -160,7 +160,7 @@ export default async function HomePage() {
 
       {baskets.length > 0 && (
         <section>
-          <SectionTitle onOlive title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé et modifiable." />
+          <SectionTitle light title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé et modifiable." />
           <div className="scrollbar-none -mx-4 flex snap-x gap-3 overflow-x-auto px-4">
             {baskets.map((b) => (
               <Link key={b.id} href={`/paniers-famille/${b.slug}`} className="w-64 shrink-0 snap-start rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
@@ -182,8 +182,8 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle onOlive title="Produits populaires" action={<Link href="/categories" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Catalogue</Link>} />
-        <div className="grid grid-cols-2 gap-3">
+        <SectionTitle light title="Produits populaires" action={<Link href="/categories" className="pill-action">Catalogue</Link>} />
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           {popular.map((p) => (
             <ProductCard key={p.id} p={p} />
           ))}
@@ -192,8 +192,8 @@ export default async function HomePage() {
 
       {communities.length > 0 && (
         <section>
-          <SectionTitle onOlive title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="shrink-0 text-sm font-bold whitespace-nowrap text-anthracite-950 underline underline-offset-2">Tout voir</Link>} />
-          <ul className="space-y-2">
+          <SectionTitle light title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="pill-action">Tout voir</Link>} />
+          <ul className="grid gap-2 md:grid-cols-2">
             {communities.slice(0, 3).map((c) => (
               <li key={c.id}>
                 <Link href={`/communautes/${c.slug}`} className="flex items-center justify-between rounded-[var(--radius-card)] bg-white p-3 shadow-[var(--shadow-card)]">
@@ -215,7 +215,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle onOlive title="Comment ça marche ?" />
+        <SectionTitle light title="Comment ça marche ?" />
         <HowItWorks />
       </section>
 

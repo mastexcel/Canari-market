@@ -11,8 +11,8 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
   const [count, unread] = user ? await Promise.all([cartCount(user.id), unreadCount(user.id)]) : [0, 0];
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-gris-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-14 max-w-lg items-center justify-between gap-2 px-4">
+      <header className="sticky top-0 z-30 border-b border-white/60 bg-white/85 shadow-[0_4px_18px_-12px_rgb(0_0_0/0.35)] backdrop-blur-md">
+        <div className="mx-auto flex h-14 max-w-lg items-center md:max-w-2xl lg:max-w-4xl justify-between gap-2 px-4">
           <Link href="/" aria-label="Accueil Sesam-Market">
             <Logo />
           </Link>
@@ -33,7 +33,7 @@ export default async function ShopLayout({ children }: { children: React.ReactNo
           </div>
         </div>
       </header>
-      <main id="contenu" className="mx-auto max-w-lg px-4 pt-4 pb-28">
+      <main id="contenu" className="mx-auto max-w-lg px-4 pt-4 pb-28 md:max-w-2xl lg:max-w-4xl">
         {children}
         <LegalFooter className="mt-10" />
       </main>

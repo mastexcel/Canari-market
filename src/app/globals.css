@@ -127,20 +127,17 @@ html {
 }
 
 /*
- * Fond gris clair « sublimé », sans motif : une lumière douce plutôt qu'un décor.
- *  - léger dégradé vertical, du gris chaud (haut) au gris plus frais (bas) ;
- *  - lueur orange en haut à droite, reflet olive en bas à gauche, voile anthracite
- *    à peine perceptible : profondeur et chaleur, sans toucher au contraste du texte.
- * Fixé à l'écran : le contenu défile sur une lumière stable, sans effet de bande.
+ * Fonds d'écran de la charte (public/backgrounds) : une version portrait et une
+ * version paysage, choisies selon l'orientation de l'écran.
+ *  - « page » (crème lumineux) : pages ordinaires ;
+ *  - « sable » (beige) : connexion, inscription, pages légales ;
+ *  - « accueil » (olive foncé) : page de garde et accueil.
+ * Le fond est porté par un calque fixe (body::before) plutôt que par
+ * background-attachment: fixed, ignoré par Safari iOS : il reste net et cadré
+ * pendant le défilement, sur téléphone comme sur tablette.
  */
 body {
-  background-color: var(--color-fond);
-  background-image:
-    radial-gradient(60rem 38rem at 105% -8%, rgb(254 120 1 / 0.1), transparent 62%),
-    radial-gradient(52rem 40rem at -12% 108%, rgb(99 108 22 / 0.11), transparent 62%),
-    radial-gradient(36rem 26rem at -8% 6%, rgb(38 47 51 / 0.04), transparent 62%),
-    linear-gradient(180deg, #f7f6f3 0%, var(--color-fond) 45%, #ebedef 100%);
-  background-attachment: fixed;
+  background-color: #f6f2e8;
   color: var(--color-anthracite-900);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -149,6 +146,25 @@ body {
   font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #f6f2e8;
+  background-image: var(--fond-portrait, url("/backgrounds/page-portrait.webp"));
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+@media (orientation: landscape) {
+  body::before { background-image: var(--fond-paysage, url("/backgrounds/page-paysage.webp")); }
+}
+body:has([data-fond="sable"]) {
+  --fond-portrait: url("/backgrounds/sable-portrait.webp");
+  --fond-paysage: url("/backgrounds/sable-paysage.webp");
 }
 
 /* Titres, nom de marque et boutons : police arrondie du logo */
@@ -310,22 +326,50 @@ p { text-wrap: pretty; }
 }
 
 /*
- * Pages d'accueil (page de garde, accueil) : olive dense et éclatant.
- * Lumière chaude en haut à droite, olive vif au centre, olive profond en bas ;
- * le texte reste anthracite (contraste AA vérifié), les cartes blanches portent le détail.
+ * Pages d'accueil (page de garde, accueil) : fond d'écran olive foncé.
+ * Un voile sombre discret calme la lumière du coin haut droit : les textes posés
+ * directement sur le fond sont blancs (classe .sur-fond), les cartes restent blanches.
  */
-.fond-accueil, body:has([data-fond="accueil"]) {
-  color: var(--color-anthracite-950);
-  background-color: #b3c046;
-  background-image:
-    radial-gradient(40rem 26rem at 88% -10%, rgb(255 255 240 / 0.55), transparent 60%),
-    radial-gradient(30rem 22rem at 112% 4%, rgb(254 120 1 / 0.16), transparent 62%),
-    radial-gradient(42rem 32rem at -20% 70%, rgb(102 116 26 / 0.3), transparent 64%),
-    linear-gradient(176deg, #c9d460 0%, #b9c64a 34%, #aab83c 68%, #9dac33 100%);
-  background-attachment: fixed;
+body:has([data-fond="accueil"]) {
+  background-color: #3b4520;
+  --fond-portrait: linear-gradient(rgb(20 26 6 / 0.28), rgb(20 26 6 / 0.12)), url("/backgrounds/accueil-portrait.webp");
+  --fond-paysage: linear-gradient(rgb(20 26 6 / 0.28), rgb(20 26 6 / 0.12)), url("/backgrounds/accueil-paysage.webp");
 }
-/* Textes secondaires et pied de page assombris sur l'olive */
-body:has([data-fond="accueil"]) .legal-footer { color: var(--color-anthracite-900); }
+body:has([data-fond="accueil"])::before { background-color: #3b4520; }
+.fond-accueil {
+  color: #fff;
+  background: #3b4520 url("/backgrounds/accueil-portrait.webp") center / cover no-repeat;
+}
+@media (orientation: landscape) {
+  .fond-accueil { background-image: url("/backgrounds/accueil-paysage.webp"); }
+}
+/* Texte posé sur le fond foncé : une ombre légère le détache des reflets */
+.sur-fond { text-shadow: 0 1px 2px rgb(0 0 0 / 0.45); }
+/* Pied de page légal : sur un voile clair, lisible devant les vagues de tous les fonds */
+.legal-footer {
+  width: fit-content;
+  margin-inline: auto;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 0.82);
+  padding: 0.625rem 1rem;
+  color: var(--color-anthracite-800);
+  backdrop-filter: blur(6px);
+}
+
+/* Lien d'action d'une section (« Tout voir ») : pastille blanche, lisible sur tous les fonds */
+.pill-action {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.95);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-brand-800);
+  box-shadow: var(--shadow-card);
+}
+.pill-action::after { content: " →"; }
+.pill-action:hover { background: #fff; }
 
 /* Halo vert adouci sous le logo : le logo reste lisible sur tous les fonds colorés */
 .halo-logo { position: relative; isolation: isolate; }

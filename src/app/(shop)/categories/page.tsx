@@ -11,7 +11,7 @@ export default async function CategoriesPage() {
   return (
     <div>
       <PageHeader title="Catégories" />
-      <ul className="grid grid-cols-2 gap-3">
+      <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {cats.map((c) => (
           <li key={c.id}>
             <Link href={`/categories/${c.slug}`} className="flex flex-col gap-2 rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
