@@ -11,7 +11,7 @@ const LINKS = [
 /** Liens légaux, présents en pied de page de toutes les pages publiques. */
 export function LegalFooter({ className }: { className?: string }) {
   return (
-    <footer className={cn("text-center text-xs text-anthracite-600", className)}>
+    <footer className={cn("legal-footer text-center text-xs text-anthracite-600", className)}>
       <nav aria-label="Informations légales" className="flex flex-wrap justify-center gap-x-4 gap-y-1">
         {LINKS.map((l) => (
           <Link key={l.href} href={l.href} className="underline-offset-2 hover:underline">

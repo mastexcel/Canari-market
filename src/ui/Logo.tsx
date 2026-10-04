@@ -32,12 +32,16 @@ export function Logo({ className, light = false, tagline = false, height = 48 }:
 }
 
 /** Logo complet : version empilée (chariot au-dessus du nom) et slogan — accueil, connexion, inscription. */
-export function FullLogo({ className, width = 320 }: { className?: string; width?: number }) {
+export function FullLogo({ className, width = 320, light = false }: { className?: string; width?: number; light?: boolean }) {
   return (
     <span className={cn("flex flex-col items-center", className)}>
-      <Image src="/brand/logo-empile.webp" alt="Sesam-Market" width={width} height={Math.round((width * 367) / 640)} className="h-auto w-full" priority />
-      <span className="mt-1 font-display text-sm font-semibold tracking-wide text-anthracite-800">
-        À plusieurs, <span className="text-accent-700">les prix s’ouvrent.</span>
+      {light ? (
+        <Image src="/brand/logo-sombre.webp" alt="Sesam-Market" width={width} height={Math.round((width * 198) / 900)} className="h-auto w-full" priority />
+      ) : (
+        <Image src="/brand/logo-empile.webp" alt="Sesam-Market" width={width} height={Math.round((width * 367) / 640)} className="h-auto w-full" priority />
+      )}
+      <span className={cn("mt-2 font-display text-sm font-semibold tracking-wide", light ? "text-white" : "text-anthracite-800")}>
+        À plusieurs, <span className={light ? "text-accent-400" : "text-accent-700"}>les prix s’ouvrent.</span>
       </span>
     </span>
   );

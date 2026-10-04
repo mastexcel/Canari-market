@@ -10,7 +10,7 @@
  * Contrastes vérifiés (WCAG AA) : texte blanc sur olive ≥ 600 / orange ≥ 700 ; anthracite sur orange.
  */
 @theme {
-  --font-sans: var(--font-nunito), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
   /* Échelle typographique : 13 · 14,5 · 16 · 18 · 20 · 24 · 30 px, interlignage aéré */
   --text-xs: 0.8125rem;
@@ -27,7 +27,7 @@
   --text-2xl--line-height: 1.95rem;
   --text-3xl: 1.875rem;
   --text-3xl--line-height: 2.25rem;
-  --font-display: var(--font-fredoka), "Trebuchet MS", system-ui, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
 
   /* Olive (« Market ») */
   --color-brand-950: #222808;
@@ -48,13 +48,17 @@
   --color-lime-400: #a9b84a;
   --color-lime-100: #f1f4dc;
 
-  /* Orange (tiret, vague, traits de vitesse) */
-  --color-accent-700: #a34a00;
-  --color-accent-600: #e86c00;
+  /* Orange
+   *  - 400/500 : orange vif du logo — décor uniquement (traits, liserés, icônes), jamais sous du texte
+   *  - 600→900 : orange brûlé profond — surfaces portant du texte blanc (contraste ≥ 4,8:1) */
+  --color-accent-900: #6b2a06;
+  --color-accent-800: #8a3507;
+  --color-accent-700: #a8420a;
+  --color-accent-600: #c2500c;
   --color-accent-500: #fe7801;
   --color-accent-400: #ff9a3d;
-  --color-accent-200: #ffd2a6;
-  --color-accent-100: #fff0e0;
+  --color-accent-200: #ffd9b8;
+  --color-accent-100: #fff3e8;
 
   /* Anthracite (« Sesam », chariot) */
   --color-anthracite-950: #161c1f;
@@ -71,15 +75,15 @@
   --color-gris-50: #f8f9fa;
 
   /* Économies : orange profond */
-  --color-economie-700: #a34a00;
-  --color-economie-600: #c45a00;
+  --color-economie-700: #a8420a;
+  --color-economie-600: #c2500c;
   --color-economie-100: #ffe7cf;
   --color-economie-50: #fff4e8;
 
   /* Capsules : terre (orange brûlé) et lagune (ardoise-olive) */
-  --color-terre-700: #b04f00;
-  --color-terre-600: #e86c00;
-  --color-terre-100: #ffe6cc;
+  --color-terre-700: #a8420a;
+  --color-terre-600: #c2500c;
+  --color-terre-100: #fff3e8;
   --color-lagune-700: #3a4448;
   --color-lagune-600: #535d62;
   --color-lagune-100: #e9ecee;
@@ -141,7 +145,8 @@ body {
   font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.6;
-  font-weight: 450;
+  font-weight: 400;
+  font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -149,11 +154,10 @@ body {
 /* Titres, nom de marque et boutons : police arrondie du logo */
 h1, h2, h3, .font-display, .btn {
   font-family: var(--font-display);
-  letter-spacing: 0;
 }
-/* Titres : graisse franche mais pas massive, interlignage serré, césure évitée */
-h1 { font-weight: 700; line-height: 1.15; text-wrap: balance; }
-h2, h3 { font-weight: 600; line-height: 1.25; text-wrap: balance; }
+/* Titres : graisse franche, approche resserrée, interlignage serré, césure évitée */
+h1 { font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; text-wrap: balance; }
+h2, h3 { font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; text-wrap: balance; }
 p { text-wrap: pretty; }
 
 /* Focus visible et cohérent (accessibilité clavier / lecteurs d'écran) */
@@ -202,97 +206,72 @@ p { text-wrap: pretty; }
 }
 
 /*
- * Boutons signature Sesam-Market
- *  - forme « feuille » : trois coins arrondis, le coin bas-gauche plus vif (l'aile du logo) ;
- *  - matière : dégradé profond + motif « tissu » très discret + reflet en haut ;
- *  - relief : lèvre inférieure qui s'enfonce à l'appui, légère montée au survol ;
- *  - reflet lumineux qui balaie le bouton au survol / focus (« les prix s'ouvrent »).
+ * Boutons — sobres et professionnels :
+ *  - coins réguliers (12 px), aplat profond avec un très léger dégradé, ombre fine ;
+ *  - texte blanc uniquement sur des teintes à fort contraste (≥ 4,8:1) ;
+ *  - survol : teinte plus profonde ; appui : léger enfoncement ; focus : anneau orange visible.
  */
 .btn {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border-radius: 1.15rem 1.15rem 1.15rem 0.45rem;
-  letter-spacing: 0.01em;
-  transition: transform 140ms ease, box-shadow 140ms ease, filter 160ms ease, background-color 160ms ease;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 120ms ease, color 160ms ease;
   -webkit-tap-highlight-color: transparent;
 }
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.4) 48%, transparent 66%);
-  transform: translateX(-120%);
-  transition: transform 650ms ease;
-  pointer-events: none;
-}
-.btn:not(:disabled):hover { transform: translateY(-1px); }
-.btn:not(:disabled):hover::after,
-.btn:not(:disabled):focus-visible::after { transform: translateX(120%); }
-.btn:not(:disabled):active { transform: translateY(2px); }
-.btn:disabled { box-shadow: none; background-image: none; cursor: not-allowed; }
+.btn:not(:disabled):active { transform: translateY(1px) scale(0.99); }
+.btn:focus-visible { outline: 3px solid var(--color-accent-400); outline-offset: 2px; }
+.btn:disabled { cursor: not-allowed; box-shadow: none; background-image: none; }
 
+/* Action principale : orange brûlé, texte blanc */
+.btn-accent {
+  color: #fff;
+  background-color: var(--color-accent-700);
+  background-image: linear-gradient(180deg, var(--color-accent-600), var(--color-accent-700));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.18) inset, 0 1px 2px rgb(107 42 6 / 0.3), 0 8px 18px -8px rgb(168 66 10 / 0.6);
+}
+.btn-accent:not(:disabled):hover { background-image: linear-gradient(180deg, var(--color-accent-700), var(--color-accent-800)); }
+
+/* Action d'étape : olive profond, texte blanc */
 .btn-primary {
   color: #fff;
   background-color: var(--color-brand-700);
-  background-image:
-    url("/patterns/tissu.svg"),
-    radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.22), transparent 55%),
-    linear-gradient(180deg, var(--color-brand-500), var(--color-brand-700) 60%, var(--color-brand-800));
-  background-size: 56px 56px, auto, auto;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.12), 0 4px 0 var(--color-brand-900), 0 12px 22px -12px rgb(83 95 19 / 0.7);
-  text-shadow: 0 1px 0 rgb(0 0 0 / 0.18);
+  background-image: linear-gradient(180deg, var(--color-brand-600), var(--color-brand-700));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.16) inset, 0 1px 2px rgb(34 40 8 / 0.3), 0 8px 18px -8px rgb(66 76 15 / 0.6);
 }
-.btn-primary:not(:disabled):hover { filter: brightness(1.06) saturate(1.05); }
-.btn-primary:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 var(--color-brand-900), 0 4px 10px -6px rgb(83 95 19 / 0.55); }
+.btn-primary:not(:disabled):hover { background-image: linear-gradient(180deg, var(--color-brand-700), var(--color-brand-800)); }
 
-.btn-accent {
-  color: var(--color-anthracite-950);
-  background-color: var(--color-accent-500);
-  background-image:
-    url("/patterns/tissu-sombre.svg"),
-    radial-gradient(120% 90% at 50% -20%, rgb(255 255 255 / 0.5), transparent 55%),
-    linear-gradient(180deg, var(--color-accent-400), var(--color-accent-500) 45%, var(--color-accent-600));
-  background-size: 56px 56px, auto, auto;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6), inset 0 -2px 0 rgb(0 0 0 / 0.08), 0 4px 0 #a34a00, 0 12px 22px -12px rgb(254 120 1 / 0.75);
-}
-.btn-accent:not(:disabled):hover { filter: brightness(1.04) saturate(1.08); }
-.btn-accent:not(:disabled):active { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 1px 0 #a34a00; }
-
-/* Secondaire : sable chaud, texte vert forêt, liseré */
+/* Secondaire : blanc, texte anthracite, liseré */
 .btn-secondary {
-  color: var(--color-brand-800);
-  background-color: var(--color-sable-100);
-  background-image: url("/patterns/tissu-sombre.svg");
-  background-size: 56px 56px;
-  box-shadow: inset 0 0 0 1.5px var(--color-sable-300), 0 3px 0 var(--color-sable-300);
+  color: var(--color-anthracite-900);
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--color-gris-300), 0 1px 2px rgb(38 47 51 / 0.08);
 }
-.btn-secondary:not(:disabled):hover { background-color: var(--color-sable-50); }
-.btn-secondary:not(:disabled):active { box-shadow: inset 0 0 0 1.5px var(--color-sable-300), 0 1px 0 var(--color-sable-300); }
+.btn-secondary:not(:disabled):hover { box-shadow: inset 0 0 0 1.5px var(--color-anthracite-600), 0 1px 2px rgb(38 47 51 / 0.08); }
 
 .btn-outline {
   color: var(--color-anthracite-800);
-  background: #fff;
-  box-shadow: inset 0 0 0 1.5px var(--color-gris-300), 0 2px 0 var(--color-gris-200);
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--color-gris-300);
 }
-.btn-outline:not(:disabled):hover { box-shadow: inset 0 0 0 1.5px var(--color-brand-400), 0 2px 0 var(--color-gris-200); color: var(--color-brand-800); }
+.btn-outline:not(:disabled):hover { background: #fff; box-shadow: inset 0 0 0 1.5px var(--color-anthracite-600); }
 
 .btn-ghost { color: var(--color-anthracite-800); background: transparent; }
-.btn-ghost:not(:disabled):hover { background: rgb(83 95 19 / 0.08); transform: none; }
-.btn-ghost::after { display: none; }
+.btn-ghost:not(:disabled):hover { background: rgb(38 47 51 / 0.06); }
 
 .btn-danger {
   color: #fff;
-  background-image: linear-gradient(180deg, #c8382f, var(--color-alerte-700));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 3px 0 #6e140f;
+  background-color: var(--color-alerte-700);
+  box-shadow: 0 1px 2px rgb(110 20 15 / 0.3), 0 8px 18px -8px rgb(163 32 26 / 0.5);
 }
+.btn-danger:not(:disabled):hover { background-color: #861a15; }
 
-.btn:disabled:not(.btn-ghost) { background: var(--color-gris-300); color: var(--color-anthracite-600); text-shadow: none; }
+.btn:disabled:not(.btn-ghost) { background: var(--color-gris-200); color: var(--color-anthracite-600); }
 
 /*
- * Capsules d'information : blocs colorés profonds, empreints du motif « tissu ».
- * Couleurs choisies pour un contraste AA avec le texte (blanc, ou anthracite sur soleil/sable).
+ * Capsules d'information : blocs colorés profonds, motif « tissu » en filigrane.
+ * Texte blanc sur foret / terre / lagune / nuit (contraste ≥ 4,8:1) ;
+ * texte anthracite sur soleil et sable (fonds clairs).
  */
 .capsule-foret, .capsule-terre, .capsule-lagune, .capsule-nuit, .capsule-soleil, .capsule-sable {
   background-size: 56px 56px, auto;
@@ -304,12 +283,12 @@ p { text-wrap: pretty; }
 }
 .capsule-terre {
   color: #fff;
-  background-color: var(--color-terre-700);
-  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, #8a3d00, var(--color-terre-700));
+  background-color: var(--color-accent-800);
+  background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-accent-900), var(--color-accent-700));
 }
 .capsule-lagune {
   color: #fff;
-  background-color: var(--color-lagune-700);
+  background-color: var(--color-anthracite-800);
   background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-anthracite-800), var(--color-brand-800));
 }
 .capsule-nuit {
@@ -317,15 +296,39 @@ p { text-wrap: pretty; }
   background-color: var(--color-anthracite-900);
   background-image: url("/patterns/tissu.svg"), linear-gradient(135deg, var(--color-anthracite-950), var(--color-anthracite-800));
 }
+/* Soleil : pêche clair, liseré orange, texte anthracite — se lit sans effort */
 .capsule-soleil {
-  color: var(--color-anthracite-950);
-  background-color: var(--color-accent-500);
-  background-image: url("/patterns/tissu-sombre.svg"), linear-gradient(135deg, var(--color-accent-400), var(--color-accent-600));
+  color: var(--color-anthracite-900);
+  background-color: var(--color-accent-100);
+  background-image: url("/patterns/tissu-sombre.svg"), linear-gradient(135deg, #fff7ef, var(--color-accent-100));
+  box-shadow: inset 0 0 0 1px var(--color-accent-200);
 }
 .capsule-sable {
   color: var(--color-anthracite-900);
   background-color: var(--color-sable-100);
   background-image: url("/patterns/tissu-sombre.svg"), linear-gradient(135deg, var(--color-sable-50), var(--color-sable-100));
+}
+
+/*
+ * Pages d'accueil (page de garde, accueil) : fond saturé et nuancé.
+ * Olive profond → anthracite, lueur orange en haut ; les cartes blanches portent l'information.
+ */
+.fond-accueil {
+  color: #fff;
+  background-color: var(--color-brand-800);
+  background-image:
+    radial-gradient(40rem 26rem at 110% -5%, rgb(254 120 1 / 0.28), transparent 60%),
+    radial-gradient(36rem 28rem at -15% 40%, rgb(141 158 42 / 0.3), transparent 62%),
+    linear-gradient(170deg, var(--color-brand-700) 0%, var(--color-brand-800) 38%, #2f3a12 62%, var(--color-anthracite-900) 100%);
+  background-attachment: fixed;
+}
+body:has([data-fond="accueil"]) {
+  background-color: var(--color-brand-800);
+  background-image:
+    radial-gradient(40rem 26rem at 110% -5%, rgb(254 120 1 / 0.28), transparent 60%),
+    radial-gradient(36rem 28rem at -15% 40%, rgb(141 158 42 / 0.3), transparent 62%),
+    linear-gradient(170deg, var(--color-brand-700) 0%, var(--color-brand-800) 38%, #2f3a12 62%, var(--color-anthracite-900) 100%);
+  background-attachment: fixed;
 }
 
 /* Les éléments de grille peuvent rétrécir : un tableau large défile dans son cadre
@@ -351,3 +354,6 @@ p { text-wrap: pretty; }
 .animate-rise { animation: rise-in 520ms cubic-bezier(.2,.7,.2,1) both; }
 .animate-float { animation: float-soft 5s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 40s linear infinite; }
+
+/* Sur les fonds saturés, le pied de page passe en clair */
+body:has([data-fond="accueil"]) .legal-footer { color: rgb(255 255 255 / 0.85); }

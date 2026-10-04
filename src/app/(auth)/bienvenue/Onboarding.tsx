@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Achats groupés",
     title: (
       <>
-        Ensemble, on achète <Hl className="text-accent-700">comme les grossistes</Hl>
+        Ensemble, on achète <Hl className="text-accent-400">comme les grossistes</Hl>
       </>
     ),
     text: "Ménages et petits commerces d’Abidjan réunissent leurs besoins dans un même achat : riz, huile, savon, cahiers…",
@@ -44,7 +44,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Prix qui baisse",
     title: (
       <>
-        Plus on est nombreux, <Hl className="text-brand-600">plus le prix baisse</Hl>
+        Plus on est nombreux, <Hl className="text-lime-400">plus le prix baisse</Hl>
       </>
     ),
     text: "Chaque participant rapproche le groupe du palier suivant. Votre prix ne peut jamais monter : la différence vous est remboursée.",
@@ -57,7 +57,7 @@ const SLIDES: Slide[] = [
     eyebrow: "Près de chez vous",
     title: (
       <>
-        Juste ce qu’il vous faut, <Hl className="text-accent-700">dans votre quartier</Hl>
+        Juste ce qu’il vous faut, <Hl className="text-accent-400">dans votre quartier</Hl>
       </>
     ),
     text: "Le sac de 50 kg est partagé en 5, 10 ou 25 kg. Retrait au point relais du quartier ou livraison à domicile.",
@@ -111,7 +111,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
 
   if (splash) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-fond">
+      <div className="fond-accueil fixed inset-0 z-50 flex flex-col">
         <div className="kente-band" />
         <div className="relative grid flex-1 place-items-center px-6 text-center">
           <svg aria-hidden className="animate-spin-slow absolute size-[min(110vw,520px)] opacity-60" viewBox="0 0 200 200">
@@ -120,7 +120,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <circle cx="100" cy="100" r="64" fill="none" stroke="#E86C00" strokeWidth="2" strokeDasharray="4 6" />
           </svg>
           <div className="animate-rise relative">
-            <FullLogo width={340} className="mx-auto w-[min(82vw,360px)]" />
+            <FullLogo light width={360} className="mx-auto w-[min(86vw,380px)]" />
           </div>
         </div>
         <div className="kente-band" />
@@ -132,14 +132,14 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
   const last = i === SLIDES.length - 1;
   const proof = stats ? s.proof(stats) : null;
   return (
-    <div className="-mx-4 -my-6 flex min-h-dvh flex-col">
+    <div className="-mx-4 -my-6 flex min-h-dvh flex-col text-white" data-fond="accueil">
       <div className="kente-band" />
       <div className="flex flex-1 flex-col px-5 pt-3 pb-5">
         <div className="flex items-center justify-between">
           <span className="capsule-soleil rounded-full px-3 py-1 text-xs font-extrabold tracking-wide uppercase shadow-[var(--shadow-card)]">
             {i + 1}/{SLIDES.length} · {s.eyebrow}
           </span>
-          <Link href="/" onClick={markOnboarded} className="rounded-full px-3 py-1.5 text-sm font-semibold text-anthracite-700 hover:bg-white/70">
+          <Link href="/" onClick={markOnboarded} className="rounded-full px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/10">
             Passer
           </Link>
         </div>
@@ -165,27 +165,27 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
           </div>
 
                     <div className="mt-5 px-4 py-1">
-            <h1 className="animate-rise max-w-sm text-[28px] leading-[1.12] font-bold text-anthracite-950 [animation-delay:80ms]">{s.title}</h1>
-            <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-anthracite-800 [animation-delay:140ms]">{s.text}</p>
+            <h1 className="animate-rise max-w-sm text-[28px] leading-[1.12] font-extrabold text-white [animation-delay:80ms]">{s.title}</h1>
+            <p className="animate-rise mx-auto mt-3 max-w-xs text-[15px] leading-relaxed text-white/90 [animation-delay:140ms]">{s.text}</p>
           </div>
-          {proof && <p className="animate-rise mt-3 capsule-foret rounded-full px-4 py-2 text-sm font-bold shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
+          {proof && <p className="animate-rise mt-3 rounded-full bg-white px-4 py-2 text-sm font-bold text-anthracite-900 shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
         </div>
 
         <div className="my-5 flex justify-center gap-2" aria-hidden>
           {SLIDES.map((_, k) => (
-            <span key={k} className={cn("h-2.5 rounded-full transition-all", k === i ? "w-8 bg-gradient-to-r from-brand-600 to-lime-500" : "w-2.5 bg-gris-300")} />
+            <span key={k} className={cn("h-2.5 rounded-full transition-all", k === i ? "w-8 bg-accent-400" : "w-2.5 bg-white/35")} />
           ))}
         </div>
 
         {last ? (
           <div className="space-y-2.5">
             <Link href="/inscription" onClick={markOnboarded} className={buttonClasses("accent", "lg", true)}>
-              Je rejoins Sesam-Market — c’est gratuit
+              Rejoindre gratuitement
             </Link>
             <Link href="/connexion" onClick={markOnboarded} className={buttonClasses("secondary", "lg", true)}>
               J&apos;ai déjà un compte
             </Link>
-            <Link href="/" onClick={markOnboarded} className="block py-1.5 text-center text-sm font-semibold text-brand-700 underline-offset-2 hover:underline">
+            <Link href="/" onClick={markOnboarded} className="block py-1.5 text-center text-sm font-semibold text-white underline underline-offset-2">
               Découvrir les achats groupés sans compte
             </Link>
           </div>
@@ -195,7 +195,7 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
               setI(i + 1);
               window.scrollTo({ top: 0 });
             }}
-            className={buttonClasses("primary", "lg", true)}
+            className={buttonClasses("accent", "lg", true)}
           >
             Suivant
           </button>

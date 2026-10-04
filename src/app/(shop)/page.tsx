@@ -30,9 +30,9 @@ export default async function HomePage() {
 
   const heroImage = illustration("hero", "accueil");
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" data-fond="accueil">
       {/* Accroche : le groupe → le volume → le prix → l'économie */}
-      <section className="brand-pattern relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-8 text-white">
+      <section className="relative -mx-4 -mt-4 overflow-hidden px-4 pt-6 pb-8 text-white">
         {heroImage ? (
           // Illustration du groupe dans un « soleil » aux couleurs du wax
           <div aria-hidden className="pointer-events-none absolute top-5 -right-7 size-44 min-[400px]:size-48">
@@ -78,7 +78,7 @@ export default async function HomePage() {
             <span>💰 {formatFcfa(platform.total)} économisés ensemble</span>
           </p>
         )}
-        <div aria-hidden className="kente-band absolute inset-x-0 bottom-0" />
+        <div aria-hidden className="kente-band absolute inset-x-4 bottom-0 rounded-full opacity-90" />
       </section>
 
       {/* Les 4 promesses du logo */}
@@ -111,7 +111,7 @@ export default async function HomePage() {
                 <span className="grid size-16 place-items-center overflow-hidden rounded-2xl bg-white text-3xl shadow-[var(--shadow-card)]" aria-hidden>
                   {categoryImage(c.slug) ? <Image src={categoryImage(c.slug)!} alt="" width={64} height={64} className="size-16 object-cover" /> : c.emoji}
                 </span>
-                <span className="text-xs leading-tight font-semibold text-anthracite-800">{c.name}</span>
+                <span className="text-xs leading-tight font-semibold text-white">{c.name}</span>
               </Link>
             </li>
           ))}
@@ -133,7 +133,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
+        <SectionTitle light title="Achats groupés en cours" subtitle="Rejoignez le groupe, faites baisser le prix." action={<Link href="/achats-groupes" className="shrink-0 text-sm font-semibold whitespace-nowrap text-accent-200 underline-offset-2 hover:underline">Tout voir</Link>} />
         {groupBuys.length ? (
           <div className="space-y-3">
             {groupBuys.map((gb, i) => (
@@ -149,7 +149,7 @@ export default async function HomePage() {
 
       {savers.length > 0 && (
         <section>
-          <SectionTitle title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
+          <SectionTitle light title="Meilleures économies" subtitle="Comparées à des relevés de prix récents et datés." />
           <div className="grid grid-cols-2 gap-3">
             {savers.slice(0, 4).map((p) => (
               <ProductCard key={p.id} p={p} />
@@ -160,7 +160,7 @@ export default async function HomePage() {
 
       {baskets.length > 0 && (
         <section>
-          <SectionTitle title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé — modifiable." />
+          <SectionTitle light title="Paniers famille" subtitle="L'essentiel de la maison, déjà composé — modifiable." />
           <div className="scrollbar-none -mx-4 flex snap-x gap-3 overflow-x-auto px-4">
             {baskets.map((b) => (
               <Link key={b.id} href={`/paniers-famille/${b.slug}`} className="w-64 shrink-0 snap-start rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
@@ -182,7 +182,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Produits populaires" action={<Link href="/categories" className="text-sm font-semibold text-brand-700">Catalogue</Link>} />
+        <SectionTitle light title="Produits populaires" action={<Link href="/categories" className="shrink-0 text-sm font-semibold whitespace-nowrap text-accent-200 underline-offset-2 hover:underline">Catalogue</Link>} />
         <div className="grid grid-cols-2 gap-3">
           {popular.map((p) => (
             <ProductCard key={p.id} p={p} />
@@ -192,7 +192,7 @@ export default async function HomePage() {
 
       {communities.length > 0 && (
         <section>
-          <SectionTitle title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="text-sm font-semibold text-brand-700">Tout voir</Link>} />
+          <SectionTitle light title="Communautés proches" subtitle={user?.commune ? `Autour de ${user.commune}` : "Achetez avec vos voisins, collègues, associations."} action={<Link href="/communautes" className="shrink-0 text-sm font-semibold whitespace-nowrap text-accent-200 underline-offset-2 hover:underline">Tout voir</Link>} />
           <ul className="space-y-2">
             {communities.slice(0, 3).map((c) => (
               <li key={c.id}>
@@ -215,7 +215,7 @@ export default async function HomePage() {
       )}
 
       <section>
-        <SectionTitle title="Comment ça marche ?" />
+        <SectionTitle light title="Comment ça marche ?" />
         <HowItWorks />
       </section>
 
