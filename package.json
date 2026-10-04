@@ -19,6 +19,7 @@
     "db:seed": "prisma db seed",
     "db:seed-if-empty": "tsx scripts/seed-if-empty.ts",
     "db:demo-password": "tsx scripts/sync-demo-password.ts",
+    "db:catalogue": "tsx scripts/sync-catalogue.ts",
     "db:reset": "prisma migrate reset --force",
     "jobs": "tsx scripts/run-jobs.ts",
     "images:optimize": "node scripts/optimize-images.mjs",

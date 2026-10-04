@@ -1,45 +1,42 @@
-import Image from "next/image";
 import Link from "next/link";
-import { categoryImage } from "@/infrastructure/assets";
-import { listCategories, upcomingCategories } from "@/application/catalog.service";
+import { catalogueTree } from "@/application/catalog.service";
 import { PageHeader } from "@/ui/Card";
+import { RayonTile } from "@/ui/shop/RayonTile";
 
-export const metadata = { title: "Catégories" };
+export const metadata = { title: "Tous nos rayons" };
 
 export default async function CategoriesPage() {
-  const [cats, upcoming] = await Promise.all([listCategories(), upcomingCategories()]);
+  const tree = await catalogueTree();
   return (
     <div>
-      <PageHeader title="Catégories" />
-      <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {cats.map((c) => (
-          <li key={c.id}>
-            <Link href={`/categories/${c.slug}`} className="flex flex-col gap-2 rounded-[var(--radius-card)] bg-white p-4 shadow-[var(--shadow-card)]">
-              {categoryImage(c.slug) ? (
-                <Image src={categoryImage(c.slug)!} alt="" width={320} height={200} className="h-24 w-full rounded-xl object-cover" />
+      <PageHeader title="Tous nos rayons" subtitle="Ce que Sesam-Market vend aujourd'hui, et ce qui arrive bientôt." />
+      <div className="space-y-7">
+        {tree.map((u) => (
+          <section key={u.slug} aria-labelledby={`u-${u.slug}`}>
+            <div className="mb-2.5 flex items-center justify-between gap-3">
+              <h2 id={`u-${u.slug}`} className="flex items-center gap-2 text-lg font-bold text-anthracite-900">
+                <span aria-hidden className="h-5 w-1.5 rounded-full bg-gradient-to-b from-accent-400 to-accent-600" />
+                {u.name}
+              </h2>
+              {u.open ? (
+                <Link href={`/categories/${u.slug}`} className="pill-action">
+                  Tout voir
+                </Link>
               ) : (
-                <span className="text-4xl" aria-hidden>
-                  {c.emoji}
-                </span>
+                <span className="rounded-full bg-accent-100 px-3 py-1 text-xs font-bold text-accent-800">Bientôt</span>
               )}
-              <span className="font-bold">{c.name}</span>
-              <span className="text-xs text-anthracite-600">{c._count.products} produits</span>
-            </Link>
-          </li>
-        ))}
-        {upcoming.map((c) => (
-          <li key={c.slug}>
-            <div className="flex h-full flex-col gap-2 rounded-[var(--radius-card)] border border-dashed border-gris-300 bg-white/60 p-4">
-              <span className="text-4xl grayscale" aria-hidden>
-                {c.emoji}
-              </span>
-              <span className="font-bold text-anthracite-600">{c.name}</span>
-              <span className="w-fit rounded-full bg-accent-100 px-2 py-0.5 text-xs font-bold text-accent-700">Bientôt</span>
             </div>
-          </li>
+            <ul className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+              {u.rayons.map((r) => (
+                <li key={r.slug}>
+                  <RayonTile {...r} />
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
-      <p className="mt-4 text-sm text-anthracite-600">Sesam-Market démarre avec les produits non périssables : stockables, sans perte ni chaîne du froid, ils permettent de grouper les achats sur plusieurs semaines et d&apos;obtenir les meilleurs prix. Les produits frais suivront.</p>
+      </div>
+      <p className="mt-6 text-sm text-anthracite-600">Sesam-Market démarre avec les produits non périssables : stockables, sans perte ni chaîne du froid, ils permettent de grouper les achats sur plusieurs semaines et d&apos;obtenir les meilleurs prix. Les nouveaux rayons ouvrent au fur et à mesure des achats groupés.</p>
     </div>
   );
 }

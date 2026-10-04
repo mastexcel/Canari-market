@@ -60,7 +60,7 @@ export async function listOpenGroupBuys(params: { take?: number; categorySlug?: 
     where: {
       status: "OPEN",
       closesAt: { gt: now },
-      product: { category: { ...sellableCategoryWhere(assortment()), ...(params.categorySlug ? { slug: params.categorySlug } : {}) } },
+      product: { category: { ...sellableCategoryWhere(assortment()), ...(params.categorySlug ? { OR: [{ slug: params.categorySlug }, { parent: { slug: params.categorySlug } }] } : {}) } },
     },
     include: listInclude,
     orderBy: { closesAt: "asc" },

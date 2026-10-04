@@ -121,7 +121,7 @@ export default async function HomePage() {
         <h2 id="cats" className="sr-only">
           Catégories
         </h2>
-        <ul className="grid grid-cols-3 gap-2.5 min-[480px]:grid-cols-5">
+        <ul className="grid grid-cols-4 gap-2 md:grid-cols-8">
           {categories.map((c) => (
             <li key={c.id}>
               <Link href={`/categories/${c.slug}`} className="flex h-full flex-col items-center gap-1 rounded-2xl bg-white/95 px-1 pt-1.5 pb-2 text-center shadow-[var(--shadow-card)]">
@@ -132,6 +132,14 @@ export default async function HomePage() {
               </Link>
             </li>
           ))}
+          <li>
+            <Link href="/categories" className="capsule-foret flex h-full flex-col items-center justify-center gap-1 rounded-2xl px-1 py-2 text-center shadow-[var(--shadow-card)]">
+              <span className="grid size-16 place-items-center rounded-xl bg-white/20 text-2xl" aria-hidden>
+                ▦
+              </span>
+              <span className="text-xs leading-tight font-bold">Tous les rayons</span>
+            </Link>
+          </li>
         </ul>
       </section>
 

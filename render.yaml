@@ -14,7 +14,7 @@ services:
     runtime: node
     plan: free
     region: frankfurt
-    buildCommand: npm ci --include=dev && npx prisma migrate deploy && npm run db:seed-if-empty && npm run db:demo-password && npm run build
+    buildCommand: npm ci --include=dev && npx prisma migrate deploy && npm run db:seed-if-empty && npm run db:catalogue && npm run db:demo-password && npm run build
     startCommand: npm start
     healthCheckPath: /api/v1/health
     envVars:

@@ -45,11 +45,43 @@ export function comparePrice(
   };
 }
 
+/** Filtre « produit de cette catégorie » : l'univers lui-même ou l'un de ses rayons. */
+export function inCategory(slug?: string): Prisma.CategoryWhereInput {
+  return slug ? { OR: [{ slug }, { parent: { slug } }] } : {};
+}
+
+/** Univers vendables, avec le nombre de produits (rayons compris). */
 export async function listCategories(db: Db = prisma) {
-  return db.category.findMany({
+  const cats = await db.category.findMany({
     where: { ...sellableCategoryWhere(assortment()), parentId: null },
     orderBy: { sortOrder: "asc" },
-    include: { _count: { select: { products: { where: { isActive: true } } } } },
+    include: {
+      _count: { select: { products: { where: { isActive: true } } } },
+      children: { where: { isActive: true }, select: { _count: { select: { products: { where: { isActive: true } } } } } },
+    },
+  });
+  return cats.map(({ children, ...c }) => ({ ...c, _count: { products: c._count.products + children.reduce((n, k) => n + k._count.products, 0) } }));
+}
+
+/** Tous les univers (y compris « bientôt ») avec leurs rayons et le nombre de produits de chacun. */
+export async function catalogueTree(db: Db = prisma) {
+  const config = assortment();
+  const cats = await db.category.findMany({
+    where: { isActive: true, parentId: null },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      children: { where: { isActive: true }, orderBy: { sortOrder: "asc" }, include: { _count: { select: { products: { where: { isActive: true } } } } } },
+    },
+  });
+  return cats.map((c) => {
+    const open = config.perishablesEnabled || !c.isPerishable;
+    return {
+      slug: c.slug,
+      name: c.name,
+      emoji: c.emoji,
+      open,
+      rayons: c.children.map((r) => ({ slug: r.slug, name: r.name, emoji: r.emoji, products: open ? r._count.products : 0 })),
+    };
   });
 }
 
@@ -70,7 +102,7 @@ export async function searchProducts(
   const q = params.q?.trim();
   const where: Prisma.ProductWhereInput = {
     isActive: true,
-    category: { ...sellableCategoryWhere(assortment()), ...(params.categorySlug ? { slug: params.categorySlug } : {}) },
+    category: { ...sellableCategoryWhere(assortment()), ...inCategory(params.categorySlug) },
     ...(q
       ? {
           OR: [

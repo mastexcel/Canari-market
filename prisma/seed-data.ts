@@ -8,15 +8,8 @@
  * Les catégories périssables existent déjà dans les données mais restent
  * fermées (« bientôt ») tant que PERISHABLES_ENABLED n'est pas activé.
  */
-export const CATEGORIES = [
-  { slug: "alimentation", name: "Épicerie sèche", emoji: "🍚", isPerishable: false },
-  { slug: "boissons", name: "Boissons", emoji: "🧃", isPerishable: false },
-  { slug: "entretien", name: "Entretien", emoji: "🧴", isPerishable: false },
-  { slug: "hygiene", name: "Hygiène & bébé", emoji: "🧼", isPerishable: false },
-  { slug: "scolaire", name: "Fournitures scolaires", emoji: "🎒", isPerishable: false },
-  { slug: "frais", name: "Frais & protéines", emoji: "🐟", isPerishable: true },
-  { slug: "legumes", name: "Fruits & légumes", emoji: "🍅", isPerishable: true },
-] as const;
+/** Univers du catalogue (les rayons sont créés par syncCatalogue, voir src/domain/catalogue-taxonomy.ts). */
+export { UNIVERS as CATEGORIES } from "../src/domain/catalogue-taxonomy";
 
 type Unit = "GRAM" | "MILLILITER" | "PIECE";
 /** [catégorie, nom, marque, emoji, unité, libellé variante, quantité, poids g, prix Sesam-Market, prix réf.] */
