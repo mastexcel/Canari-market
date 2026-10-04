@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Écran couché et peu haut (téléphone en paysage) : les blocs passent côte à côte */
+@custom-variant paysage-court (@media (orientation: landscape) and (max-height: 640px));
 
 /*
  * Design system Sesam-Market — charte v3, issue du logo « chariot garni »

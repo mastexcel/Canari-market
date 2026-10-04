@@ -144,9 +144,9 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
           </Link>
         </div>
 
-        <div key={i} className="flex flex-1 flex-col items-center justify-center text-center" aria-live="polite">
+        <div key={i} className="flex flex-1 flex-col items-center justify-center text-center paysage-court:flex-row paysage-court:gap-8 paysage-court:text-left" aria-live="polite">
           {/* Illustration dans un « soleil » : halo, anneaux et formes wax */}
-          <div className="animate-rise relative mt-3 size-[min(76vw,310px,38dvh)]">
+          <div className="animate-rise relative mt-3 size-[min(76vw,310px,38dvh)] shrink-0 paysage-court:mt-0 paysage-court:size-[min(62dvh,260px)]">
             <div className={cn("absolute inset-3 rounded-full bg-gradient-to-br", s.glow)} />
             <svg aria-hidden className="animate-spin-slow absolute inset-0 size-full" viewBox="0 0 200 200">
               <circle cx="100" cy="100" r="97" fill="none" stroke={s.ring} strokeWidth="3" strokeDasharray="3 9" strokeLinecap="round" />
@@ -164,14 +164,14 @@ export function Onboarding({ images = [], stats = null }: { images?: Array<strin
             <Shapes color={s.ring} />
           </div>
 
-          <div className="mt-5 px-4 py-1">
+          <div className="mt-5 px-4 py-1 paysage-court:mt-0 paysage-court:px-0">
             <h1 className="sur-fond animate-rise max-w-sm text-[28px] leading-[1.12] font-extrabold text-white [animation-delay:80ms]">{s.title}</h1>
-            <p className="animate-rise mx-auto mt-3 max-w-xs sur-fond text-[15px] leading-relaxed font-medium text-white [animation-delay:140ms]">{s.text}</p>
+            <p className="sur-fond animate-rise mx-auto mt-3 max-w-xs paysage-court:mx-0 paysage-court:max-w-md text-[15px] leading-relaxed font-medium text-white [animation-delay:140ms]">{s.text}</p>
           </div>
-          {proof && <p className="animate-rise mt-3 rounded-full bg-white px-4 py-2 text-sm font-bold text-anthracite-900 shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
+          {proof && <p className="animate-rise mt-3 rounded-full paysage-court:hidden bg-white px-4 py-2 text-sm font-bold text-anthracite-900 shadow-[var(--shadow-card)] [animation-delay:200ms]">{proof}</p>}
         </div>
 
-        <div className="my-5 flex justify-center gap-2" aria-hidden>
+        <div className="my-5 flex justify-center gap-2 paysage-court:my-3" aria-hidden>
           {SLIDES.map((_, k) => (
             <span key={k} className={cn("h-2.5 rounded-full transition-all", k === i ? "w-8 bg-accent-700" : "w-2.5 bg-white/80")} />
           ))}

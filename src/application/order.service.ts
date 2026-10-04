@@ -518,7 +518,7 @@ export async function listOrders(userId: string, db: Db = prisma) {
   return db.order.findMany({
     where: { userId, status: { not: "DRAFT" } },
     orderBy: { createdAt: "desc" },
-    include: { items: { select: { label: true, quantity: true } }, pickupPoint: { select: { name: true } } },
+    include: { items: { select: { label: true, quantity: true, product: { select: { slug: true, emoji: true, name: true } } } }, pickupPoint: { select: { name: true } } },
     take: 100,
   });
 }

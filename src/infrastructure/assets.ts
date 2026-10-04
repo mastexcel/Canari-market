@@ -22,5 +22,7 @@ export function publicAsset(rel: string): string | null {
 
 export const productImage = (slug: string, explicit?: string | null) => explicit || publicAsset(`images/produits/${slug}.webp`);
 export const categoryImage = (slug: string) => publicAsset(`images/categories/${slug}.webp`);
+export const basketImage = (slug: string) => publicAsset(`images/paniers/${slug}.webp`);
+export const communityImage = (slug: string) => publicAsset(`images/communautes/${slug}.webp`);
 export const iconImage = (name: string) => publicAsset(`images/icones/${name}.webp`);
 export const illustration = (folder: "onboarding" | "hero" | "etats" | "communication", name: string) => publicAsset(`images/${folder}/${name}.webp`);

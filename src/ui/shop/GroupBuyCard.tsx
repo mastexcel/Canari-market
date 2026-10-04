@@ -23,14 +23,15 @@ export function GroupBuyCard({ gb, index = 0, now = new Date() }: { gb: GroupBuy
     <Link href={`/achats-groupes/${gb.slug}`} className="group block overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[var(--shadow-float)]">
       {/* En-tête coloré à motif : produit, titre, prix */}
       <div className={`${HEADS[index % HEADS.length]} flex gap-3 p-4`}>
-        <span className="shrink-0 self-start rounded-2xl bg-white p-0.5 shadow-sm ring-2 ring-white/50">
-          <ProductTile emoji={gb.product.emoji} name={gb.product.name} src={gb.image} size="sm" className="size-16 text-3xl" />
+        <span className="shrink-0 self-start rounded-2xl bg-white p-1 shadow-[0_8px_18px_-10px_rgb(0_0_0/0.6)]">
+          <ProductTile emoji={gb.product.emoji} name={gb.product.name} src={gb.image} size="sm" className="size-20 rounded-xl text-4xl" />
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="leading-snug font-bold">{gb.title}</h3>
-            {gb.community && <span className="shrink-0 rounded-full bg-white/18 px-2.5 py-0.5 text-xs font-bold ring-1 ring-white/30">{gb.community.name.replace(/^Sesam /, "")}</span>}
+            <h3 className="text-[17px] leading-snug font-bold">{gb.title}</h3>
+            <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-full bg-white text-brand-800 shadow-sm transition-transform group-hover:translate-x-0.5">›</span>
           </div>
+          {gb.community && <p className="mt-0.5 text-xs font-semibold opacity-95">📍 {gb.community.name.replace(/^Sesam /, "")}</p>}
           <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
             {gb.referenceIsFresh && <span className="text-sm line-through opacity-80">{formatFcfa(gb.referenceUnitPrice)}</span>}
             <strong className="rounded-lg bg-white px-2 py-0.5 text-base font-extrabold text-brand-800 tabular">{formatFcfa(p.targetUnitPrice)}</strong>
@@ -46,11 +47,11 @@ export function GroupBuyCard({ gb, index = 0, now = new Date() }: { gb: GroupBuy
           <span className="rounded-full bg-brand-700 px-2 py-0.5 text-xs font-extrabold tabular text-white">{Math.floor(p.percentOfTarget)} %</span>
         </div>
         <GroupProgress percent={p.percentOfTarget} markers={tierMarkers(gb)} label={`Progression de ${gb.title}`} />
-        <div className="mt-2 flex items-center justify-between gap-2 text-xs">
+        <div className="mt-2.5 flex items-center justify-between gap-2 rounded-2xl bg-accent-100 py-1 pr-1 pl-3 text-xs">
           <span className="font-bold text-terre-700">
             {p.remainingToTargetUnits > 0 ? `Plus que ${p.remainingToTargetUnits} pour débloquer le prix` : "Objectif atteint 🎉"}
           </span>
-          <span className="shrink-0 rounded-full bg-sable-100 px-2 py-0.5 font-semibold text-anthracite-700">⏱ {timeLeft(gb.closesAt, now)}</span>
+          <span className="shrink-0 rounded-full bg-white px-2 py-0.5 font-semibold text-anthracite-800 shadow-sm">⏱ {timeLeft(gb.closesAt, now)}</span>
         </div>
       </div>
     </Link>

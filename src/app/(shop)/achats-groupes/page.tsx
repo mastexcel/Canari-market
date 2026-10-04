@@ -14,7 +14,7 @@ export default async function GroupBuysPage({ searchParams }: { searchParams: Pr
   return (
     <div>
       <PageHeader title="Achats groupés" subtitle="Chaque participation rapproche tout le groupe du prochain prix." />
-      <nav aria-label="Filtrer par catégorie" className="scrollbar-none -mx-4 mb-4 flex gap-2 overflow-x-auto px-4">
+      <nav aria-label="Filtrer par catégorie" className="mb-4 flex flex-wrap gap-2">
         {[{ slug: "", name: "Tous", emoji: "✨" }, ...cats].map((c) => (
           <Link
             key={c.slug || "all"}
