@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cn } from "./cn";
 
 const LINKS = [
+  { href: "/application", label: "Application mobile" },
   { href: "/confidentialite", label: "Confidentialité" },
   { href: "/cgu", label: "Conditions d’utilisation" },
   { href: "/mentions-legales", label: "Mentions légales" },

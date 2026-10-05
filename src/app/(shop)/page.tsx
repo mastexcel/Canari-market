@@ -10,7 +10,7 @@ import { basketImage, categoryImage, communityImage, iconImage, illustration, pu
 
 /** Affiches de campagne (public/images/pub) : chacune mène à la page dont elle parle. */
 const PUBS: Array<[string, string, string]> = [
-  ["courses-moins-cheres", "Faites vos courses moins chères : rejoignez des achats groupés", "/achats-groupes"],
+  ["courses-moins-cheres", "Faites vos courses moins chères : téléchargez l’application Sesam-Market", "/application"],
   ["produits-essentiels", "Des produits essentiels : épicerie, boissons, entretien, hygiène, scolaire", "/categories"],
   ["achetez-en-groupe", "Achetez en groupe : plus nous sommes nombreux, plus le prix baisse", "/achats-groupes"],
   ["rejoignez-communaute", "Rejoignez votre communauté de quartier ou de résidence", "/communautes"],
