@@ -15,8 +15,8 @@ export default async function DriverHome() {
   return (
     <div className="space-y-4">
       <H1>Mes missions</H1>
-      <div className="grid grid-cols-3 gap-2">
-        <StatCard tone="economie" label="Gains du mois" value={formatFcfa(m.earnings.thisMonth)} />
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <StatCard className="col-span-2 sm:col-span-1" tone="economie" label="Gains du mois" value={formatFcfa(m.earnings.thisMonth)} />
         <StatCard label="Total" value={formatFcfa(m.earnings.total)} />
         <StatCard label="Livraisons" value={String(m.earnings.deliveries)} />
       </div>

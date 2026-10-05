@@ -34,12 +34,12 @@ export function ProShell({ title, user, nav, children }: { title: string; user: 
   );
 }
 
-export function StatCard({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: "economie" | "brand" | "alerte" }) {
+export function StatCard({ label, value, hint, tone, className = "" }: { label: string; value: string; hint?: string; tone?: "economie" | "brand" | "alerte"; className?: string }) {
   const toneClass = tone === "economie" ? "capsule-lagune" : tone === "brand" ? "capsule-foret" : tone === "alerte" ? "bg-alerte-100 text-alerte-700" : "bg-white";
   return (
-    <div className={`rounded-[var(--radius-card)] p-4 shadow-[var(--shadow-card)] ${toneClass}`}>
+    <div className={`min-w-0 rounded-[var(--radius-card)] p-3 shadow-[var(--shadow-card)] sm:p-4 ${toneClass} ${className}`}>
       <p className={`text-xs ${tone && tone !== "alerte" ? "text-white" : "text-anthracite-600"}`}>{label}</p>
-      <p className="mt-1 text-xl font-extrabold tabular">{value}</p>
+      <p className="mt-1 text-lg leading-tight font-extrabold tabular break-words sm:text-xl">{value}</p>
       {hint && <p className={`mt-0.5 text-xs ${tone && tone !== "alerte" ? "text-white/95" : "text-anthracite-600"}`}>{hint}</p>}
     </div>
   );
