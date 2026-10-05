@@ -51,3 +51,22 @@ npx cap open android       # ou ouvrir dans Android Studio
 Compte Apple Developer (99 USD/an) et un Mac. Apple refuse les applications qui ne sont qu'un site
 dans une coque : avant soumission, prévoir au moins une fonction native (notifications push,
 scan du QR de retrait, partage natif…).
+
+## Notifications push
+
+Le serveur envoie une notification push à chaque événement important (achat groupé confirmé,
+paiement, commande prête au point relais, livreur en route, remboursement…), uniquement aux
+utilisateurs qui les ont activées.
+
+- **Site et site installé** (Web Push) : déjà actif. Clés `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY`
+  dans les variables d'environnement Render. Activation : page Notifications → « Activer ».
+- **Application Android** (Firebase Cloud Messaging), à configurer une fois :
+  1. Sur https://console.firebase.google.com : créer un projet, puis ajouter une application
+     Android avec l'identifiant `ci.sesammarket.app`. Télécharger `google-services.json`.
+  2. GitHub → Settings → Secrets → Actions : secret `GOOGLE_SERVICES_JSON` = contenu du fichier.
+  3. Firebase → Paramètres du projet → Comptes de service → « Générer une nouvelle clé privée ».
+     Sur Render, variable `FCM_SERVICE_ACCOUNT` = contenu de ce fichier encodé en base64
+     (`base64 -w0 cle.json`).
+  4. Relancer le workflow « Application mobile » : l'APK suivant demande l'autorisation des
+     notifications après la connexion et enregistre le téléphone.
+- **iPhone (application)** : même projet Firebase, avec une clé APNs Apple (compte Apple Developer).
