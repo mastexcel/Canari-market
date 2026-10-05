@@ -18,6 +18,7 @@ import { lotLedger, prepareStockItems, receivePurchaseOrder, recordFractionation
 import { assignDriver, dispatchToPickupPoints, driverDeliver, driverPickup, driverRespond, pickupHandover, pickupReceive } from "../src/application/delivery.service";
 import { consolidatedDemand } from "../src/application/group-buy.service";
 import { syncCatalogue } from "../src/application/catalogue-sync.service";
+import { seedDemoExtendedCatalogue } from "./demo-catalogue";
 import { slugify } from "../src/domain/community";
 import { CATEGORIES, COMMUNES_ZONES, COMMUNITIES, FIRST_NAMES, LAST_NAMES, PICKUP_POINTS, PRODUCTS, SUPPLIERS } from "./seed-data";
 
@@ -105,6 +106,7 @@ async function main() {
   }
   // Univers → rayons : chaque produit rejoint son rayon (riz & céréales, huiles…)
   await syncCatalogue(prisma);
+  await seedDemoExtendedCatalogue(prisma);
   const productBy = (name: string) => {
     const e = [...products.entries()].find(([s]) => s.startsWith(slugify(name)));
     if (!e) throw new Error(`Produit introuvable : ${name}`);
