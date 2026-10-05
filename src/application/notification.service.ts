@@ -6,6 +6,7 @@ import type { NotificationChannel, Prisma } from "@prisma/client";
 import { prisma, type Db } from "@/infrastructure/db";
 import { getChannelAdapter } from "@/infrastructure/notifications/channels";
 import { logger } from "@/infrastructure/logger";
+import { deliverPush, hasPushDevice } from "./push.service";
 import { formatFcfa } from "@/domain/money";
 
 type Vars = Record<string, string | number>;
@@ -83,6 +84,18 @@ export const TEMPLATES = {
 
 export type TemplateKey = keyof typeof TEMPLATES;
 
+/** Page ouverte au toucher d'une notification push, selon le modèle. */
+export function notificationUrl(template: string, data?: Record<string, unknown> | null): string {
+  if (typeof data?.url === "string" && data.url.startsWith("/")) return data.url;
+  if (template.startsWith("group_progress")) return "/achats-groupes";
+  if (template.startsWith("group_") || template.startsWith("payment_") || template.startsWith("order_") || template.startsWith("refund_")) return "/commandes";
+  if (template === "referral_rewarded") return "/compte/parrainage";
+  if (template === "rfq_opened" || template === "po_received") return "/fournisseur";
+  if (template === "mission_assigned") return "/livreur";
+  if (template === "parcel_incoming") return "/point-relais";
+  return "/notifications";
+}
+
 export interface NotifyOptions {
   /** Canaux sortants en plus de l'in-app. */
   channels?: Exclude<NotificationChannel, "IN_APP">[];
@@ -101,15 +114,35 @@ export async function notify(
   await db.notification.create({
     data: { userId, channel: "IN_APP", template, title, body, data, status: "SENT", sentAt: new Date() },
   });
-  for (const channel of opts.channels ?? []) {
+  // Push automatique pour tout utilisateur qui l'a activé sur au moins un appareil
+  const channels = new Set(opts.channels ?? []);
+  if (await hasPushDevice(userId, db)) channels.add("PUSH");
+  for (const channel of channels) {
     await db.notification.create({ data: { userId, channel, template, title, body, data, status: "QUEUED" } });
   }
+  if (channels.has("PUSH")) schedulePushFlush();
+}
+
+let flushTimer: ReturnType<typeof setTimeout> | null = null;
+
+/**
+ * Envoie les push en file peu après l'appel : notify() s'exécute souvent dans une
+ * transaction, l'envoi (réseau) se fait donc après sa validation, hors transaction.
+ * La tâche planifiée reste un filet de sécurité.
+ */
+function schedulePushFlush() {
+  if (process.env.NODE_ENV === "test" || process.env.VITEST || flushTimer) return;
+  flushTimer = setTimeout(() => {
+    flushTimer = null;
+    dispatchQueuedNotifications(200, prisma, ["PUSH"]).catch((e) => logger.error("push.flush_failed", { error: (e as Error).message }));
+  }, 1500);
+  flushTimer.unref?.();
 }
 
 /** Envoie les notifications sortantes en file (tâche planifiée). */
-export async function dispatchQueuedNotifications(limit = 200, db: Db = prisma): Promise<number> {
+export async function dispatchQueuedNotifications(limit = 200, db: Db = prisma, only?: NotificationChannel[]): Promise<number> {
   const queued = await db.notification.findMany({
-    where: { status: "QUEUED", channel: { not: "IN_APP" } },
+    where: { status: "QUEUED", channel: only ? { in: only } : { not: "IN_APP" } },
     include: { user: { select: { phone: true, email: true, status: true } } },
     take: limit,
     orderBy: { createdAt: "asc" },
@@ -118,6 +151,12 @@ export async function dispatchQueuedNotifications(limit = 200, db: Db = prisma):
   for (const n of queued) {
     if (n.user.status === "DELETED") {
       await db.notification.update({ where: { id: n.id }, data: { status: "FAILED" } });
+      continue;
+    }
+    if (n.channel === "PUSH") {
+      const reached = await deliverPush(n.userId, { title: n.title, body: n.body, url: notificationUrl(n.template, n.data as Record<string, unknown> | null) }, db);
+      await db.notification.update({ where: { id: n.id }, data: reached ? { status: "SENT", sentAt: new Date() } : { status: "FAILED" } });
+      if (reached) sent++;
       continue;
     }
     const to = n.channel === "EMAIL" ? n.user.email : n.user.phone;

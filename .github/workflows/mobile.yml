@@ -17,6 +17,7 @@ jobs:
       APP_VERSION_CODE: ${{ github.run_number }}
       APP_VERSION_NAME: 1.0.${{ github.run_number }}
       HAS_KEY: ${{ secrets.SESAM_KEYSTORE_BASE64 != '' }}
+      HAS_FIREBASE: ${{ secrets.GOOGLE_SERVICES_JSON != '' }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -31,6 +32,18 @@ jobs:
           cache: gradle
       # Le SDK Android est préinstallé sur les machines GitHub (ANDROID_HOME) ;
       # Gradle télécharge seul la plateforme manquante.
+
+      # Notifications push : fichier Firebase de l'application Android (secret GOOGLE_SERVICES_JSON,
+      # contenu brut du google-services.json). Le marqueur « SesamPush » ajouté à l'user-agent
+      # indique au site que cette version sait recevoir les notifications.
+      - name: Configuration Firebase (notifications push)
+        if: ${{ env.HAS_FIREBASE == 'true' }}
+        working-directory: mobile
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          printf '%s' "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+          node -e "const f='capacitor.config.json',c=require('./'+f);c.appendUserAgent='SesamApp SesamPush';require('fs').writeFileSync(f,JSON.stringify(c,null,2))"
 
       - name: Dépendances et synchronisation Capacitor
         working-directory: mobile

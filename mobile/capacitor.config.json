@@ -6,7 +6,9 @@
     "url": "https://sesam-market.onrender.com/?source=app",
     "errorPath": "hors-ligne.html",
     "androidScheme": "https",
-    "allowNavigation": ["sesam-market.onrender.com"]
+    "allowNavigation": [
+      "sesam-market.onrender.com"
+    ]
   },
   "android": {
     "backgroundColor": "#3b4520",
@@ -30,6 +32,14 @@
       "style": "DARK",
       "backgroundColor": "#3b4520",
       "overlaysWebView": false
+    },
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
     }
-  }
+  },
+  "appendUserAgent": "SesamApp"
 }

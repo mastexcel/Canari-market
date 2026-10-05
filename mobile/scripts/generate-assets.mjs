@@ -4,7 +4,7 @@
  * Usage : npm run assets (depuis mobile/, après « npm install » à la racine du dépôt).
  */
 import { createRequire } from "node:module";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -62,6 +62,15 @@ for (const d of readdirSync(res).filter((d) => d.startsWith("drawable"))) {
   if (!existsSync(file)) continue;
   const { width, height } = await sharp(file).metadata();
   await (await splash(width, height)).toFile(file);
+}
+
+// Petite icône de notification Android : silhouette blanche du chariot (24 dp)
+for (const [name, k] of Object.entries(DENSITIES)) {
+  const size = Math.round(24 * k);
+  const dir = path.join(res, `drawable-${name}`);
+  mkdirSync(dir, { recursive: true });
+  const alpha = await sharp(MARK).resize(size, size, { fit: "contain", background: "#0000" }).ensureAlpha().extractChannel("alpha").toBuffer();
+  await sharp({ create: { width: size, height: size, channels: 3, background: "#ffffff" } }).joinChannel(alpha).png().toFile(path.join(dir, "ic_stat_sesam.png"));
 }
 
 if (existsSync(ios)) {

@@ -52,12 +52,36 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Notifications push (architecture prête : charge utile { title, body, url })
+// Notifications push : charge utile { title, body, url } envoyée par le serveur (Web Push)
 self.addEventListener("push", (event) => {
-  const data = event.data ? event.data.json() : {};
-  event.waitUntil(self.registration.showNotification(data.title || "Sesam-Market", { body: data.body, icon: "/icons/icon-192.png", data: { url: data.url || "/" } }));
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { body: event.data ? event.data.text() : "" };
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title || "Sesam-Market", {
+      body: data.body || "",
+      icon: "/images/app-icon.png",
+      badge: "/icons/icon-192.png",
+      lang: "fr",
+      tag: data.url || "sesam",
+      renotify: true,
+      data: { url: data.url || "/notifications" },
+    }),
+  );
 });
+
+// Toucher la notification : réutilise un onglet Sesam-Market ouvert, sinon en ouvre un.
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  event.waitUntil(self.clients.openWindow(event.notification.data?.url || "/"));
+  const target = new URL(event.notification.data?.url || "/", self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((wins) => {
+      const win = wins.find((w) => new URL(w.url).origin === self.location.origin);
+      if (win) return win.navigate(target).then((w) => (w || win).focus());
+      return self.clients.openWindow(target);
+    }),
+  );
 });

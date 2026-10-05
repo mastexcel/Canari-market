@@ -21,7 +21,8 @@ async function main() {
     const fixed =
       (await prisma.$executeRaw`UPDATE "GroupBuy" SET "title" = replace("title", ' — ', ', '), "referenceSource" = replace("referenceSource", ' — ', ', ') WHERE "title" LIKE '% — %' OR "referenceSource" LIKE '% — %'`) +
       (await prisma.$executeRaw`UPDATE "ReferencePrice" SET "sourceLabel" = replace("sourceLabel", ' — ', ', ') WHERE "sourceLabel" LIKE '% — %'`) +
-      (await prisma.$executeRaw`UPDATE "OrderItem" SET "label" = replace("label", ' — ', ', ') WHERE "label" LIKE '% — %'`);
+      (await prisma.$executeRaw`UPDATE "OrderItem" SET "label" = replace("label", ' — ', ', ') WHERE "label" LIKE '% — %'`) +
+      (await prisma.$executeRaw`UPDATE "Notification" SET "title" = replace("title", ' — ', ', '), "body" = replace("body", ' — ', ', ') WHERE "title" LIKE '% — %' OR "body" LIKE '% — %'`);
     if (fixed) console.log(`Ponctuation harmonisée sur ${fixed} lignes.`);
 
     // 2. Mot de passe des comptes de démonstration

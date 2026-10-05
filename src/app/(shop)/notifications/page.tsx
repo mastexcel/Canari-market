@@ -4,6 +4,7 @@ import { formatDateTime } from "@/domain/dates";
 import { PageHeader } from "@/ui/Card";
 import { EmptyState } from "@/ui/EmptyState";
 import { MarkRead } from "./MarkRead";
+import { PushToggle } from "./PushToggle";
 import { illustration } from "@/infrastructure/assets";
 
 export const metadata = { title: "Notifications" };
@@ -15,6 +16,7 @@ export default async function NotificationsPage() {
   return (
     <div>
       <PageHeader title="Notifications" action={unread ? <MarkRead /> : undefined} />
+      <PushToggle />
       {items.length === 0 ? (
         <EmptyState title="Rien de nouveau" emoji="🔔" image={illustration("etats", "aucune-notification")}>Vous serez prévenu de l&apos;avancement de vos achats groupés et commandes.</EmptyState>
       ) : (

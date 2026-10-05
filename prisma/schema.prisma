@@ -352,6 +352,7 @@ model User {
   communityMembers   CommunityMember[]
   communitiesCreated Community[]           @relation("CommunityCreator")
   notifications      Notification[]
+  pushDevices        PushDevice[]
   reviews            Review[]
   tickets            SupportTicket[]
   ticketMessages     SupportMessage[]
@@ -1335,6 +1336,31 @@ model Notification {
 
   @@index([userId, channel, createdAt])
   @@index([status, channel])
+}
+
+/// Appareil abonné aux notifications push : navigateur (Web Push) ou application (FCM).
+/// L'abonnement est explicite (bouton « Activer les notifications ») et révocable.
+model PushDevice {
+  id         String         @id @default(cuid())
+  userId     String
+  kind       PushDeviceKind
+  /// Web Push : URL de l'abonnement ; FCM : jeton de l'appareil.
+  endpoint   String         @unique
+  p256dh     String?
+  auth       String?
+  userAgent  String?
+  failures   Int            @default(0)
+  createdAt  DateTime       @default(now())
+  lastSeenAt DateTime       @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum PushDeviceKind {
+  WEB
+  FCM
 }
 
 model Review {

@@ -36,6 +36,7 @@ export async function exportUserData(userId: string, db: Db = prisma) {
       orders: { include: { items: true, payments: { select: { id: true, amount: true, status: true, method: true, operator: true, createdAt: true, paidAt: true } }, refunds: true, delivery: true } },
       communityMembers: { include: { community: { select: { name: true } } } },
       notifications: { select: { title: true, body: true, createdAt: true, channel: true } },
+      pushDevices: { select: { kind: true, userAgent: true, createdAt: true, lastSeenAt: true } },
       reviews: true,
       tickets: { include: { messages: true } },
       creditEntries: true,
@@ -62,6 +63,7 @@ export async function deleteAccount(userId: string, password: string, db: Db = p
     await tx.cart.deleteMany({ where: { userId } });
     await tx.communityMember.deleteMany({ where: { userId } });
     await tx.notification.deleteMany({ where: { userId } });
+    await tx.pushDevice.deleteMany({ where: { userId } });
     await tx.household.deleteMany({ where: { userId } });
     await tx.merchant.deleteMany({ where: { userId } });
     await tx.user.update({
