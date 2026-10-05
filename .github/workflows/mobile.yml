@@ -1,0 +1,80 @@
+name: Application mobile
+
+# Compile l'application Android (Capacitor) à chaque modification du dossier mobile/,
+# ou à la demande depuis l'onglet Actions.
+on:
+  push:
+    paths: ["mobile/**", ".github/workflows/mobile.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    env:
+      APP_VERSION_CODE: ${{ github.run_number }}
+      APP_VERSION_NAME: 1.0.${{ github.run_number }}
+      HAS_KEY: ${{ secrets.SESAM_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - uses: android-actions/setup-android@v3
+
+      - name: Dépendances et synchronisation Capacitor
+        working-directory: mobile
+        run: |
+          npm ci
+          npx cap sync android
+
+      - name: APK de test (installable directement)
+        working-directory: mobile/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/sesam-market.apk"
+
+      # Version Play Store signée, seulement si la clé est configurée dans les secrets du dépôt :
+      # SESAM_KEYSTORE_BASE64, SESAM_KEYSTORE_PASSWORD, SESAM_KEY_ALIAS, SESAM_KEY_PASSWORD
+      - name: Version Play Store signée (AAB)
+        if: ${{ env.HAS_KEY == 'true' }}
+        working-directory: mobile/android
+        env:
+          SESAM_KEYSTORE_PASSWORD: ${{ secrets.SESAM_KEYSTORE_PASSWORD }}
+          SESAM_KEY_ALIAS: ${{ secrets.SESAM_KEY_ALIAS }}
+          SESAM_KEY_PASSWORD: ${{ secrets.SESAM_KEY_PASSWORD }}
+        run: |
+          echo "${{ secrets.SESAM_KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/sesam.jks"
+          export SESAM_KEYSTORE_FILE="$RUNNER_TEMP/sesam.jks"
+          ./gradlew bundleRelease assembleRelease --no-daemon
+          cp app/build/outputs/bundle/release/app-release.aab "$GITHUB_WORKSPACE/sesam-market.aab"
+          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/sesam-market.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sesam-market-android-${{ github.run_number }}
+          path: |
+            sesam-market.apk
+            sesam-market.aab
+          if-no-files-found: ignore
+
+      # Dernière version publiée sur la branche « app-builds » (récupérée ensuite pour le lien
+      # de téléchargement du site).
+      - name: Publier l'APK sur la branche app-builds
+        run: |
+          mkdir -p "$RUNNER_TEMP/builds" && cd "$RUNNER_TEMP/builds"
+          git init -q -b app-builds
+          cp "$GITHUB_WORKSPACE/sesam-market.apk" .
+          printf '{"version":"%s","commit":"%s","date":"%s"}\n' "$APP_VERSION_NAME" "$GITHUB_SHA" "$(date -u +%FT%TZ)" > version.json
+          git add . && git -c user.name="github-actions" -c user.email="github-actions@users.noreply.github.com" commit -qm "APK $APP_VERSION_NAME"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" app-builds

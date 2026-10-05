@@ -5,6 +5,7 @@ import "./globals.css";
 import { ToastProvider } from "@/ui/Toast";
 import { ServiceWorker } from "@/ui/ServiceWorker";
 import { CookieNotice } from "@/ui/CookieNotice";
+import { NativeBridge } from "@/ui/NativeBridge";
 
 /**
  * Typographie (auto-hébergée par Next : aucun appel à Google côté client, latin seulement) :
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Aller au contenu
         </a>
         <CookieNotice />
+        <NativeBridge />
         <ToastProvider>{children}</ToastProvider>
         <ServiceWorker />
       </body>

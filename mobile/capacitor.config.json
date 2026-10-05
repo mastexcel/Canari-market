@@ -1,0 +1,35 @@
+{
+  "appId": "ci.sesammarket.app",
+  "appName": "Sesam-Market",
+  "webDir": "www",
+  "server": {
+    "url": "https://sesam-market.onrender.com/?source=app",
+    "errorPath": "hors-ligne.html",
+    "androidScheme": "https",
+    "allowNavigation": ["sesam-market.onrender.com"]
+  },
+  "android": {
+    "backgroundColor": "#3b4520",
+    "allowMixedContent": false
+  },
+  "ios": {
+    "backgroundColor": "#3b4520",
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2500,
+      "launchAutoHide": true,
+      "backgroundColor": "#3b4520",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": false,
+      "splashImmersive": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#3b4520",
+      "overlaysWebView": false
+    }
+  }
+}
