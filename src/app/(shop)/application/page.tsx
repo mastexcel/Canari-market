@@ -30,7 +30,7 @@ export default function ApplicationPage() {
       <PageHeader title="L’application Sesam-Market" subtitle="Vos achats groupés dans la poche, en portrait comme en paysage." />
 
       <section className="flex flex-col items-center gap-4 rounded-[var(--radius-card)] bg-white p-5 text-center shadow-[var(--shadow-card)] md:flex-row md:text-left">
-        <Image src="/icons/icon-192.png" alt="" width={96} height={96} className="size-24 rounded-[1.6rem] shadow-[var(--shadow-card)]" />
+        <Image src="/images/app-icon.png" alt="" width={96} height={96} className="size-24 drop-shadow-[0_8px_14px_rgb(0_0_0/0.18)]" />
         <div className="flex-1">
           <h2 className="text-lg font-bold text-anthracite-900">Android</h2>
           {android ? (
